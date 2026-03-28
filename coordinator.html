@@ -132,6 +132,16 @@
             background: linear-gradient(135deg, rgba(168, 85, 247, 0.55), rgba(236, 72, 153, 0.55));
         }
 
+        .create-btn {
+            background: rgba(34, 197, 94, 0.25);
+            border-color: rgba(34, 197, 94, 0.4);
+            margin-top: 12px;
+        }
+
+        .create-btn:hover {
+            background: rgba(34, 197, 94, 0.35);
+        }
+
         .template-item {
             background: rgba(0, 0, 0, 0.35);
             padding: 18px 20px;
@@ -179,6 +189,15 @@
             border-radius: 20px;
             margin-bottom: 24px;
             font-size: 14px;
+        }
+
+        .stats-badge {
+            background: rgba(0,0,0,0.3);
+            padding: 8px 12px;
+            border-radius: 40px;
+            font-size: 13px;
+            display: inline-block;
+            margin-bottom: 16px;
         }
 
         @media (max-width: 768px) {
@@ -243,11 +262,14 @@
                 <textarea id="taskComment" placeholder="Комментарий для шефов (опционально)"></textarea>
                 
                 <button class="mass-btn" onclick="sendToAllChiefs()">🌍 ОТПРАВИТЬ ВСЕМ ШЕФАМ</button>
+                
+                <button class="create-btn" onclick="createTestChiefs()">🔧 Создать тестовых шефов (для всех округов)</button>
             </div>
 
             <div class="panel glass-card">
                 <h2>📊 Активные задачи</h2>
-                <div id="activeTasksList" style="max-height: 600px; overflow-y: auto;"></div>
+                <div id="chiefsCount" class="stats-badge">👥 Загрузка...</div>
+                <div id="activeTasksList" style="max-height: 500px; overflow-y: auto;"></div>
             </div>
         </div>
     </div>
@@ -289,12 +311,20 @@
             event.currentTarget.classList.add('selected');
         }
 
+        async function loadChiefsCount() {
+            const { data, error } = await sb.from('chiefs').select('id', { count: 'exact', head: true });
+            if (!error) {
+                document.getElementById('chiefsCount').innerHTML = `👥 Всего шефов: ${data?.length || 0}`;
+            }
+        }
+
         async function loadActiveTasks() {
             const { data, error } = await sb
                 .from('assignments')
                 .select('*, task_templates(*), chiefs(name, primary_branch_id)')
                 .neq('status', 'completed')
-                .order('created_at', { ascending: false });
+                .order('created_at', { ascending: false })
+                .limit(30);
             
             if (error) return;
             
@@ -332,6 +362,46 @@
             alert('✅ Шаблон создан');
         }
 
+        async function createTestChiefs() {
+            const { data: districts } = await sb.from('districts').select('*');
+            
+            if (!districts?.length) {
+                alert('Нет округов в базе');
+                return;
+            }
+            
+            let created = 0;
+            
+            for (const d of districts) {
+                // Создаём местного шефа
+                const mainId = 'chief_' + d.id + '_main';
+                const { error: e1 } = await sb.from('chiefs').upsert({
+                    id: mainId,
+                    name: 'Шеф ' + d.name,
+                    district_id: d.id,
+                    primary_branch_id: null
+                }, { onConflict: 'id' });
+                if (!e1) created++;
+                
+                // Создаём первичку (если есть)
+                const { data: pb } = await sb.from('primary_branches').select('id').eq('district_id', d.id).limit(1);
+                if (pb && pb[0]) {
+                    const primaryId = 'chief_' + d.id + '_primary';
+                    await sb.from('chiefs').upsert({
+                        id: primaryId,
+                        name: 'Шеф ' + d.name + ' (Первичка)',
+                        district_id: d.id,
+                        primary_branch_id: pb[0].id
+                    }, { onConflict: 'id' });
+                    created++;
+                }
+            }
+            
+            alert(`✅ Создано/обновлено ${created} шефов! Теперь можно отправлять задачи.`);
+            loadChiefsCount();
+            loadActiveTasks();
+        }
+
         async function sendToAllChiefs() {
             if (!selectedTemplateId) {
                 alert('Сначала выберите шаблон задачи (например, РАСПУШ)');
@@ -341,7 +411,7 @@
             const link = document.getElementById('taskLink').value;
             const comment = document.getElementById('taskComment').value;
             
-            // Получаем ВСЕХ шефов (все округа, все первички)
+            // Получаем ВСЕХ шефов
             const { data: allChiefs, error } = await sb
                 .from('chiefs')
                 .select('id, district_id');
@@ -352,7 +422,7 @@
             }
             
             if (!allChiefs?.length) {
-                alert('Нет шефов для отправки');
+                alert('Нет шефов для отправки. Нажмите "Создать тестовых шефов" сначала.');
                 return;
             }
             
@@ -377,6 +447,7 @@
         }
 
         loadTemplates();
+        loadChiefsCount();
         loadActiveTasks();
         
         setInterval(() => {
