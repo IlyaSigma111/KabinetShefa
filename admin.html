@@ -2,13 +2,14 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Админ-консоль</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -43,55 +44,59 @@
             background: rgba(20, 25, 35, 0.4);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 32px;
+            border-radius: 28px;
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 24px;
+            padding: 16px;
         }
 
         .header {
-            padding: 24px 32px;
-            margin-bottom: 28px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 12px;
         }
 
         .header h1 {
-            font-size: 28px;
+            font-size: 22px;
             font-weight: 700;
         }
 
         .badge {
             background: rgba(239, 68, 68, 0.2);
-            padding: 8px 16px;
-            border-radius: 40px;
-            font-size: 14px;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 12px;
             color: #f87171;
         }
 
         .tabs {
             display: flex;
-            gap: 12px;
-            margin-bottom: 28px;
+            gap: 8px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            -webkit-overflow-scrolling: touch;
         }
 
         .tab-btn {
-            padding: 12px 28px;
+            padding: 10px 18px;
             background: rgba(0, 0, 0, 0.4);
             border: none;
-            border-radius: 60px;
+            border-radius: 40px;
             color: rgba(255, 255, 255, 0.7);
-            font-size: 16px;
+            font-size: 13px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
+            white-space: nowrap;
         }
 
         .tab-btn.active {
@@ -103,8 +108,8 @@
         .panel {
             background: rgba(20, 25, 35, 0.35);
             backdrop-filter: blur(20px);
-            border-radius: 32px;
-            padding: 28px;
+            border-radius: 28px;
+            padding: 20px;
             display: none;
         }
 
@@ -113,22 +118,43 @@
         }
 
         .panel h2 {
-            font-size: 22px;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
+            font-size: 18px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 14px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            color: white;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 0 -4px;
+            padding: 0 4px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 600px;
         }
 
         th, td {
-            padding: 14px 12px;
+            padding: 12px 8px;
             text-align: left;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            font-size: 14px;
+            font-size: 13px;
+            vertical-align: middle;
         }
 
         th {
@@ -137,14 +163,14 @@
         }
 
         .delete-btn, .add-points-btn, .remove-points-btn {
-            padding: 6px 14px;
+            padding: 6px 12px;
             border: none;
             border-radius: 20px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 500;
             transition: all 0.2s;
-            margin: 0 4px;
+            margin: 2px;
         }
 
         .delete-btn {
@@ -152,8 +178,8 @@
             color: #f87171;
         }
 
-        .delete-btn:hover {
-            background: rgba(239, 68, 68, 0.4);
+        .delete-btn:active {
+            transform: scale(0.96);
         }
 
         .add-points-btn {
@@ -164,17 +190,6 @@
         .remove-points-btn {
             background: rgba(245, 158, 11, 0.2);
             color: #f59e0b;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 12px 16px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            color: white;
-            font-size: 14px;
-            margin-bottom: 20px;
         }
 
         .status-badge {
@@ -190,27 +205,88 @@
             color: #10b981;
         }
 
+        .status-inactive {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+        }
+
+        .task-stats {
+            font-size: 11px;
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+
         .toast {
             position: fixed;
-            bottom: 30px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
             background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(12px);
-            padding: 12px 24px;
-            border-radius: 60px;
+            padding: 10px 20px;
+            border-radius: 50px;
             z-index: 1000;
             border-left: 4px solid #6c8cff;
-            font-size: 14px;
+            font-size: 13px;
+            max-width: 90%;
+            text-align: center;
             white-space: nowrap;
         }
 
-        @media (max-width: 768px) {
-            .container { padding: 16px; }
-            .header { padding: 18px 20px; }
-            .panel { padding: 20px; overflow-x: auto; }
-            th, td { padding: 10px 8px; font-size: 12px; }
-            .toast { white-space: normal; max-width: 90%; }
+        @media (min-width: 768px) {
+            .container {
+                padding: 24px;
+            }
+            .header {
+                padding: 20px 28px;
+            }
+            .header h1 {
+                font-size: 26px;
+            }
+            .tabs {
+                gap: 12px;
+            }
+            .tab-btn {
+                padding: 12px 24px;
+                font-size: 15px;
+            }
+            .panel {
+                padding: 28px;
+            }
+            .panel h2 {
+                font-size: 22px;
+            }
+            th, td {
+                padding: 14px 12px;
+                font-size: 14px;
+            }
+            .toast {
+                white-space: nowrap;
+                padding: 12px 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .panel {
+                padding: 16px;
+            }
+            th, td {
+                padding: 10px 6px;
+                font-size: 11px;
+            }
+            .delete-btn, .add-points-btn, .remove-points-btn {
+                padding: 5px 10px;
+                font-size: 10px;
+            }
+            .toast {
+                white-space: normal;
+                max-width: 90%;
+                font-size: 12px;
+            }
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -229,7 +305,7 @@
         </div>
 
         <div class="tabs">
-            <button class="tab-btn active" data-tab="tasks">Задачи</button>
+            <button class="tab-btn active" data-tab="tasks">Все задачи</button>
             <button class="tab-btn" data-tab="chiefs">Шефы</button>
             <button class="tab-btn" data-tab="ratingMain">Рейтинг местных</button>
             <button class="tab-btn" data-tab="ratingPrimary">Рейтинг первичек</button>
@@ -238,20 +314,19 @@
 
         <!-- Панель задач (уникальные задачи) -->
         <div id="tasks-panel" class="panel active">
-            <h2>Управление задачами (уникальные)</h2>
-            <input type="text" id="taskSearch" class="search-input" placeholder="Поиск по названию...">
-            <div style="overflow-x: auto;">
+            <h2>Управление задачами</h2>
+            <input type="text" id="taskSearch" class="search-input" placeholder="Поиск по названию задачи...">
+            <div class="table-wrapper">
                 <table>
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Задача</th>
                             <th>Описание</th>
-                            <th>Кому отправлено</th>
+                            <th>Статистика</th>
                             <th>Статус</th>
                             <th>Действия</th>
-                        </tr>
-                    </thead>
+                        </thead>
                     <tbody id="tasksTable"></tbody>
                 </table>
             </div>
@@ -261,7 +336,7 @@
         <div id="chiefs-panel" class="panel">
             <h2>Управление баллами шефов</h2>
             <input type="text" id="chiefSearch" class="search-input" placeholder="Поиск по имени или округу...">
-            <div style="overflow-x: auto;">
+            <div class="table-wrapper">
                 <table>
                     <thead>
                         <tr>
@@ -270,8 +345,7 @@
                             <th>Тип</th>
                             <th>Баллы</th>
                             <th>Действия</th>
-                        </tr>
-                    </thead>
+                        </thead>
                     <tbody id="chiefsTable"></tbody>
                 </table>
             </div>
@@ -280,16 +354,10 @@
         <!-- Рейтинг местных отделений -->
         <div id="ratingMain-panel" class="panel">
             <h2>Рейтинг местных отделений</h2>
-            <div style="overflow-x: auto;">
+            <div class="table-wrapper">
                 <table>
                     <thead>
-                        <tr>
-                            <th>Округ</th>
-                            <th>Всего баллов</th>
-                            <th>Количество шефов</th>
-                            <th>Средний балл</th>
-                        </tr>
-                    </thead>
+                        <tr><th>Округ</th><th>Всего баллов</th><th>Количество шефов</th><th>Средний балл</th> </thead>
                     <tbody id="ratingMainTable"></tbody>
                 </table>
             </div>
@@ -298,16 +366,10 @@
         <!-- Рейтинг первичек -->
         <div id="ratingPrimary-panel" class="panel">
             <h2>Рейтинг первичных отделений</h2>
-            <div style="overflow-x: auto;">
+            <div class="table-wrapper">
                 <table>
                     <thead>
-                        <tr>
-                            <th>Округ</th>
-                            <th>Всего баллов</th>
-                            <th>Количество первичек</th>
-                            <th>Средний балл</th>
-                        </tr>
-                    </thead>
+                        <tr><th>Округ</th><th>Всего баллов</th><th>Количество первичек</th><th>Средний балл</th> </thead>
                     <tbody id="ratingPrimaryTable"></tbody>
                 </table>
             </div>
@@ -316,17 +378,10 @@
         <!-- Панель шаблонов -->
         <div id="templates-panel" class="panel">
             <h2>Шаблоны задач</h2>
-            <div style="overflow-x: auto;">
+            <div class="table-wrapper">
                 <table>
                     <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Название</th>
-                            <th>Описание</th>
-                            <th>Активен</th>
-                            <th>Действия</th>
-                        </tr>
-                    </thead>
+                        <tr><th>ID</th><th>Название</th><th>Описание</th><th>Активен</th><th>Действия</th> </thead>
                     <tbody id="templatesTable"></tbody>
                 </table>
             </div>
@@ -344,11 +399,11 @@
         async function checkConnection() {
             const { data, error } = await supabaseClient.from('districts').select('count', { count: 'exact', head: true });
             if (error) {
-                document.getElementById('dbStatus').innerHTML = 'Ошибка подключения';
+                document.getElementById('dbStatus').innerHTML = '❌ Ошибка подключения';
                 document.getElementById('dbStatus').style.background = 'rgba(239,68,68,0.2)';
                 document.getElementById('dbStatus').style.color = '#f87171';
             } else {
-                document.getElementById('dbStatus').innerHTML = 'База данных подключена';
+                document.getElementById('dbStatus').innerHTML = '✅ База данных подключена';
                 document.getElementById('dbStatus').style.background = 'rgba(16,185,129,0.2)';
                 document.getElementById('dbStatus').style.color = '#10b981';
             }
@@ -374,14 +429,13 @@
 
         function renderTasksTable() {
             const searchTerm = document.getElementById('taskSearch')?.value.toLowerCase() || '';
-            
             const filtered = allTemplates.filter(function(t) {
                 return t.title.toLowerCase().includes(searchTerm);
             });
             
             const tbody = document.getElementById('tasksTable');
             if (!filtered || filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:40px;">Нет задач</td></tr>';
+                tbody.innerHTML = '运转<td colspan="6" style="text-align:center; padding:40px;">Нет задач</td> </tr>';
                 return;
             }
             
@@ -394,14 +448,12 @@
                 const pendingCount = totalCount - completedCount;
                 
                 html += '<tr>' +
-                    '<td>' + template.id + '</td>' +
+                    '<td style="font-family: monospace; font-size: 11px;">' + template.id + '</td>' +
                     '<td><strong>' + template.title + '</strong></td>' +
                     '<td>' + (template.description || '-') + '</td>' +
-                    '<td>Всего: ' + totalCount + ' (Выполнено: ' + completedCount + ', Ожидает: ' + pendingCount + ')</td>' +
-                    '<td><span class="status-badge status-active">' + (template.is_active ? 'Активна' : 'Неактивна') + '</span></td>' +
-                    '<td>' +
-                        '<button class="delete-btn" onclick="deleteAllTasksByTemplate(' + template.id + ', \'' + template.title.replace(/'/g, "\\'") + '\')">Удалить задачу у всех</button>' +
-                    '</td>' +
+                    '<td><div class="task-stats">Всего: ' + totalCount + '<br>Выполнено: ' + completedCount + '<br>Ожидает: ' + pendingCount + '</div></td>' +
+                    '<td><span class="status-badge ' + (template.is_active ? 'status-active' : 'status-inactive') + '">' + (template.is_active ? 'Активна' : 'Неактивна') + '</span></td>' +
+                    '<td><button class="delete-btn" onclick="deleteAllTasksByTemplate(' + template.id + ', \'' + template.title.replace(/'/g, "\\'") + '\')">🗑 Удалить у всех</button></td>' +
                 '</tr>';
             }
             tbody.innerHTML = html;
@@ -437,7 +489,7 @@
             loadChiefs();
             loadRatingMain();
             loadRatingPrimary();
-            showToast('Все задачи "' + templateTitle + '" удалены у всех шефов');
+            showToast('✅ Все задачи "' + templateTitle + '" удалены у всех шефов');
         };
 
         async function loadChiefs() {
@@ -473,7 +525,6 @@
 
         function renderChiefsTable(chiefs) {
             const searchTerm = document.getElementById('chiefSearch')?.value.toLowerCase() || '';
-            
             const filtered = chiefs.filter(function(c) {
                 return (c.name || '').toLowerCase().includes(searchTerm) ||
                        (c.district || '').toLowerCase().includes(searchTerm);
@@ -481,7 +532,7 @@
             
             const tbody = document.getElementById('chiefsTable');
             if (!filtered || filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:40px;">Нет шефов</td></tr>';
+                tbody.innerHTML = '运转<td colspan="5" style="text-align:center; padding:40px;">Нет шефов</td> </tr>';
                 return;
             }
             
@@ -503,26 +554,30 @@
         }
 
         window.addPoints = async function(chiefId) {
-            await supabaseClient.rpc('increment_score', { chief_id_param: chiefId });
+            // Получаем текущие баллы
+            const { data: current } = await supabaseClient.from('chief_scores').select('total_score').eq('chief_id', chiefId).single();
+            const newScore = (current?.total_score || 0) + 1;
+            await supabaseClient.from('chief_scores').upsert({ chief_id: chiefId, total_score: newScore, updated_at: new Date() });
+            await supabaseClient.from('operations_history').insert([{ chief_id: chiefId, action: 'Админ начислил +1 балл' }]);
             loadChiefs();
             loadRatingMain();
             loadRatingPrimary();
-            showToast('Начислен 1 балл');
+            showToast('✅ Начислен 1 балл');
         };
 
         window.removePoints = async function(chiefId) {
-            await supabaseClient.rpc('decrement_score', { chief_id_param: chiefId });
+            const { data: current } = await supabaseClient.from('chief_scores').select('total_score').eq('chief_id', chiefId).single();
+            const newScore = Math.max(0, (current?.total_score || 0) - 1);
+            await supabaseClient.from('chief_scores').upsert({ chief_id: chiefId, total_score: newScore, updated_at: new Date() });
+            await supabaseClient.from('operations_history').insert([{ chief_id: chiefId, action: 'Админ снял 1 балл' }]);
             loadChiefs();
             loadRatingMain();
             loadRatingPrimary();
-            showToast('Снят 1 балл');
+            showToast('⚠️ Снят 1 балл');
         };
 
         async function loadRatingMain() {
-            const { data: chiefs } = await supabaseClient
-                .from('chiefs')
-                .select('id, district_id, districts(name), primary_branch_id');
-            
+            const { data: chiefs } = await supabaseClient.from('chiefs').select('id, district_id, districts(name), primary_branch_id');
             const { data: scores } = await supabaseClient.from('chief_scores').select('*');
             
             const scoreMap = {};
@@ -565,7 +620,7 @@
             
             const tbody = document.getElementById('ratingMainTable');
             if (!sorted || sorted.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:40px;">Нет данных</td></tr>';
+                tbody.innerHTML = '运转<td colspan="4" style="text-align:center; padding:40px;">Нет данных</td> </tr>';
                 return;
             }
             
@@ -583,10 +638,7 @@
         }
 
         async function loadRatingPrimary() {
-            const { data: chiefs } = await supabaseClient
-                .from('chiefs')
-                .select('id, district_id, districts(name), primary_branch_id');
-            
+            const { data: chiefs } = await supabaseClient.from('chiefs').select('id, district_id, districts(name), primary_branch_id');
             const { data: scores } = await supabaseClient.from('chief_scores').select('*');
             
             const scoreMap = {};
@@ -629,7 +681,7 @@
             
             const tbody = document.getElementById('ratingPrimaryTable');
             if (!sorted || sorted.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:40px;">Нет данных</td></tr>';
+                tbody.innerHTML = '运转<td colspan="4" style="text-align:center; padding:40px;">Нет данных</td> </tr>';
                 return;
             }
             
@@ -652,7 +704,7 @@
             
             const tbody = document.getElementById('templatesTable');
             if (!data || data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:40px;">Нет шаблонов</td></tr>';
+                tbody.innerHTML = '运转<td colspan="5" style="text-align:center; padding:40px;">Нет шаблонов</td> </tr>';
                 return;
             }
             
@@ -663,7 +715,7 @@
                     '<td>' + t.id + '</td>' +
                     '<td><strong>' + t.title + '</strong></td>' +
                     '<td>' + (t.description || '-') + '</td>' +
-                    '<td><span class="status-badge status-active">' + (t.is_active ? 'Активен' : 'Неактивен') + '</span></td>' +
+                    '<td><span class="status-badge ' + (t.is_active ? 'status-active' : 'status-inactive') + '">' + (t.is_active ? 'Активен' : 'Неактивен') + '</span></td>' +
                     '<td><button class="delete-btn" onclick="toggleTemplate(' + t.id + ', ' + !t.is_active + ')">' + (t.is_active ? 'Отключить' : 'Включить') + '</button></td>' +
                 '</tr>';
             }
@@ -673,7 +725,7 @@
         window.toggleTemplate = async function(id, newStatus) {
             await supabaseClient.from('task_templates').update({ is_active: newStatus }).eq('id', id);
             loadTemplates();
-            showToast('Шаблон обновлён');
+            showToast('✅ Шаблон обновлён');
         };
 
         function showToast(msg) {
