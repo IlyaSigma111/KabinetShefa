@@ -271,7 +271,6 @@
                 <textarea id="taskComment" placeholder="Комментарий для шефов (опционально)"></textarea>
                 
                 <button class="mass-btn" onclick="sendToAllChiefs()">🌍 ОТПРАВИТЬ ВСЕМ ШЕФАМ</button>
-                <button class="create-btn" onclick="createAllChiefs()">🔧 Создать всех шефов (для всех округов)</button>
             </div>
 
             <div class="panel glass-card">
@@ -296,7 +295,10 @@
                 .select('*')
                 .eq('is_active', true);
             
-            if (error) return;
+            if (error) {
+                console.error('Ошибка загрузки шаблонов:', error);
+                return;
+            }
             
             const container = document.getElementById('templatesList');
             if (data?.length) {
@@ -322,57 +324,6 @@
             event.currentTarget.classList.add('selected');
         }
 
-        async function createAllChiefs() {
-            const { data: districts, error } = await supabaseClient
-                .from('districts')
-                .select('*');
-            
-            if (error || !districts?.length) {
-                alert('Нет округов в базе');
-                return;
-            }
-            
-            let createdCount = 0;
-            
-            for (const district of districts) {
-                // Создаём местного шефа
-                const mainId = 'chief_' + district.id + '_main';
-                const { error: e1 } = await supabaseClient
-                    .from('chiefs')
-                    .upsert({
-                        id: mainId,
-                        name: `Шеф ${district.name}`,
-                        district_id: district.id,
-                        primary_branch_id: null
-                    });
-                if (!e1) createdCount++;
-                
-                // Создаём первичку
-                const { data: primaryBranches } = await supabaseClient
-                    .from('primary_branches')
-                    .select('id')
-                    .eq('district_id', district.id)
-                    .limit(1);
-                
-                if (primaryBranches && primaryBranches[0]) {
-                    const primaryId = 'chief_' + district.id + '_primary';
-                    await supabaseClient
-                        .from('chiefs')
-                        .upsert({
-                            id: primaryId,
-                            name: `Шеф ${district.name} (Первичка)`,
-                            district_id: district.id,
-                            primary_branch_id: primaryBranches[0].id
-                        });
-                    createdCount++;
-                }
-            }
-            
-            alert(`✅ Создано/обновлено ${createdCount} шефов! Теперь можно отправлять задачи.`);
-            loadChiefsCount();
-            loadActiveTasks();
-        }
-
         async function loadChiefsCount() {
             const { count, error } = await supabaseClient
                 .from('chiefs')
@@ -391,7 +342,10 @@
                 .order('created_at', { ascending: false })
                 .limit(50);
             
-            if (error) return;
+            if (error) {
+                console.error('Ошибка загрузки задач:', error);
+                return;
+            }
             
             const container = document.getElementById('activeTasksList');
             if (!data?.length) {
@@ -454,21 +408,27 @@
             const deadline = document.getElementById('taskDeadline').value;
             const comment = document.getElementById('taskComment').value;
             
+            console.log('Отправка задачи:', { templateId: selectedTemplateId, link, deadline });
+            
             const { data: allChiefs, error } = await supabaseClient
                 .from('chiefs')
                 .select('id, district_id');
             
             if (error) {
+                console.error('Ошибка получения шефов:', error);
                 alert('Ошибка: ' + error.message);
                 return;
             }
             
+            console.log('Найдено шефов:', allChiefs?.length);
+            
             if (!allChiefs?.length) {
-                alert('Нет шефов для отправки. Нажмите "Создать всех шефов" сначала.');
+                alert('Нет шефов для отправки. Сначала создайте шефов через SQL.');
                 return;
             }
             
             let successCount = 0;
+            let errorCount = 0;
             
             for (const chief of allChiefs) {
                 const { error: insertError } = await supabaseClient
@@ -483,10 +443,15 @@
                         status: 'pending'
                     }]);
                 
-                if (!insertError) successCount++;
+                if (insertError) {
+                    console.error('Ошибка для шефа', chief.id, insertError);
+                    errorCount++;
+                } else {
+                    successCount++;
+                }
             }
             
-            alert(`🌍 РАССЫЛКА ВЫПОЛНЕНА!\n\n✅ Задача "${selectedTemplateTitle}" отправлена ${successCount} шефам во всех округах!`);
+            alert(`🌍 РАССЫЛКА ВЫПОЛНЕНА!\n\n✅ Задача "${selectedTemplateTitle}" отправлена ${successCount} шефам\n❌ Ошибок: ${errorCount}`);
             
             document.getElementById('taskLink').value = '';
             document.getElementById('taskDeadline').value = '';
