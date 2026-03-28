@@ -2,125 +2,54 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Кабинет шеф-редактора</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-            background: #0a0c10;
-            color: rgba(255,255,255,0.95);
-            min-height: 100vh;
-        }
-        .dark-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
-        .glow-sphere { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; }
-        .sphere-1 { width: 600px; height: 600px; top: -200px; right: -200px; background: linear-gradient(135deg, #667eea, #764ba2); }
-        .sphere-2 { width: 500px; height: 500px; bottom: -200px; left: -100px; background: linear-gradient(135deg, #ff6b6b, #ff8e53); }
-        .sphere-3 { width: 400px; height: 400px; top: 50%; left: 30%; background: linear-gradient(135deg, #4facfe, #00f2fe); }
-        .glass-card { background: rgba(20,25,35,0.4); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 48px; }
-        .container { max-width: 700px; margin: 0 auto; padding: 40px 24px; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-        .card { width: 100%; padding: 48px 40px; }
-        .logo { text-align: center; margin-bottom: 48px; }
-        .logo-icon { width: 100px; height: 100px; background: rgba(108,140,255,0.15); border-radius: 32px; display: flex; align-items: center; justify-content: center; font-size: 52px; margin: 0 auto 24px; border: 1px solid rgba(108,140,255,0.3); }
-        h1 { font-size: 32px; font-weight: 700; text-align: center; margin-bottom: 12px; }
-        .sub { text-align: center; font-size: 16px; opacity: 0.6; margin-bottom: 48px; }
-        .form-group { margin-bottom: 28px; }
-        label { display: block; font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500; opacity: 0.7; margin-bottom: 12px; }
-        select, button { width: 100%; padding: 18px 22px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 28px; color: white; font-size: 18px; font-family: inherit; cursor: pointer; }
-        select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffffff80' d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 22px center; }
-        button { background: linear-gradient(135deg, rgba(108,140,255,0.35), rgba(118,75,162,0.35)); border-color: rgba(108,140,255,0.4); font-weight: 600; margin-top: 16px; }
-        button:hover { transform: translateY(-2px); }
-        .branch-group { margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); display: none; }
-        .branch-group.show { display: block; }
-        .radio-group { display: flex; gap: 20px; flex-wrap: wrap; }
-        .radio-option { flex: 1; text-align: center; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 28px; cursor: pointer; border: 1px solid transparent; }
-        .radio-option.selected { background: rgba(108,140,255,0.2); border-color: rgba(108,140,255,0.5); }
-        .radio-option span:first-child { font-size: 36px; display: block; margin-bottom: 12px; }
-        @media (max-width: 600px) { .card { padding: 32px 24px; } h1 { font-size: 26px; } .logo-icon { width: 70px; height: 70px; font-size: 36px; } }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Inter',sans-serif;background:#0a0c10;color:#fff;min-height:100vh}
+        .dark-glow{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;overflow:hidden}
+        .glow-sphere{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.4}
+        .sphere-1{width:600px;height:600px;top:-200px;right:-200px;background:linear-gradient(135deg,#667eea,#764ba2)}
+        .sphere-2{width:500px;height:500px;bottom:-200px;left:-100px;background:linear-gradient(135deg,#ff6b6b,#ff8e53)}
+        .sphere-3{width:400px;height:400px;top:50%;left:30%;background:linear-gradient(135deg,#4facfe,#00f2fe)}
+        .glass{background:rgba(20,25,35,0.3);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:32px}
+        .container{max-width:500px;margin:0 auto;padding:20px;min-height:100vh;display:flex;align-items:center;justify-content:center}
+        .card{width:100%;padding:40px}
+        .logo{text-align:center;margin-bottom:40px}
+        .logo-icon{width:80px;height:80px;background:rgba(108,140,255,0.1);border-radius:24px;display:flex;align-items:center;justify-content:center;font-size:40px;margin:0 auto 20px}
+        h1{font-size:28px;text-align:center}
+        .sub{text-align:center;font-size:14px;opacity:0.5;margin-top:8px}
+        select,button{width:100%;padding:16px;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.1);border-radius:24px;color:#fff;font-size:16px;margin-bottom:16px}
+        button{background:linear-gradient(135deg,rgba(108,140,255,0.3),rgba(118,75,162,0.3));border-color:rgba(108,140,255,0.4);font-weight:600;cursor:pointer}
+        .branch-group{display:none;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.1)}
+        .branch-group.show{display:block}
+        .radio-group{display:flex;gap:12px}
+        .radio-option{flex:1;text-align:center;padding:14px;background:rgba(0,0,0,0.3);border-radius:20px;cursor:pointer}
+        .radio-option.selected{background:rgba(108,140,255,0.2);border:1px solid rgba(108,140,255,0.4)}
+        @media(max-width:600px){.card{padding:24px}h1{font-size:24px}}
     </style>
 </head>
 <body>
-    <div class="dark-glow"><div class="glow-sphere sphere-1"></div><div class="glow-sphere sphere-2"></div><div class="glow-sphere sphere-3"></div></div>
-    <div class="container"><div class="card glass-card">
-        <div class="logo"><div class="logo-icon">📰</div><h1>Кабинет шеф-редактора</h1><div class="sub">выбор отделения</div></div>
-        <div class="form-group"><label>📍 Местное отделение</label><select id="districtSelect"><option value="">Загрузка...</option></select></div>
-        <div id="branchGroup" class="branch-group"><label>🏢 Тип отделения</label><div class="radio-group">
-            <div class="radio-option" data-branch-type="main"><span>🏛️</span><span>Местное отделение</span></div>
-            <div class="radio-option" data-branch-type="primary"><span>📌</span><span>Первичное отделение</span></div>
-        </div></div>
-        <button id="enterBtn">Войти в кабинет</button>
+<div class="dark-glow"><div class="glow-sphere sphere-1"></div><div class="glow-sphere sphere-2"></div><div class="glow-sphere sphere-3"></div></div>
+<div class="container"><div class="card glass">
+    <div class="logo"><div class="logo-icon">📰</div><h1>Кабинет шеф-редактора</h1><div class="sub">выбор отделения</div></div>
+    <select id="districtSelect"><option>Загрузка...</option></select>
+    <div id="branchGroup" class="branch-group"><div class="radio-group">
+        <div class="radio-option" data-type="main">🏛️ Местное</div>
+        <div class="radio-option" data-type="primary">📌 Первичка</div>
     </div></div>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-        const SB_URL = 'https://csvynjkhhlexbnwpziup.supabase.co';
-        const SB_KEY = 'sb_publishable__WbXqBZhgBBU-dDFEvXVeA_PQYwa_y7';
-        const sb = supabase.createClient(SB_URL, SB_KEY);
-        
-        let districtsList = [];
-        let selectedBranchType = 'main';
-
-        async function loadDistricts() {
-            const { data } = await sb.from('districts').select('*').order('name');
-            if (data) {
-                districtsList = data;
-                const select = document.getElementById('districtSelect');
-                select.innerHTML = '<option value="">Выберите местное отделение</option>' + data.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
-            }
-        }
-
-        document.querySelectorAll('.radio-option').forEach(opt => {
-            opt.addEventListener('click', () => {
-                document.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
-                opt.classList.add('selected');
-                selectedBranchType = opt.dataset.branchType;
-            });
-        });
-
-        document.getElementById('districtSelect').addEventListener('change', (e) => {
-            const group = document.getElementById('branchGroup');
-            if (e.target.value) group.classList.add('show');
-            else group.classList.remove('show');
-        });
-
-        document.getElementById('enterBtn').addEventListener('click', async () => {
-            const districtId = document.getElementById('districtSelect').value;
-            if (!districtId) { alert('Выберите местное отделение'); return; }
-            
-            const district = districtsList.find(d => d.id == districtId);
-            let chiefId = null;
-            
-            if (selectedBranchType === 'main') {
-                chiefId = 'chief_' + districtId + '_main';
-            } else {
-                const { data: pb } = await sb.from('primary_branches').select('id').eq('district_id', parseInt(districtId)).limit(1);
-                if (pb && pb[0]) {
-                    chiefId = 'chief_' + districtId + '_primary';
-                } else {
-                    chiefId = 'chief_' + districtId + '_primary_' + Date.now();
-                    await sb.from('primary_branches').insert([{ name: 'Первичное отделение', district_id: parseInt(districtId) }]);
-                }
-            }
-            
-            localStorage.setItem('chiefId', chiefId);
-            localStorage.setItem('chiefDistrictId', districtId);
-            localStorage.setItem('chiefDistrictName', district.name);
-            localStorage.setItem('chiefBranchType', selectedBranchType);
-            
-            // Проверяем существует ли шеф, если нет - создаём
-            const { data: existing } = await sb.from('chiefs').select('id').eq('id', chiefId).single();
-            if (!existing) {
-                await sb.from('chiefs').insert([{
-                    id: chiefId,
-                    name: `Шеф ${district.name}${selectedBranchType === 'primary' ? ' (Первичка)' : ''}`,
-                    district_id: parseInt(districtId),
-                    primary_branch_id: selectedBranchType === 'primary' ? 1 : null
-                }]);
-            }
-            
-            window.location.href = 'chief.html';
-        });
-
-        loadDistricts();
-    </script>
+    <button id="enterBtn">Войти</button>
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SB_URL='https://csvynjkhhlexbnwpziup.supabase.co',SB_KEY='sb_publishable__WbXqBZhgBBU-dDFEvXVeA_PQYwa_y7';
+const sb=supabase.createClient(SB_URL,SB_KEY);
+let districts=[],branchType='main';
+async function load(){const{data}=await sb.from('districts').select('*');if(data){districts=data;const sel=districtSelect;sel.innerHTML='<option value="">Выберите округ</option>'+data.map(d=>`<option value="${d.id}">${d.name}</option>`).join('')}}
+districtSelect.onchange=e=>{document.getElementById('branchGroup').classList.toggle('show',e.target.value)};
+document.querySelectorAll('.radio-option').forEach(opt=>{opt.onclick=()=>{document.querySelectorAll('.radio-option').forEach(o=>o.classList.remove('selected'));opt.classList.add('selected');branchType=opt.dataset.type}});
+enterBtn.onclick=async()=>{const id=districtSelect.value;if(!id)return alert('Выберите округ');const d=districts.find(x=>x.id==id);let chiefId=branchType=='main'?`chief_${id}_main`:`chief_${id}_primary`;localStorage.setItem('chiefId',chiefId);localStorage.setItem('chiefDistrict',d.name);const{data:exist}=await sb.from('chiefs').select('id').eq('id',chiefId).single();if(!exist){await sb.from('chiefs').insert([{id:chiefId,name:`Шеф ${d.name}${branchType=='primary'?' (Первичка)':''}`,district_id:parseInt(id),primary_branch_id:branchType=='primary'?1:null}])}window.location.href='chief.html'};
+load();
+</script>
 </body>
 </html>
