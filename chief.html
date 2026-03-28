@@ -17,7 +17,6 @@
             background: #0a0c10;
             color: rgba(255, 255, 255, 0.95);
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
         .dark-glow {
@@ -42,8 +41,7 @@
         .sphere-3 { width: 400px; height: 400px; top: 50%; left: 30%; background: linear-gradient(135deg, #4facfe, #00f2fe); }
 
         .glass-card {
-            background: rgba(20, 25, 35, 0.4);
-            backdrop-filter: blur(20px);
+            background: rgba(20, 25, 35, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 28px;
         }
@@ -103,7 +101,7 @@
         }
 
         .stat-card {
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5);
             padding: 16px 12px;
             border-radius: 20px;
             text-align: center;
@@ -119,7 +117,7 @@
 
         .stat-label {
             font-size: 12px;
-            opacity: 0.6;
+            opacity: 0.7;
             margin-top: 6px;
         }
 
@@ -138,10 +136,10 @@
 
         .menu-btn {
             padding: 10px 20px;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5);
             border: none;
             border-radius: 40px;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.8);
             font-size: 14px;
             font-weight: 500;
             cursor: pointer;
@@ -154,14 +152,13 @@
         }
 
         .menu-btn.active {
-            background: rgba(108, 140, 255, 0.25);
+            background: rgba(108, 140, 255, 0.3);
             border: 1px solid rgba(108, 140, 255, 0.4);
             color: white;
         }
 
         .content {
-            background: rgba(20, 25, 35, 0.35);
-            backdrop-filter: blur(20px);
+            background: rgba(20, 25, 35, 0.5);
             border-radius: 28px;
             padding: 20px;
             min-height: 400px;
@@ -182,16 +179,18 @@
         }
 
         .task-item {
-            background: rgba(0, 0, 0, 0.35);
+            background: rgba(0, 0, 0, 0.5);
             padding: 16px;
             border-radius: 20px;
             margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .task-title {
             font-size: 17px;
             font-weight: 600;
             margin-bottom: 6px;
+            color: #fff;
         }
 
         .task-desc {
@@ -268,7 +267,7 @@
         .link-input {
             width: 100%;
             padding: 12px;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 24px;
             color: white;
@@ -277,7 +276,7 @@
         }
 
         .history-item {
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.4);
             padding: 12px;
             border-radius: 18px;
             margin-bottom: 10px;
@@ -312,8 +311,7 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.9);
             padding: 10px 20px;
             border-radius: 50px;
             z-index: 1000;
@@ -327,7 +325,7 @@
         .empty-state {
             text-align: center;
             padding: 40px;
-            opacity: 0.5;
+            opacity: 0.6;
         }
 
         @media (min-width: 768px) {
@@ -435,7 +433,7 @@
         <div class="content">
             <div id="tasks" class="page active">
                 <h3>Мои задачи</h3>
-                <div id="tasksList" class="empty-state">⏳ Загрузка задач...</div>
+                <div id="tasksList"></div>
             </div>
 
             <div id="rating" class="page">
@@ -443,11 +441,10 @@
                 <div style="overflow-x: auto;">
                     <table class="ranking-table">
                         <thead>
-                             <tr>
+                             \n
                                 <th>Округ</th>
                                 <th>Всего баллов</th>
-                            </tr>
-                        </thead>
+                             </thead>
                         <tbody id="ratingList"></tbody>
                     </table>
                 </div>
@@ -455,7 +452,7 @@
 
             <div id="history" class="page">
                 <h3>История операций</h3>
-                <div id="historyList" class="empty-state">⏳ Загрузка истории...</div>
+                <div id="historyList"></div>
             </div>
 
             <div id="help" class="page">
@@ -473,32 +470,26 @@
 
     <script>
         (function() {
+            // Supabase настройки
+            const SUPABASE_URL = 'https://csvynjkhhlexbnwpziup.supabase.co';
+            const SUPABASE_KEY = 'sb_publishable__WbXqBZhgBBU-dDFEvXVeA_PQYwa_y7';
+            const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+                auth: { persistSession: false }
+            });
+            
             // Получаем данные из localStorage
             let chiefId = localStorage.getItem('chiefId');
             let districtName = localStorage.getItem('chiefDistrictName');
             let branchType = localStorage.getItem('chiefBranchType');
             
-            // Проверка наличия chiefId
+            // Если нет chiefId — возвращаем на главную
             if (!chiefId) {
                 document.getElementById('tasksList').innerHTML = '<div class="empty-state">⚠️ Ошибка: не выбран округ. <a href="index.html" style="color:#6c8cff;">Вернуться на главную</a></div>';
                 document.getElementById('districtDisplay').innerHTML = 'Ошибка';
                 return;
             }
             
-            // Отображаем округ
             document.getElementById('districtDisplay').innerHTML = '📍 ' + (districtName || 'Неизвестно') + (branchType === 'primary' ? ' • Первичка' : '');
-            
-            // Проверка Supabase
-            if (typeof supabase === 'undefined') {
-                document.getElementById('tasksList').innerHTML = '<div class="empty-state">⚠️ Ошибка загрузки библиотеки</div>';
-                return;
-            }
-            
-            const SUPABASE_URL = 'https://csvynjkhhlexbnwpziup.supabase.co';
-            const SUPABASE_KEY = 'sb_publishable__WbXqBZhgBBU-dDFEvXVeA_PQYwa_y7';
-            const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
-                auth: { persistSession: false }
-            });
             
             let lastTaskCount = 0;
             
@@ -580,21 +571,18 @@
                 }
                 
                 try {
-                    // Обновляем статус задачи
                     await supabaseClient.from('assignments').update({ 
                         status: 'completed', 
                         link: link, 
                         completed_at: new Date() 
                     }).eq('id', taskId);
                     
-                    // Добавляем в историю
                     await supabaseClient.from('operations_history').insert([{ 
                         chief_id: chiefId, 
                         assignment_id: taskId, 
                         action: 'Выполнена задача +1 балл' 
                     }]);
                     
-                    // Получаем текущие баллы и увеличиваем
                     const { data: currentScore } = await supabaseClient
                         .from('chief_scores')
                         .select('total_score')
@@ -608,7 +596,6 @@
                         updated_at: new Date() 
                     });
                     
-                    // Перезагружаем данные
                     loadTasks();
                     loadStats();
                     loadHistory();
@@ -647,6 +634,9 @@
             
             // Загрузка истории
             async function loadHistory() {
+                const container = document.getElementById('historyList');
+                container.innerHTML = '<div class="empty-state">⏳ Загрузка истории...</div>';
+                
                 try {
                     const { data } = await supabaseClient
                         .from('operations_history')
@@ -655,7 +645,6 @@
                         .order('created_at', { ascending: false })
                         .limit(30);
                     
-                    const container = document.getElementById('historyList');
                     if (!data || data.length === 0) {
                         container.innerHTML = '<div class="empty-state">📭 История пуста</div>';
                         return;
@@ -671,31 +660,24 @@
                     container.innerHTML = html;
                 } catch (err) {
                     console.error('Ошибка истории:', err);
-                    document.getElementById('historyList').innerHTML = '<div class="empty-state">⚠️ Ошибка загрузки истории</div>';
+                    container.innerHTML = '<div class="empty-state">⚠️ Ошибка загрузки истории</div>';
                 }
             }
             
-            // Загрузка рейтинга округов
+            // Загрузка рейтинга
             async function loadRating() {
                 const container = document.getElementById('ratingList');
-                container.innerHTML = '<tr><td colspan="2" class="empty-state">⏳ Загрузка рейтинга...</td></tr>';
+                container.innerHTML = '发展<td colspan="2" class="empty-state">⏳ Загрузка рейтинга...</td> </tr>';
                 
                 try {
-                    // Получаем всех шефов с их округами
-                    const { data: chiefs, error: chiefsError } = await supabaseClient
+                    const { data: chiefs } = await supabaseClient
                         .from('chiefs')
                         .select('id, district_id, districts(name)');
                     
-                    if (chiefsError) throw chiefsError;
-                    
-                    // Получаем баллы всех шефов
-                    const { data: scores, error: scoresError } = await supabaseClient
+                    const { data: scores } = await supabaseClient
                         .from('chief_scores')
                         .select('*');
                     
-                    if (scoresError) throw scoresError;
-                    
-                    // Создаём карту баллов
                     const scoreMap = {};
                     if (scores) {
                         for (let i = 0; i < scores.length; i++) {
@@ -703,7 +685,6 @@
                         }
                     }
                     
-                    // Суммируем баллы по округам
                     const districtScores = {};
                     if (chiefs) {
                         for (let i = 0; i < chiefs.length; i++) {
@@ -714,19 +695,18 @@
                         }
                     }
                     
-                    // Сортируем по убыванию
                     const sorted = Object.entries(districtScores)
                         .map(([name, total]) => ({ name, total }))
                         .sort((a, b) => b.total - a.total);
                     
                     if (sorted.length === 0) {
-                        container.innerHTML = '<tr><td colspan="2" class="empty-state">Нет данных</td></tr>';
+                        container.innerHTML = '发展<td colspan="2" class="empty-state">Нет данных</td> </tr>';
                         return;
                     }
                     
                     let html = '';
                     for (let i = 0; i < sorted.length; i++) {
-                        html += '<tr>' +
+                        html += ' <tr>' +
                                     '<td style="font-weight: 500;">' + sorted[i].name + '</td>' +
                                     '<td style="color: #6c8cff; font-weight: 600;">' + sorted[i].total + ' баллов</td>' +
                                 '</tr>';
@@ -734,11 +714,10 @@
                     container.innerHTML = html;
                 } catch (err) {
                     console.error('Ошибка рейтинга:', err);
-                    container.innerHTML = '<tr><td colspan="2" class="empty-state">⚠️ Ошибка загрузки</td></tr>';
+                    container.innerHTML = ' <tr><td colspan="2" class="empty-state">⚠️ Ошибка загрузки</td></tr>';
                 }
             }
             
-            // Показать уведомление
             function showToast(message) {
                 const toast = document.createElement('div');
                 toast.className = 'toast';
@@ -747,7 +726,6 @@
                 setTimeout(function() { toast.remove(); }, 3000);
             }
             
-            // Сброс и выход
             window.resetAndExit = function() {
                 localStorage.clear();
                 window.location.href = 'index.html';
@@ -773,12 +751,12 @@
                 });
             }
             
-            // Запрос разрешения на уведомления
+            // Запрос уведомлений
             if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
                 Notification.requestPermission();
             }
             
-            // Загрузка всех данных при старте
+            // Загрузка всех данных
             loadStats();
             loadTasks();
             loadHistory();
