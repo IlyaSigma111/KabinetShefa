@@ -2,17 +2,18 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Выбор округа | Редакционная платформа</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Кабинет шеф-редактора</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
             background: #0a0c10;
             color: rgba(255, 255, 255, 0.95);
             min-height: 100vh;
@@ -60,12 +61,12 @@
             background: linear-gradient(135deg, #4facfe, #00f2fe);
         }
 
-        .ultra-glass {
-            background: rgba(20, 25, 35, 0.25);
-            backdrop-filter: blur(20px) saturate(180%);
+        .glass-card {
+            background: rgba(20, 25, 35, 0.3);
+            backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 32px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
         .container {
@@ -82,98 +83,125 @@
 
         .card {
             width: 100%;
-            padding: 40px;
+            padding: 32px 24px;
         }
 
-        .logo-area {
+        .logo {
             text-align: center;
             margin-bottom: 32px;
         }
 
         .logo-icon {
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 70px;
+            height: 70px;
+            background: rgba(108, 140, 255, 0.1);
             border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
-            margin: 0 auto 20px;
+            font-size: 36px;
+            margin: 0 auto 16px;
+            border: 1px solid rgba(108, 140, 255, 0.2);
         }
 
-        .logo-text {
-            font-size: 28px;
-            font-weight: 700;
-            background: linear-gradient(to right, #fff, #b0c4ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        h1 {
+            font-size: 22px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 8px;
         }
 
-        .logo-sub {
-            font-size: 12px;
+        .sub {
+            text-align: center;
+            font-size: 13px;
             opacity: 0.5;
-            margin-top: 8px;
+            margin-bottom: 32px;
         }
 
         .form-group {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
-            margin-bottom: 10px;
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
             opacity: 0.6;
+            margin-bottom: 8px;
         }
 
-        select {
+        select, button {
             width: 100%;
-            padding: 16px 20px;
+            padding: 16px 18px;
             background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 24px;
             color: white;
             font-size: 16px;
             font-family: inherit;
             cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffffff80' d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 20px center;
-        }
-
-        select:focus {
-            outline: none;
-            border-color: rgba(108, 140, 255, 0.3);
-        }
-
-        button {
-            width: 100%;
-            padding: 16px;
-            background: rgba(108, 140, 255, 0.2);
-            border: 1px solid rgba(108, 140, 255, 0.3);
-            border-radius: 30px;
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
             transition: all 0.2s;
         }
 
-        button:hover {
-            background: rgba(108, 140, 255, 0.3);
-            transform: translateY(-2px);
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffffff80' d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 18px center;
         }
 
-        .info-text {
-            margin-top: 20px;
+        button {
+            background: linear-gradient(135deg, rgba(108, 140, 255, 0.3), rgba(118, 75, 162, 0.3));
+            border-color: rgba(108, 140, 255, 0.3);
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .branch-group {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .branch-group.hidden {
+            display: none;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .radio-option {
+            flex: 1;
             text-align: center;
-            font-size: 12px;
-            opacity: 0.4;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .radio-option.selected {
+            background: rgba(108, 140, 255, 0.2);
+            border-color: rgba(108, 140, 255, 0.4);
+        }
+
+        .radio-option span:first-child {
+            font-size: 20px;
+            display: block;
+        }
+
+        .radio-option span:last-child {
+            font-size: 11px;
+            opacity: 0.7;
         }
     </style>
 </head>
@@ -185,53 +213,120 @@
     </div>
 
     <div class="container">
-        <div class="card ultra-glass">
-            <div class="logo-area">
+        <div class="card glass-card">
+            <div class="logo">
                 <div class="logo-icon">📰</div>
-                <div class="logo-text">Редакционная<br>платформа</div>
-                <div class="logo-sub">выбор округа</div>
+                <h1>Кабинет шеф-редактора</h1>
+                <div class="sub">выбор отделения</div>
             </div>
 
             <div class="form-group">
-                <label>📍 Ваш округ</label>
+                <label>📍 Местное отделение</label>
                 <select id="districtSelect">
-                    <option value="">Выберите округ</option>
+                    <option value="">Загрузка...</option>
                 </select>
             </div>
 
-            <button onclick="enterAsChief()">Войти в кабинет</button>
-            <div class="info-text">Выберите ваш округ для доступа к задачам</div>
+            <div id="branchGroup" class="branch-group hidden">
+                <label>🏢 Первичное отделение</label>
+                <div id="branchOptions" class="radio-group"></div>
+            </div>
+
+            <button id="enterBtn">Войти в кабинет</button>
         </div>
     </div>
 
     <script>
-        const districts = [
-            'Ишимский округ', 'Тобольск', 'Ярковский округ', 'Казанский округ',
-            'Сладковский округ', 'Тюменский округ', 'Бердюжский округ', 'Тобольский округ',
-            'Вагайский округ', 'Юргинский округ', 'Ялуторовский округ', 'Викуловский округ',
-            'Абатский округ', 'Заводоуковский округ', 'Сорокинский округ', 'Ишим',
-            'Упоровский округ', 'Нижнетавдинский округ', 'Уватский округ', 'Исетский округ',
-            'Омутинский округ', 'Армизонский округ', 'Армашевский округ', 'Тюмень',
-            'Голышмановский округ', 'Ялуторовск'
-        ];
+        const SUPABASE_URL = 'https://csvynjkhhlexbnwpziup.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable__WbXqBZhgBBU-dDFEvXVeA_PQYwa_y7';
+        
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        let districtsList = [];
+        let branchesList = [];
 
-        const select = document.getElementById('districtSelect');
-        districts.forEach(d => {
-            const option = document.createElement('option');
-            option.value = d;
-            option.textContent = d;
-            select.appendChild(option);
+        async function loadDistricts() {
+            const { data } = await supabaseClient.from('districts').select('*').order('name');
+            if (data) {
+                districtsList = data;
+                const select = document.getElementById('districtSelect');
+                select.innerHTML = '<option value="">Выберите местное отделение</option>' + 
+                    data.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
+            }
+        }
+
+        async function loadBranches(districtId) {
+            const { data } = await supabaseClient.from('primary_branches').select('*').eq('district_id', districtId);
+            branchesList = data || [];
+            const container = document.getElementById('branchOptions');
+            
+            if (branchesList.length > 0) {
+                document.getElementById('branchGroup').classList.remove('hidden');
+                container.innerHTML = `
+                    <div class="radio-option" data-branch-id="">
+                        <span>🏢</span>
+                        <span>Только местное</span>
+                    </div>
+                    ${branchesList.map(b => `
+                        <div class="radio-option" data-branch-id="${b.id}">
+                            <span>📌</span>
+                            <span>${b.name}</span>
+                        </div>
+                    `).join('')}
+                `;
+                
+                document.querySelectorAll('.radio-option').forEach(opt => {
+                    opt.addEventListener('click', () => {
+                        document.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+                        opt.classList.add('selected');
+                    });
+                });
+            } else {
+                document.getElementById('branchGroup').classList.add('hidden');
+            }
+        }
+
+        document.getElementById('districtSelect').addEventListener('change', (e) => {
+            if (e.target.value) {
+                loadBranches(parseInt(e.target.value));
+            } else {
+                document.getElementById('branchGroup').classList.add('hidden');
+            }
         });
 
-        function enterAsChief() {
-            const district = document.getElementById('districtSelect').value;
-            if (!district) {
-                alert('Пожалуйста, выберите ваш округ');
+        document.getElementById('enterBtn').addEventListener('click', async () => {
+            const districtId = document.getElementById('districtSelect').value;
+            if (!districtId) {
+                alert('Выберите местное отделение');
                 return;
             }
-            localStorage.setItem('chiefDistrict', district);
+            
+            const selectedBranch = document.querySelector('.radio-option.selected');
+            let branchId = null;
+            if (selectedBranch && selectedBranch.dataset.branchId) {
+                branchId = parseInt(selectedBranch.dataset.branchId);
+            }
+            
+            const district = districtsList.find(d => d.id == districtId);
+            const chiefId = 'chief_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+            
+            localStorage.setItem('chiefId', chiefId);
+            localStorage.setItem('chiefDistrictId', districtId);
+            localStorage.setItem('chiefDistrictName', district.name);
+            localStorage.setItem('chiefBranchId', branchId || '');
+            
+            await supabaseClient.from('chiefs').insert([{
+                id: chiefId,
+                name: `Шеф ${district.name}`,
+                district_id: parseInt(districtId),
+                primary_branch_id: branchId
+            }]).catch(e => console.log('exists'));
+            
             window.location.href = 'chief.html';
-        }
+        });
+
+        loadDistricts();
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </body>
 </html>
