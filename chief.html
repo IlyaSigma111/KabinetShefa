@@ -213,44 +213,46 @@
                 }
                 
                 const container = document.getElementById('tasksList');
-                if (!data?.length) {
+                if (!data || data.length === 0) {
                     container.innerHTML = '<p style="opacity:0.5; text-align:center; padding:60px;">Нет задач</p>';
                     return;
                 }
                 
-                const pendingTasks = data.filter(t => t.status === 'pending');
+                const pendingTasks = data.filter(function(t) { return t.status === 'pending'; });
                 if (pendingTasks.length > lastTaskCount && lastTaskCount > 0 && Notification.permission === 'granted') {
                     new Notification('Новая задача!', { body: 'У вас ' + pendingTasks.length + ' новых задач' });
                 }
                 lastTaskCount = pendingTasks.length;
                 
-                container.innerHTML = data.map(task => {
+                let html = '';
+                for (let i = 0; i < data.length; i++) {
+                    const task = data[i];
                     let deadlineHtml = '';
                     if (task.deadline) {
                         const deadlineDate = new Date(task.deadline);
                         const isExpired = deadlineDate < new Date();
                         deadlineHtml = '<div class="deadline ' + (isExpired ? 'deadline-urgent' : 'deadline-normal') + '">Срок: ' + deadlineDate.toLocaleString() + (isExpired ? ' (просрочено!)' : '') + '</div>';
                     }
-                    return `
-                        <div class="task-item">
-                            <div class="task-title">${task.task_templates?.title || 'Задача'}</div>
-                            <div class="task-desc">${task.task_templates?.description || ''}</div>
-                            ${deadlineHtml}
-                            ${task.link ? '<a href="' + task.link + '" target="_blank" class="task-link">Ссылка</a>' : ''}
-                            ${task.coordinator_comment ? '<div style="font-size:13px; margin-top:8px; color:#6c8cff;">Комментарий: ' + task.coordinator_comment + '</div>' : ''}
-                            <div><span class="task-status status-' + task.status + '">' + (task.status === 'pending' ? 'Ожидает' : 'Выполнено') + '</span></div>
-                            ${task.status === 'pending' ? `
-                                <input type="text" id="link_${task.id}" class="link-input" placeholder="Вставьте ссылку (t.me или vk.com)">
-                                <button class="btn-complete" onclick="completeTask(${task.id})">Выполнить +1 балл</button>
-                            ` : ''}
-                        </div>
-                    `;
-                }).join('');
+                    html += '<div class="task-item">' +
+                        '<div class="task-title">' + (task.task_templates?.title || 'Задача') + '</div>' +
+                        '<div class="task-desc">' + (task.task_templates?.description || '') + '</div>' +
+                        deadlineHtml +
+                        (task.link ? '<a href="' + task.link + '" target="_blank" class="task-link">Ссылка</a>' : '') +
+                        (task.coordinator_comment ? '<div style="font-size:13px; margin-top:8px; color:#6c8cff;">Комментарий: ' + task.coordinator_comment + '</div>' : '') +
+                        '<div><span class="task-status status-' + task.status + '">' + (task.status === 'pending' ? 'Ожидает' : 'Выполнено') + '</span></div>';
+                    
+                    if (task.status === 'pending') {
+                        html += '<input type="text" id="link_' + task.id + '" class="link-input" placeholder="Вставьте ссылку (t.me или vk.com)">' +
+                                '<button class="btn-complete" onclick="completeTask(' + task.id + ')">Выполнить +1 балл</button>';
+                    }
+                    html += '</div>';
+                }
+                container.innerHTML = html;
             }
             
             window.completeTask = async function(taskId) {
                 const linkInput = document.getElementById('link_' + taskId);
-                const link = linkInput?.value?.trim();
+                const link = linkInput ? linkInput.value.trim() : '';
                 if (!link) { alert('Вставьте ссылку'); return; }
                 if (!link.includes('t.me') && !link.includes('vk.com')) { alert('Ссылка должна быть на t.me или vk.com'); return; }
                 
@@ -268,61 +270,109 @@
                 const { data: tasks } = await supabaseClient.from('assignments').select('status').eq('chief_id', chiefId);
                 const { data: score } = await supabaseClient.from('chief_scores').select('total_score').eq('chief_id', chiefId).single();
                 document.getElementById('totalTasks').innerText = tasks?.length || 0;
-                document.getElementById('completedTasks').innerText = tasks?.filter(t => t.status === 'completed').length || 0;
+                document.getElementById('completedTasks').innerText = tasks ? tasks.filter(function(t) { return t.status === 'completed'; }).length : 0;
                 document.getElementById('totalScore').innerText = score?.total_score || 0;
             }
             
             async function loadHistory() {
                 const { data } = await supabaseClient.from('operations_history').select('*').eq('chief_id', chiefId).order('created_at', { ascending: false }).limit(30);
                 const container = document.getElementById('historyList');
-                if (!data?.length) { container.innerHTML = '<p style="opacity:0.5; text-align:center; padding:60px;">История пуста</p>'; return; }
-                container.innerHTML = data.map(h => '<div class="history-item"><span>' + h.action + '</span><span style="opacity:0.5;">' + new Date(h.created_at).toLocaleString() + '</span></div>').join('');
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<p style="opacity:0.5; text-align:center; padding:60px;">История пуста</p>';
+                    return;
+                }
+                let html = '';
+                for (let i = 0; i < data.length; i++) {
+                    html += '<div class="history-item"><span>' + data[i].action + '</span><span style="opacity:0.5;">' + new Date(data[i].created_at).toLocaleString() + '</span></div>';
+                }
+                container.innerHTML = html;
             }
             
             async function loadRating() {
-                const { data: chiefs } = await supabaseClient.from('chiefs').select('id, district_id, districts(name)');
+                const { data: chiefs } = await supabaseClient.from('chiefs').select('id, district_id, districts(name), primary_branch_id');
                 const { data: scores } = await supabaseClient.from('chief_scores').select('*');
                 
-                const districtScores = {};
-                chiefs?.forEach(chief => {
-                    const districtName = chief.districts?.name || 'Неизвестно';
-                    const score = scores?.find(s => s.chief_id === chief.id)?.total_score || 0;
-                    if (!districtScores[districtName]) {
-                        districtScores[districtName] = 0;
+                const scoreMap = {};
+                if (scores) {
+                    for (let i = 0; i < scores.length; i++) {
+                        scoreMap[scores[i].chief_id] = scores[i].total_score || 0;
                     }
-                    districtScores[districtName] += score;
+                }
+                
+                const districtScores = {};
+                if (chiefs) {
+                    for (let i = 0; i < chiefs.length; i++) {
+                        const chief = chiefs[i];
+                        const districtName = chief.districts?.name || 'Неизвестно';
+                        const score = scoreMap[chief.id] || 0;
+                        if (!districtScores[districtName]) {
+                            districtScores[districtName] = 0;
+                        }
+                        districtScores[districtName] += score;
+                    }
+                }
+                
+                const sorted = Object.keys(districtScores).map(function(name) {
+                    return { name: name, total: districtScores[name] };
+                }).sort(function(a, b) {
+                    return b.total - a.total;
                 });
                 
-                const sorted = Object.entries(districtScores).map(([name, total]) => ({ name, total })).sort((a, b) => b.total - a.total);
-                
                 const container = document.getElementById('ratingList');
-                if (!sorted.length) {
-                    container.innerHTML = '<tr><td colspan="2" style="text-align:center; padding:40px;">Нет данных</td></tr>';
+                if (!sorted || sorted.length === 0) {
+                    container.innerHTML = '运转<td colspan="2" style="text-align:center; padding:40px;">Нет данных</td> </tr>';
                     return;
                 }
                 
-                container.innerHTML = sorted.map(r => '<tr><td style="font-weight: 500;">' + r.name + '</td><td style="color: #6c8cff; font-weight: 600;">' + r.total + ' баллов</td></tr>').join('');
+                let html = '';
+                for (let i = 0; i < sorted.length; i++) {
+                    html += '<tr><td style="font-weight: 500;">' + sorted[i].name + '</td><td style="color: #6c8cff; font-weight: 600;">' + sorted[i].total + ' баллов</td></tr>';
+                }
+                container.innerHTML = html;
             }
             
-            function showToast(msg) { const t = document.createElement('div'); t.className = 'toast'; t.innerText = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 3000); }
+            function showToast(msg) {
+                const toast = document.createElement('div');
+                toast.className = 'toast';
+                toast.innerText = msg;
+                document.body.appendChild(toast);
+                setTimeout(function() { toast.remove(); }, 3000);
+            }
             
-            window.resetAndExit = function() { localStorage.clear(); window.location.href = 'index.html'; };
+            window.resetAndExit = function() {
+                localStorage.clear();
+                window.location.href = 'index.html';
+            };
             
-            document.querySelectorAll('.menu-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-                    document.getElementById(btn.dataset.page).classList.add('active');
-                    if (btn.dataset.page === 'rating') loadRating();
-                    if (btn.dataset.page === 'history') loadHistory();
+            const menuBtns = document.querySelectorAll('.menu-btn');
+            for (let i = 0; i < menuBtns.length; i++) {
+                menuBtns[i].addEventListener('click', function() {
+                    for (let j = 0; j < menuBtns.length; j++) {
+                        menuBtns[j].classList.remove('active');
+                    }
+                    this.classList.add('active');
+                    const pages = document.querySelectorAll('.page');
+                    for (let j = 0; j < pages.length; j++) {
+                        pages[j].classList.remove('active');
+                    }
+                    document.getElementById(this.dataset.page).classList.add('active');
+                    if (this.dataset.page === 'rating') loadRating();
+                    if (this.dataset.page === 'history') loadHistory();
                 });
-            });
+            }
             
-            if (Notification.permission !== 'granted' && Notification.permission !== 'denied') Notification.requestPermission();
+            if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+                Notification.requestPermission();
+            }
             
-            loadStats(); loadTasks(); loadHistory(); loadRating();
-            setInterval(loadTasks, 30000);
+            loadStats();
+            loadTasks();
+            loadHistory();
+            loadRating();
+            
+            setInterval(function() {
+                loadTasks();
+            }, 30000);
         });
     </script>
 </body>
