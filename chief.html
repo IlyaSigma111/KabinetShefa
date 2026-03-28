@@ -17,6 +17,7 @@
             background: #0a0c10;
             color: rgba(255, 255, 255, 0.95);
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .dark-glow {
@@ -51,6 +52,8 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 16px;
+            position: relative;
+            z-index: 1;
         }
 
         .header {
@@ -74,6 +77,7 @@
             border-radius: 40px;
             font-size: 14px;
             border: 1px solid rgba(108, 140, 255, 0.3);
+            white-space: nowrap;
         }
 
         .reset-btn {
@@ -82,7 +86,13 @@
             padding: 8px 20px;
             border-radius: 40px;
             color: #f87171;
+            font-size: 14px;
             cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .reset-btn:active {
+            transform: scale(0.96);
         }
 
         .stats-grid {
@@ -116,11 +126,14 @@
         .menu-scroll {
             overflow-x: auto;
             margin-bottom: 20px;
+            -webkit-overflow-scrolling: touch;
         }
 
         .menu-items {
             display: flex;
             gap: 10px;
+            min-width: min-content;
+            padding-bottom: 4px;
         }
 
         .menu-btn {
@@ -130,8 +143,14 @@
             border-radius: 40px;
             color: rgba(255, 255, 255, 0.7);
             font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
             white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .menu-btn:active {
+            transform: scale(0.96);
         }
 
         .menu-btn.active {
@@ -159,6 +178,7 @@
         .page h3 {
             font-size: 20px;
             margin-bottom: 20px;
+            font-weight: 600;
         }
 
         .task-item {
@@ -177,6 +197,8 @@
         .task-desc {
             font-size: 13px;
             opacity: 0.7;
+            margin-bottom: 8px;
+            line-height: 1.4;
         }
 
         .deadline {
@@ -197,11 +219,21 @@
             color: #f87171;
         }
 
+        .task-link {
+            color: #6c8cff;
+            text-decoration: none;
+            font-size: 13px;
+            word-break: break-all;
+            display: inline-block;
+            margin: 6px 0;
+        }
+
         .task-status {
             display: inline-block;
             padding: 4px 12px;
             border-radius: 30px;
             font-size: 12px;
+            font-weight: 500;
             margin-top: 8px;
         }
 
@@ -221,10 +253,16 @@
             padding: 12px;
             border-radius: 40px;
             color: #10b981;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             margin-top: 12px;
             width: 100%;
+            transition: all 0.2s;
+        }
+
+        .btn-complete:active {
+            transform: scale(0.96);
         }
 
         .link-input {
@@ -234,6 +272,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 24px;
             color: white;
+            font-size: 14px;
             margin-top: 12px;
         }
 
@@ -244,6 +283,9 @@
             margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
             font-size: 12px;
         }
 
@@ -252,44 +294,98 @@
             border-collapse: collapse;
         }
 
-        .ranking-table th, .ranking-table td {
+        .ranking-table th,
+        .ranking-table td {
             padding: 10px 6px;
             text-align: left;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             font-size: 13px;
         }
 
-        .debug-panel {
-            background: rgba(0, 0, 0, 0.6);
-            padding: 12px;
-            border-radius: 16px;
-            margin-top: 16px;
-            font-family: monospace;
-            font-size: 11px;
-            color: #888;
-            word-break: break-all;
-        }
-
-        .error-message {
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            border-radius: 20px;
-            padding: 12px;
-            margin-bottom: 16px;
-            color: #f87171;
-            font-size: 13px;
-            text-align: center;
-        }
-
-        .loading-spinner {
-            text-align: center;
-            padding: 40px;
+        .ranking-table th {
+            font-weight: 600;
             opacity: 0.7;
         }
 
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 10px 20px;
+            border-radius: 50px;
+            z-index: 1000;
+            border-left: 4px solid #6c8cff;
+            font-size: 13px;
+            max-width: 90%;
+            text-align: center;
+            white-space: normal;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            opacity: 0.5;
+        }
+
         @media (min-width: 768px) {
-            .container { padding: 24px; }
-            .stat-number { font-size: 36px; }
+            .container {
+                padding: 24px;
+            }
+            .header {
+                padding: 20px 28px;
+            }
+            .logo h2 {
+                font-size: 24px;
+            }
+            .stats-grid {
+                gap: 20px;
+            }
+            .stat-number {
+                font-size: 36px;
+            }
+            .content {
+                padding: 28px;
+            }
+            .task-item {
+                padding: 20px;
+            }
+            .task-title {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .stats-grid {
+                gap: 8px;
+            }
+            .stat-number {
+                font-size: 24px;
+            }
+            .stat-card {
+                padding: 12px 8px;
+            }
+            .menu-btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+            .content {
+                padding: 16px;
+            }
+            .task-item {
+                padding: 14px;
+            }
+            .ranking-table th,
+            .ranking-table td {
+                padding: 8px 4px;
+                font-size: 12px;
+            }
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -303,26 +399,36 @@
 
     <div class="container">
         <div class="header glass-card">
-            <div class="logo"><h2>Кабинет шеф-редактора</h2></div>
-            <div style="display: flex; gap: 12px;">
+            <div class="logo">
+                <h2>📰 Кабинет шеф-редактора</h2>
+            </div>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
                 <span class="district-badge" id="districtDisplay">Загрузка...</span>
-                <button class="reset-btn" onclick="resetAndExit()">Сменить</button>
+                <button class="reset-btn" onclick="resetAndExit()">Сменить округ</button>
             </div>
         </div>
 
         <div class="stats-grid">
-            <div class="stat-card"><div class="stat-number" id="totalTasks">0</div><div class="stat-label">Всего задач</div></div>
-            <div class="stat-card"><div class="stat-number" id="completedTasks">0</div><div class="stat-label">Выполнено</div></div>
-            <div class="stat-card"><div class="stat-number" id="totalScore">0</div><div class="stat-label">Баллов</div></div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalTasks">0</div>
+                <div class="stat-label">Всего задач</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="completedTasks">0</div>
+                <div class="stat-label">Выполнено</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalScore">0</div>
+                <div class="stat-label">Мои баллы</div>
+            </div>
         </div>
 
         <div class="menu-scroll">
             <div class="menu-items">
-                <button class="menu-btn active" data-page="tasks">Мои задачи</button>
-                <button class="menu-btn" data-page="rating">Рейтинг округов</button>
-                <button class="menu-btn" data-page="history">История</button>
-                <button class="menu-btn" data-page="help">Справка</button>
-                <button class="menu-btn" data-page="debug">Отладка</button>
+                <button class="menu-btn active" data-page="tasks">📋 Мои задачи</button>
+                <button class="menu-btn" data-page="rating">🏆 Рейтинг округов</button>
+                <button class="menu-btn" data-page="history">📜 История</button>
+                <button class="menu-btn" data-page="help">❓ Справка</button>
             </div>
         </div>
 
@@ -331,21 +437,36 @@
                 <h3>Мои задачи</h3>
                 <div id="tasksList"></div>
             </div>
+
             <div id="rating" class="page">
                 <h3>Рейтинг округов</h3>
-                <div style="overflow-x: auto;"><table class="ranking-table"><thead> <tr><th>Округ</th><th>Всего баллов</th></tr> </thead><tbody id="ratingList"></tbody></table></div>
+                <div style="overflow-x: auto;">
+                    <table class="ranking-table">
+                        <thead>
+                             <tr>
+                                <th>Округ</th>
+                                <th>Всего баллов</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ratingList"></tbody>
+                    </table>
+                </div>
             </div>
+
             <div id="history" class="page">
                 <h3>История операций</h3>
                 <div id="historyList"></div>
             </div>
+
             <div id="help" class="page">
                 <h3>Справка</h3>
-                <p style="opacity:0.7;">• Выполняйте задачи и прикрепляйте ссылки (t.me или vk.com)<br>• 1 ссылка = 1 балл</p>
-            </div>
-            <div id="debug" class="page">
-                <h3>Отладка</h3>
-                <div id="debugInfo" class="debug-panel">Загрузка...</div>
+                <p style="opacity: 0.7; line-height: 1.5; font-size: 14px;">
+                    • Выполняйте задачи и прикрепляйте ссылки (t.me или vk.com)<br>
+                    • 1 ссылка = 1 балл<br>
+                    • Баллы идут в копилку вашего округа<br>
+                    • У задач есть срок выполнения — старайтесь успеть вовремя<br>
+                    • Новые задачи приходят с уведомлениями
+                </p>
             </div>
         </div>
     </div>
@@ -357,37 +478,21 @@
             let districtName = localStorage.getItem('chiefDistrictName');
             let branchType = localStorage.getItem('chiefBranchType');
             
-            let debugLog = [];
-            
-            function addDebug(msg) {
-                debugLog.unshift(new Date().toLocaleTimeString() + ': ' + msg);
-                if (debugLog.length > 20) debugLog.pop();
-                const debugDiv = document.getElementById('debugInfo');
-                if (debugDiv) {
-                    debugDiv.innerHTML = debugLog.map(l => '<div>' + l + '</div>').join('');
-                }
-                console.log(msg);
-            }
-            
-            addDebug('=== Страница загружена ===');
-            addDebug('chiefId из localStorage: ' + (chiefId || 'не найден'));
-            addDebug('districtName: ' + (districtName || 'не найден'));
-            
+            // Проверка наличия chiefId
             if (!chiefId) {
-                addDebug('ОШИБКА: chiefId не найден в localStorage');
-                document.getElementById('tasksList').innerHTML = '<div class="error-message">⚠️ Ошибка: не выбран округ. <a href="index.html" style="color:#6c8cff;">Вернуться на главную</a></div>';
+                document.getElementById('tasksList').innerHTML = '<div style="text-align:center; padding:40px; color:#f87171;">⚠️ Ошибка: не выбран округ. <a href="index.html" style="color:#6c8cff;">Вернуться на главную</a></div>';
                 document.getElementById('districtDisplay').innerHTML = 'Ошибка';
                 return;
             }
             
-            document.getElementById('districtDisplay').innerHTML = districtName + (branchType === 'primary' ? ' • Первичка' : '');
+            // Отображаем округ
+            document.getElementById('districtDisplay').innerHTML = '📍 ' + (districtName || 'Неизвестно') + (branchType === 'primary' ? ' • Первичка' : '');
             
+            // Проверка Supabase
             if (typeof supabase === 'undefined') {
-                addDebug('ОШИБКА: supabase не загружен');
-                document.getElementById('tasksList').innerHTML = '<div class="error-message">⚠️ Ошибка загрузки Supabase</div>';
+                document.getElementById('tasksList').innerHTML = '<div class="empty-state">⚠️ Ошибка загрузки библиотеки</div>';
                 return;
             }
-            addDebug('Supabase загружен');
             
             const SUPABASE_URL = 'https://csvynjkhhlexbnwpziup.supabase.co';
             const SUPABASE_KEY = 'sb_publishable__WbXqBZhgBBU-dDFEvXVeA_PQYwa_y7';
@@ -395,34 +500,65 @@
                 auth: { persistSession: false }
             });
             
-            addDebug('Supabase клиент создан');
+            let lastTaskCount = 0;
+            let isLoading = false;
             
+            // Функция с таймаутом
+            async function fetchWithTimeout(promise, timeoutMs = 15000) {
+                let timeoutId;
+                const timeoutPromise = new Promise(function(_, reject) {
+                    timeoutId = setTimeout(function() {
+                        reject(new Error('Превышено время ожидания (' + timeoutMs + 'мс)'));
+                    }, timeoutMs);
+                });
+                try {
+                    const result = await Promise.race([promise, timeoutPromise]);
+                    clearTimeout(timeoutId);
+                    return result;
+                } catch (err) {
+                    clearTimeout(timeoutId);
+                    throw err;
+                }
+            }
+            
+            // Загрузка задач
             async function loadTasks() {
-                addDebug('loadTasks() запущена');
+                if (isLoading) return;
+                isLoading = true;
+                
                 const container = document.getElementById('tasksList');
-                container.innerHTML = '<div class="loading-spinner">⏳ Загрузка задач...</div>';
+                container.innerHTML = '<div class="empty-state">⏳ Загрузка задач...</div>';
                 
                 try {
-                    addDebug('Запрос к assignments для chiefId: ' + chiefId);
-                    
-                    const { data, error } = await supabaseClient
-                        .from('assignments')
-                        .select('*, task_templates(*)')
-                        .eq('chief_id', chiefId)
-                        .order('created_at', { ascending: false });
+                    const { data, error } = await fetchWithTimeout(
+                        supabaseClient
+                            .from('assignments')
+                            .select('*, task_templates(*)')
+                            .eq('chief_id', chiefId)
+                            .order('created_at', { ascending: false }),
+                        15000
+                    );
                     
                     if (error) {
-                        addDebug('Ошибка запроса: ' + error.message);
-                        container.innerHTML = '<div class="error-message">⚠️ Ошибка: ' + error.message + '</div>';
+                        console.error('Ошибка загрузки задач:', error);
+                        container.innerHTML = '<div class="empty-state">⚠️ Ошибка: ' + error.message + '</div>';
                         return;
                     }
-                    
-                    addDebug('Получено задач: ' + (data?.length || 0));
                     
                     if (!data || data.length === 0) {
-                        container.innerHTML = '<div style="text-align:center; padding:40px; opacity:0.5;">📭 Нет задач</div>';
+                        container.innerHTML = '<div class="empty-state">📭 Нет задач</div>';
                         return;
                     }
+                    
+                    // Уведомление о новых задачах
+                    const pendingTasks = data.filter(function(t) { return t.status === 'pending'; });
+                    if (pendingTasks.length > lastTaskCount && lastTaskCount > 0 && Notification.permission === 'granted') {
+                        new Notification('📢 Новая задача!', { 
+                            body: 'У вас ' + pendingTasks.length + ' новых ' + (pendingTasks.length === 1 ? 'задача' : 'задач'),
+                            icon: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'
+                        });
+                    }
+                    lastTaskCount = pendingTasks.length;
                     
                     let html = '';
                     for (let i = 0; i < data.length; i++) {
@@ -433,6 +569,7 @@
                             const isExpired = deadlineDate < new Date();
                             deadlineHtml = '<div class="deadline ' + (isExpired ? 'deadline-urgent' : 'deadline-normal') + '">⏰ Срок: ' + deadlineDate.toLocaleString() + (isExpired ? ' (просрочено!)' : '') + '</div>';
                         }
+                        
                         html += '<div class="task-item">' +
                             '<div class="task-title">' + (task.task_templates?.title || 'Задача') + '</div>' +
                             '<div class="task-desc">' + (task.task_templates?.description || '') + '</div>' +
@@ -448,121 +585,222 @@
                         html += '</div>';
                     }
                     container.innerHTML = html;
-                    addDebug('Задачи отображены');
                 } catch (err) {
-                    addDebug('Критическая ошибка: ' + err.message);
-                    container.innerHTML = '<div class="error-message">⚠️ Ошибка: ' + err.message + '</div>';
+                    console.error('Ошибка:', err);
+                    container.innerHTML = '<div class="empty-state">⚠️ Ошибка подключения: ' + err.message + '<br><br>Проверьте интернет-соединение</div>';
+                } finally {
+                    isLoading = false;
                 }
             }
             
+            // Выполнение задачи
             window.completeTask = async function(taskId) {
-                addDebug('Выполнение задачи ' + taskId);
+                const linkInput = document.getElementById('link_' + taskId);
+                const link = linkInput ? linkInput.value.trim() : '';
+                
+                if (!link) {
+                    alert('Вставьте ссылку на выполненную работу');
+                    return;
+                }
+                if (!link.includes('t.me') && !link.includes('vk.com')) {
+                    alert('Ссылка должна быть на t.me или vk.com');
+                    return;
+                }
+                
                 try {
-                    const linkInput = document.getElementById('link_' + taskId);
-                    const link = linkInput ? linkInput.value.trim() : '';
-                    if (!link) { alert('Вставьте ссылку'); return; }
-                    if (!link.includes('t.me') && !link.includes('vk.com')) { alert('Ссылка должна быть на t.me или vk.com'); return; }
+                    // Обновляем статус задачи
+                    await supabaseClient.from('assignments').update({ 
+                        status: 'completed', 
+                        link: link, 
+                        completed_at: new Date() 
+                    }).eq('id', taskId);
                     
-                    await supabaseClient.from('assignments').update({ status: 'completed', link: link, completed_at: new Date() }).eq('id', taskId);
-                    await supabaseClient.from('operations_history').insert([{ chief_id: chiefId, assignment_id: taskId, action: 'Выполнена задача +1 балл' }]);
+                    // Добавляем в историю
+                    await supabaseClient.from('operations_history').insert([{ 
+                        chief_id: chiefId, 
+                        assignment_id: taskId, 
+                        action: 'Выполнена задача +1 балл' 
+                    }]);
                     
-                    const { data: currentScore } = await supabaseClient.from('chief_scores').select('total_score').eq('chief_id', chiefId).single();
+                    // Получаем текущие баллы и увеличиваем
+                    const { data: currentScore } = await supabaseClient
+                        .from('chief_scores')
+                        .select('total_score')
+                        .eq('chief_id', chiefId)
+                        .single();
+                    
                     const newScore = (currentScore?.total_score || 0) + 1;
-                    await supabaseClient.from('chief_scores').upsert({ chief_id: chiefId, total_score: newScore, updated_at: new Date() });
+                    await supabaseClient.from('chief_scores').upsert({ 
+                        chief_id: chiefId, 
+                        total_score: newScore, 
+                        updated_at: new Date() 
+                    });
                     
-                    addDebug('Задача выполнена, новый счет: ' + newScore);
-                    loadTasks(); loadStats(); loadHistory();
-                    alert('✅ Задача выполнена! +1 балл');
+                    // Перезагружаем данные
+                    loadTasks();
+                    loadStats();
+                    loadHistory();
+                    showToast('✅ Задача выполнена! +1 балл');
                 } catch (err) {
-                    addDebug('Ошибка выполнения: ' + err.message);
+                    console.error('Ошибка выполнения:', err);
                     alert('Ошибка: ' + err.message);
                 }
             };
             
+            // Загрузка статистики
             async function loadStats() {
                 try {
-                    const { data: tasks } = await supabaseClient.from('assignments').select('status').eq('chief_id', chiefId);
-                    const { data: score } = await supabaseClient.from('chief_scores').select('total_score').eq('chief_id', chiefId).single();
-                    document.getElementById('totalTasks').innerText = tasks?.length || 0;
-                    document.getElementById('completedTasks').innerText = tasks ? tasks.filter(t => t.status === 'completed').length : 0;
+                    const { data: tasks } = await supabaseClient
+                        .from('assignments')
+                        .select('status')
+                        .eq('chief_id', chiefId);
+                    
+                    const { data: score } = await supabaseClient
+                        .from('chief_scores')
+                        .select('total_score')
+                        .eq('chief_id', chiefId)
+                        .single();
+                    
+                    const total = tasks?.length || 0;
+                    const completed = tasks ? tasks.filter(t => t.status === 'completed').length : 0;
+                    
+                    document.getElementById('totalTasks').innerText = total;
+                    document.getElementById('completedTasks').innerText = completed;
                     document.getElementById('totalScore').innerText = score?.total_score || 0;
-                    addDebug('Статистика: всего=' + (tasks?.length || 0) + ', баллов=' + (score?.total_score || 0));
                 } catch (err) {
-                    addDebug('Ошибка статистики: ' + err.message);
+                    console.error('Ошибка статистики:', err);
                 }
             }
             
+            // Загрузка истории
             async function loadHistory() {
                 try {
-                    const { data } = await supabaseClient.from('operations_history').select('*').eq('chief_id', chiefId).order('created_at', { ascending: false }).limit(30);
+                    const { data } = await supabaseClient
+                        .from('operations_history')
+                        .select('*')
+                        .eq('chief_id', chiefId)
+                        .order('created_at', { ascending: false })
+                        .limit(30);
+                    
                     const container = document.getElementById('historyList');
                     if (!data || data.length === 0) {
-                        container.innerHTML = '<div style="text-align:center; padding:40px; opacity:0.5;">📭 История пуста</div>';
+                        container.innerHTML = '<div class="empty-state">📭 История пуста</div>';
                         return;
                     }
+                    
                     let html = '';
                     for (let i = 0; i < data.length; i++) {
-                        html += '<div class="history-item"><span>' + data[i].action + '</span><span>' + new Date(data[i].created_at).toLocaleString() + '</span></div>';
+                        html += '<div class="history-item">' +
+                                    '<span>' + data[i].action + '</span>' +
+                                    '<span style="opacity:0.5;">' + new Date(data[i].created_at).toLocaleString() + '</span>' +
+                                '</div>';
                     }
                     container.innerHTML = html;
                 } catch (err) {
-                    addDebug('Ошибка истории: ' + err.message);
+                    console.error('Ошибка истории:', err);
+                    document.getElementById('historyList').innerHTML = '<div class="empty-state">⚠️ Ошибка загрузки истории</div>';
                 }
             }
             
+            // Загрузка рейтинга округов
             async function loadRating() {
                 try {
-                    const { data: chiefs } = await supabaseClient.from('chiefs').select('id, district_id, districts(name)');
-                    const { data: scores } = await supabaseClient.from('chief_scores').select('*');
+                    const { data: chiefs } = await supabaseClient
+                        .from('chiefs')
+                        .select('id, district_id, districts(name), primary_branch_id');
+                    
+                    const { data: scores } = await supabaseClient
+                        .from('chief_scores')
+                        .select('*');
+                    
                     const scoreMap = {};
-                    if (scores) for (let s of scores) scoreMap[s.chief_id] = s.total_score || 0;
+                    if (scores) {
+                        for (let i = 0; i < scores.length; i++) {
+                            scoreMap[scores[i].chief_id] = scores[i].total_score || 0;
+                        }
+                    }
+                    
                     const districtScores = {};
                     if (chiefs) {
                         for (let i = 0; i < chiefs.length; i++) {
-                            const name = chiefs[i].districts?.name || 'Неизвестно';
-                            districtScores[name] = (districtScores[name] || 0) + (scoreMap[chiefs[i].id] || 0);
+                            const chief = chiefs[i];
+                            const districtName = chief.districts?.name || 'Неизвестно';
+                            const score = scoreMap[chief.id] || 0;
+                            districtScores[districtName] = (districtScores[districtName] || 0) + score;
                         }
                     }
-                    const sorted = Object.entries(districtScores).sort((a,b) => b[1] - a[1]);
+                    
+                    const sorted = Object.entries(districtScores)
+                        .map(([name, total]) => ({ name, total }))
+                        .sort((a, b) => b.total - a.total);
+                    
                     const container = document.getElementById('ratingList');
-                    if (!sorted.length) { container.innerHTML = '<tr><td colspan="2">Нет данных</td></tr>'; return; }
+                    if (!sorted.length) {
+                        container.innerHTML = '<tr><td colspan="2" class="empty-state">Нет данных</td></tr>';
+                        return;
+                    }
+                    
                     let html = '';
                     for (let i = 0; i < sorted.length; i++) {
-                        html += '<tr><td>' + sorted[i][0] + '</td><td style="color:#6c8cff;">' + sorted[i][1] + ' баллов</td></tr>';
+                        html += '<tr>' +
+                                    '<td style="font-weight: 500;">' + sorted[i].name + '</td>' +
+                                    '<td style="color: #6c8cff; font-weight: 600;">' + sorted[i].total + ' баллов</td>' +
+                                '</tr>';
                     }
                     container.innerHTML = html;
                 } catch (err) {
-                    addDebug('Ошибка рейтинга: ' + err.message);
+                    console.error('Ошибка рейтинга:', err);
+                    document.getElementById('ratingList').innerHTML = '<tr><td colspan="2" class="empty-state">⚠️ Ошибка загрузки</td></tr>';
                 }
             }
             
+            // Показать уведомление
+            function showToast(message) {
+                const toast = document.createElement('div');
+                toast.className = 'toast';
+                toast.innerText = message;
+                document.body.appendChild(toast);
+                setTimeout(function() { toast.remove(); }, 3000);
+            }
+            
+            // Сброс и выход
             window.resetAndExit = function() {
                 localStorage.clear();
                 window.location.href = 'index.html';
             };
             
-            // Меню
+            // Переключение вкладок
             const menuBtns = document.querySelectorAll('.menu-btn');
             for (let i = 0; i < menuBtns.length; i++) {
                 menuBtns[i].addEventListener('click', function() {
-                    for (let j = 0; j < menuBtns.length; j++) menuBtns[j].classList.remove('active');
+                    for (let j = 0; j < menuBtns.length; j++) {
+                        menuBtns[j].classList.remove('active');
+                    }
                     this.classList.add('active');
-                    for (let j = 0; j < document.querySelectorAll('.page').length; j++) {
-                        document.querySelectorAll('.page')[j].classList.remove('active');
+                    
+                    const pages = document.querySelectorAll('.page');
+                    for (let j = 0; j < pages.length; j++) {
+                        pages[j].classList.remove('active');
                     }
                     document.getElementById(this.dataset.page).classList.add('active');
+                    
                     if (this.dataset.page === 'rating') loadRating();
                     if (this.dataset.page === 'history') loadHistory();
                 });
             }
             
-            // Запуск загрузки
-            addDebug('Запуск загрузки данных...');
+            // Запрос разрешения на уведомления
+            if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+                Notification.requestPermission();
+            }
+            
+            // Загрузка всех данных
             loadStats();
             loadTasks();
             loadHistory();
             loadRating();
             
+            // Обновление задач каждые 30 секунд
             setInterval(function() {
                 loadTasks();
             }, 30000);
