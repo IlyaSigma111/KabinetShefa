@@ -156,6 +156,7 @@
             }
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <div class="dark-glow">
@@ -206,10 +207,14 @@
         const SUPABASE_URL = 'https://csvynjkhhlexbnwpziup.supabase.co';
         const SUPABASE_KEY = 'sb_publishable__WbXqBZhgBBU-dDFEvXVeA_PQYwa_y7';
         
-        const sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         async function loadTemplates() {
-            const { data } = await sbClient.from('task_templates').select('*').eq('is_active', true);
+            const { data, error } = await sb.from('task_templates').select('*').eq('is_active', true);
+            if (error) {
+                console.error('Ошибка загрузки шаблонов:', error);
+                return;
+            }
             const container = document.getElementById('templatesList');
             const select = document.getElementById('templateSelect');
             
@@ -222,29 +227,35 @@
                 `).join('');
                 select.innerHTML = '<option value="">Выберите шаблон</option>' + 
                     data.map(t => `<option value="${t.id}">${t.title}</option>`).join('');
+            } else {
+                container.innerHTML = '<p style="opacity: 0.5;">Нет шаблонов</p>';
             }
         }
 
         async function loadDistricts() {
-            const { data } = await sbClient.from('districts').select('*').order('name');
+            const { data, error } = await sb.from('districts').select('*').order('name');
+            if (error) return;
             const select = document.getElementById('districtSelect');
             select.innerHTML = '<option value="">Выберите округ (всем шефам)</option>' + 
                 (data || []).map(d => `<option value="${d.id}">${d.name}</option>`).join('');
         }
 
         async function loadBranches() {
-            const { data } = await sbClient.from('primary_branches').select('*, districts(name)');
+            const { data, error } = await sb.from('primary_branches').select('*, districts(name)');
+            if (error) return;
             const select = document.getElementById('branchSelect');
             select.innerHTML = '<option value="">Выберите первичку</option>' + 
                 (data || []).map(b => `<option value="${b.id}">${b.districts?.name} — ${b.name}</option>`).join('');
         }
 
         async function loadActiveTasks() {
-            const { data } = await sbClient
+            const { data, error } = await sb
                 .from('assignments')
                 .select('*, task_templates(*), chiefs(name)')
                 .neq('status', 'completed')
                 .order('created_at', { ascending: false });
+            
+            if (error) return;
             
             const container = document.getElementById('activeTasksList');
             if (!data?.length) {
@@ -267,7 +278,11 @@
             const desc = document.getElementById('newTemplateDesc').value;
             if (!title) { alert('Введите название'); return; }
             
-            await sbClient.from('task_templates').insert([{ title, description: desc }]);
+            const { error } = await sb.from('task_templates').insert([{ title, description: desc }]);
+            if (error) {
+                alert('Ошибка: ' + error.message);
+                return;
+            }
             document.getElementById('newTemplateTitle').value = '';
             document.getElementById('newTemplateDesc').value = '';
             loadTemplates();
@@ -286,13 +301,13 @@
             let chiefs = [];
             
             if (branchId) {
-                const { data } = await sbClient
+                const { data } = await sb
                     .from('chiefs')
                     .select('id, district_id')
                     .eq('primary_branch_id', parseInt(branchId));
                 chiefs = data || [];
             } else if (districtId) {
-                const { data } = await sbClient
+                const { data } = await sb
                     .from('chiefs')
                     .select('id, district_id')
                     .eq('district_id', parseInt(districtId));
@@ -308,7 +323,7 @@
             }
             
             for (const chief of chiefs) {
-                await sbClient.from('assignments').insert([{
+                await sb.from('assignments').insert([{
                     template_id: parseInt(templateId),
                     chief_id: chief.id,
                     district_id: chief.district_id,
@@ -333,6 +348,5 @@
         loadBranches();
         loadActiveTasks();
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </body>
 </html>
