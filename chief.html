@@ -338,7 +338,6 @@
             text-align: center;
         }
 
-        /* Адаптация для планшетов */
         @media (min-width: 768px) {
             .container {
                 padding: 24px;
@@ -363,23 +362,6 @@
             }
         }
 
-        /* Адаптация для больших экранов */
-        @media (min-width: 1024px) {
-            .container {
-                padding: 32px;
-            }
-            .stats-grid {
-                gap: 24px;
-            }
-            .stat-number {
-                font-size: 42px;
-            }
-            .task-title {
-                font-size: 18px;
-            }
-        }
-
-        /* Мобильные улучшения */
         @media (max-width: 480px) {
             .header {
                 flex-direction: column;
@@ -555,11 +537,18 @@
                 if (!link) { alert('Вставьте ссылку'); return; }
                 if (!link.includes('t.me') && !link.includes('vk.com')) { alert('Ссылка должна быть на t.me или vk.com'); return; }
                 
+                // Обновляем статус задачи
                 await supabaseClient.from('assignments').update({ status: 'completed', link: link, completed_at: new Date() }).eq('id', taskId);
+                
+                // Добавляем в историю
                 await supabaseClient.from('operations_history').insert([{ chief_id: chiefId, assignment_id: taskId, action: 'Выполнена задача +1 балл' }]);
                 
-                const { data: completed } = await supabaseClient.from('assignments').select('id').eq('chief_id', chiefId).eq('status', 'completed');
-                await supabaseClient.from('chief_scores').upsert({ chief_id: chiefId, total_score: completed?.length || 0 });
+                // Получаем текущие баллы шефа
+                const { data: currentScore } = await supabaseClient.from('chief_scores').select('total_score').eq('chief_id', chiefId).single();
+                const newScore = (currentScore?.total_score || 0) + 1;
+                
+                // Обновляем баллы (суммируем, а не заменяем)
+                await supabaseClient.from('chief_scores').upsert({ chief_id: chiefId, total_score: newScore, updated_at: new Date() });
                 
                 loadTasks(); loadStats(); loadHistory();
                 showToast('✅ Задача выполнена! +1 балл');
