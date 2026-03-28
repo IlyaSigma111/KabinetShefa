@@ -47,7 +47,7 @@
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 24px;
         }
@@ -69,7 +69,7 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 28px;
         }
 
@@ -121,13 +121,15 @@
         }
 
         .mass-btn {
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(236, 72, 153, 0.3));
-            border-color: rgba(168, 85, 247, 0.5);
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(236, 72, 153, 0.4));
+            border-color: rgba(168, 85, 247, 0.6);
+            font-size: 18px;
+            padding: 18px;
             margin-top: 8px;
         }
 
         .mass-btn:hover {
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.45), rgba(236, 72, 153, 0.45));
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.55), rgba(236, 72, 153, 0.55));
         }
 
         .template-item {
@@ -139,9 +141,13 @@
             transition: all 0.2s;
         }
 
+        .template-item.selected {
+            background: rgba(108, 140, 255, 0.25);
+            border: 1px solid rgba(108, 140, 255, 0.4);
+        }
+
         .template-item:hover {
             background: rgba(108, 140, 255, 0.15);
-            transform: translateX(8px);
         }
 
         .template-item strong {
@@ -166,14 +172,13 @@
         .status-pending { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
         .status-completed { background: rgba(16, 185, 129, 0.2); color: #10b981; }
 
-        .info-note {
+        .info-box {
             background: rgba(59, 130, 246, 0.1);
-            border-left: 3px solid #3b82f6;
-            padding: 12px 16px;
-            border-radius: 16px;
-            font-size: 13px;
-            margin-bottom: 20px;
-            opacity: 0.8;
+            border-left: 4px solid #a855f7;
+            padding: 16px 20px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+            font-size: 14px;
         }
 
         @media (max-width: 768px) {
@@ -188,13 +193,9 @@
             }
             .grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
             }
             .panel {
                 padding: 24px;
-            }
-            .panel h2 {
-                font-size: 20px;
             }
         }
     </style>
@@ -210,7 +211,7 @@
     <div class="container">
         <div class="header glass-card">
             <h1>🎛️ Медиакоординатор</h1>
-            <div style="font-size: 15px; opacity: 0.6;">Управление задачами</div>
+            <div style="font-size: 15px; opacity: 0.6;">Рассылка задач</div>
         </div>
 
         <div class="grid">
@@ -223,34 +224,25 @@
             </div>
 
             <div class="panel glass-card">
-                <h2>✏️ Создать задачу</h2>
+                <h2>🚀 Отправить задачу ВСЕМ</h2>
                 
-                <div class="info-note">
-                    📌 <strong>Кому отправить:</strong><br>
-                    • <strong>Местному отделению</strong> — только главный шеф округа<br>
-                    • <strong>Первичкам</strong> — все первичные отделения округа<br>
-                    • <strong>ВСЕМ (распуш)</strong> — всем шефам всех округов (и местным, и первичкам)
+                <div class="info-box">
+                    🔥 <strong>Как отправить РАСПУШ всем:</strong><br>
+                    1. Выберите шаблон "РАСПУШ"<br>
+                    2. Вставьте ссылку (если есть)<br>
+                    3. Нажмите <strong>"🌍 ОТПРАВИТЬ ВСЕМ ШЕФАМ"</strong><br>
+                    <br>
+                    📌 Задача улетит всем шефам всех округов (и местным, и первичкам)
                 </div>
 
-                <select id="templateSelect">
-                    <option value="">Выберите шаблон</option>
-                </select>
+                <div id="selectedTemplate" style="margin-bottom: 16px; padding: 14px; background: rgba(0,0,0,0.3); border-radius: 20px; text-align: center;">
+                    ⚡ Выбран шаблон: <strong id="selectedTemplateName">не выбран</strong>
+                </div>
                 
-                <select id="targetSelect">
-                    <option value="">Выберите кому отправить</option>
-                    <option value="district">🏛️ Только местному отделению</option>
-                    <option value="primary">📌 Всем первичкам этого округа</option>
-                </select>
+                <input type="text" id="taskLink" placeholder="Ссылка на материал (опционально)">
+                <textarea id="taskComment" placeholder="Комментарий для шефов (опционально)"></textarea>
                 
-                <select id="districtSelect">
-                    <option value="">Выберите местное отделение</option>
-                </select>
-                
-                <button class="mass-btn" onclick="sendToAllDistricts()">🌍 РАСПУШ ДЛЯ ВСЕХ ОКРУГОВ</button>
-                
-                <input type="text" id="taskLink" placeholder="Ссылка (опционально)">
-                <textarea id="taskComment" placeholder="Комментарий"></textarea>
-                <button onclick="createAssignment()">📤 Отправить задачу</button>
+                <button class="mass-btn" onclick="sendToAllChiefs()">🌍 ОТПРАВИТЬ ВСЕМ ШЕФАМ</button>
             </div>
 
             <div class="panel glass-card">
@@ -265,33 +257,36 @@
         const SUPABASE_KEY = 'sb_publishable__WbXqBZhgBBU-dDFEvXVeA_PQYwa_y7';
         
         const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        let selectedTemplateId = null;
+        let selectedTemplateTitle = null;
 
         async function loadTemplates() {
             const { data, error } = await sb.from('task_templates').select('*').eq('is_active', true);
             if (error) return;
             const container = document.getElementById('templatesList');
-            const select = document.getElementById('templateSelect');
             
             if (data?.length) {
                 container.innerHTML = data.map(t => `
-                    <div class="template-item" onclick="selectTemplate(${t.id})">
+                    <div class="template-item" onclick="selectTemplate(${t.id}, '${t.title.replace(/'/g, "\\'")}')">
                         <strong>${t.title}</strong>
                         <div style="font-size: 13px; opacity: 0.6; margin-top: 6px;">${t.description || ''}</div>
                     </div>
                 `).join('');
-                select.innerHTML = '<option value="">Выберите шаблон</option>' + 
-                    data.map(t => `<option value="${t.id}">${t.title}</option>`).join('');
             } else {
                 container.innerHTML = '<p style="opacity: 0.5; text-align: center; padding: 40px;">Нет шаблонов</p>';
             }
         }
 
-        async function loadDistricts() {
-            const { data, error } = await sb.from('districts').select('*').order('name');
-            if (error) return;
-            const select = document.getElementById('districtSelect');
-            select.innerHTML = '<option value="">Выберите местное отделение</option>' + 
-                (data || []).map(d => `<option value="${d.id}">${d.name}</option>`).join('');
+        function selectTemplate(id, title) {
+            selectedTemplateId = id;
+            selectedTemplateTitle = title;
+            document.getElementById('selectedTemplateName').innerText = title;
+            
+            document.querySelectorAll('.template-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
         }
 
         async function loadActiveTasks() {
@@ -316,7 +311,7 @@
                         <span class="task-status status-${task.status}">${task.status === 'pending' ? '⏳ Ожидает' : '🔄 В работе'}</span>
                     </div>
                     <div style="font-size: 13px; opacity: 0.7; margin-top: 8px;">Шеф: ${task.chiefs?.name || 'Шеф'} | ${task.chiefs?.primary_branch_id ? '📌 Первичка' : '🏛️ Местное'}</div>
-                    ${task.link ? `<a href="${task.link}" target="_blank" style="color: #6c8cff; font-size: 13px; margin-top: 8px; display: inline-block;">🔗 Ссылка</a>` : ''}
+                    ${task.link ? `<a href="${task.link}" target="_blank" style="color: #6c8cff; font-size: 13px; margin-top: 8px; display: inline-block;">🔗 Ссылка от координатора</a>` : ''}
                 </div>
             `).join('');
         }
@@ -334,70 +329,19 @@
             document.getElementById('newTemplateTitle').value = '';
             document.getElementById('newTemplateDesc').value = '';
             loadTemplates();
-            alert('Шаблон создан');
+            alert('✅ Шаблон создан');
         }
 
-        async function createAssignment() {
-            const templateId = document.getElementById('templateSelect').value;
-            const targetType = document.getElementById('targetSelect').value;
-            const districtId = document.getElementById('districtSelect').value;
-            const link = document.getElementById('taskLink').value;
-            const comment = document.getElementById('taskComment').value;
-            
-            if (!templateId) { alert('Выберите шаблон'); return; }
-            if (!districtId) { alert('Выберите местное отделение'); return; }
-            if (!targetType) { alert('Выберите кому отправить (местное или первички)'); return; }
-            
-            let chiefs = [];
-            
-            if (targetType === 'district') {
-                // Только главный шеф местного отделения (без первички)
-                const { data } = await sb
-                    .from('chiefs')
-                    .select('id, district_id')
-                    .eq('district_id', parseInt(districtId))
-                    .is('primary_branch_id', null);
-                chiefs = data || [];
-            } else if (targetType === 'primary') {
-                // Только первички этого округа
-                const { data } = await sb
-                    .from('chiefs')
-                    .select('id, district_id')
-                    .eq('district_id', parseInt(districtId))
-                    .not('primary_branch_id', 'is', null);
-                chiefs = data || [];
-            }
-            
-            if (chiefs.length === 0) {
-                alert('Нет шефов для назначения');
+        async function sendToAllChiefs() {
+            if (!selectedTemplateId) {
+                alert('Сначала выберите шаблон задачи (например, РАСПУШ)');
                 return;
             }
             
-            for (const chief of chiefs) {
-                await sb.from('assignments').insert([{
-                    template_id: parseInt(templateId),
-                    chief_id: chief.id,
-                    district_id: chief.district_id,
-                    link: link,
-                    coordinator_comment: comment,
-                    status: 'pending'
-                }]);
-            }
-            
-            alert(`✅ Задача отправлена ${chiefs.length} шефам!`);
-            document.getElementById('taskLink').value = '';
-            document.getElementById('taskComment').value = '';
-            loadActiveTasks();
-        }
-
-        async function sendToAllDistricts() {
-            const templateId = document.getElementById('templateSelect').value;
             const link = document.getElementById('taskLink').value;
             const comment = document.getElementById('taskComment').value;
             
-            if (!templateId) { alert('Выберите шаблон'); return; }
-            
-            // Получаем ВСЕХ шефов (и местные, и первички) из всех округов
+            // Получаем ВСЕХ шефов (все округа, все первички)
             const { data: allChiefs, error } = await sb
                 .from('chiefs')
                 .select('id, district_id');
@@ -415,29 +359,29 @@
             let successCount = 0;
             for (const chief of allChiefs) {
                 const { error: insertError } = await sb.from('assignments').insert([{
-                    template_id: parseInt(templateId),
+                    template_id: selectedTemplateId,
                     chief_id: chief.id,
                     district_id: chief.district_id,
-                    link: link,
-                    coordinator_comment: comment,
+                    link: link || null,
+                    coordinator_comment: comment || null,
                     status: 'pending'
                 }]);
                 if (!insertError) successCount++;
             }
             
-            alert(`🌍 РАСПУШ выполнен! Задача отправлена ${successCount} шефам во всех округах!`);
+            alert(`🌍 РАССЫЛКА ВЫПОЛНЕНА!\n\n✅ Задача "${selectedTemplateTitle}" отправлена ${successCount} шефам во всех округах!`);
+            
             document.getElementById('taskLink').value = '';
             document.getElementById('taskComment').value = '';
             loadActiveTasks();
         }
 
-        function selectTemplate(id) {
-            document.getElementById('templateSelect').value = id;
-        }
-
         loadTemplates();
-        loadDistricts();
         loadActiveTasks();
+        
+        setInterval(() => {
+            loadActiveTasks();
+        }, 15000);
     </script>
 </body>
 </html>
