@@ -37,29 +37,9 @@
             opacity: 0.4;
         }
 
-        .sphere-1 {
-            width: 600px;
-            height: 600px;
-            top: -200px;
-            right: -200px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-        }
-
-        .sphere-2 {
-            width: 500px;
-            height: 500px;
-            bottom: -200px;
-            left: -100px;
-            background: linear-gradient(135deg, #ff6b6b, #ff8e53);
-        }
-
-        .sphere-3 {
-            width: 400px;
-            height: 400px;
-            top: 50%;
-            left: 30%;
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-        }
+        .sphere-1 { width: 600px; height: 600px; top: -200px; right: -200px; background: linear-gradient(135deg, #667eea, #764ba2); }
+        .sphere-2 { width: 500px; height: 500px; bottom: -200px; left: -100px; background: linear-gradient(135deg, #ff6b6b, #ff8e53); }
+        .sphere-3 { width: 400px; height: 400px; top: 50%; left: 30%; background: linear-gradient(135deg, #4facfe, #00f2fe); }
 
         .glass-card {
             background: rgba(20, 25, 35, 0.4);
@@ -86,294 +66,50 @@
             gap: 20px;
         }
 
-        .logo h2 {
-            font-size: 28px;
-            font-weight: 700;
-        }
+        .logo h2 { font-size: 28px; font-weight: 700; }
+        .district-badge { background: rgba(108,140,255,0.2); padding: 12px 24px; border-radius: 60px; font-size: 16px; border: 1px solid rgba(108,140,255,0.3); }
+        .reset-btn { background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.3); padding: 12px 28px; border-radius: 60px; color: #f87171; cursor: pointer; }
 
-        .district-badge {
-            background: rgba(108, 140, 255, 0.2);
-            padding: 12px 24px;
-            border-radius: 60px;
-            font-size: 16px;
-            font-weight: 500;
-            border: 1px solid rgba(108, 140, 255, 0.3);
-        }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 32px; }
+        .stat-card { background: rgba(0,0,0,0.4); padding: 28px 20px; border-radius: 28px; text-align: center; }
+        .stat-number { font-size: 48px; font-weight: 800; background: linear-gradient(135deg, #fff, #b0c4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .stat-label { font-size: 15px; opacity: 0.6; margin-top: 10px; }
 
-        .reset-btn {
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            padding: 12px 28px;
-            border-radius: 60px;
-            color: #f87171;
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
+        .menu-scroll { overflow-x: auto; margin-bottom: 28px; }
+        .menu-items { display: inline-flex; gap: 12px; }
+        .menu-btn { padding: 14px 28px; background: rgba(0,0,0,0.4); border: none; border-radius: 60px; color: rgba(255,255,255,0.7); font-size: 16px; cursor: pointer; }
+        .menu-btn.active { background: rgba(108,140,255,0.25); border: 1px solid rgba(108,140,255,0.4); color: white; }
 
-        .reset-btn:hover {
-            background: rgba(239, 68, 68, 0.3);
-        }
+        .content { background: rgba(20,25,35,0.35); backdrop-filter: blur(20px); border-radius: 32px; padding: 32px; min-height: 500px; }
+        .page { display: none; }
+        .page.active { display: block; }
+        .page h3 { font-size: 24px; margin-bottom: 28px; }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-bottom: 32px;
-        }
+        .task-item { background: rgba(0,0,0,0.35); padding: 24px; border-radius: 24px; margin-bottom: 16px; }
+        .task-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+        .task-desc { font-size: 14px; opacity: 0.7; margin-bottom: 8px; }
+        .deadline { font-size: 13px; margin: 8px 0; padding: 6px 12px; border-radius: 20px; display: inline-block; }
+        .deadline-normal { background: rgba(245,158,11,0.2); color: #f59e0b; }
+        .deadline-urgent { background: rgba(239,68,68,0.2); color: #f87171; }
+        .task-link { color: #6c8cff; text-decoration: none; font-size: 14px; display: inline-block; margin: 8px 0; }
+        .task-status { display: inline-block; padding: 6px 16px; border-radius: 40px; font-size: 13px; margin-top: 8px; }
+        .status-pending { background: rgba(245,158,11,0.2); color: #f59e0b; }
+        .status-completed { background: rgba(16,185,129,0.2); color: #10b981; }
+        .btn-complete { background: rgba(16,185,129,0.2); border: none; padding: 12px 24px; border-radius: 40px; color: #10b981; font-weight: 600; cursor: pointer; margin-top: 16px; width: 100%; }
+        .link-input { width: 100%; padding: 14px 18px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; color: white; margin-top: 16px; }
 
-        .stat-card {
-            background: rgba(0, 0, 0, 0.4);
-            padding: 28px 20px;
-            border-radius: 28px;
-            text-align: center;
-        }
+        .history-item { background: rgba(0,0,0,0.3); padding: 16px 20px; border-radius: 20px; margin-bottom: 12px; display: flex; justify-content: space-between; }
+        .ranking-table { width: 100%; border-collapse: collapse; }
+        .ranking-table th, .ranking-table td { padding: 16px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.08); }
 
-        .stat-number {
-            font-size: 48px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #fff, #b0c4ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .stat-label {
-            font-size: 15px;
-            opacity: 0.6;
-            margin-top: 10px;
-            font-weight: 500;
-        }
-
-        .menu-scroll {
-            overflow-x: auto;
-            white-space: nowrap;
-            margin-bottom: 28px;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .menu-items {
-            display: inline-flex;
-            gap: 12px;
-            padding: 4px 0;
-        }
-
-        .menu-btn {
-            padding: 14px 28px;
-            background: rgba(0, 0, 0, 0.4);
-            border: none;
-            border-radius: 60px;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .menu-btn.active {
-            background: rgba(108, 140, 255, 0.25);
-            border: 1px solid rgba(108, 140, 255, 0.4);
-            color: white;
-        }
-
-        .content {
-            background: rgba(20, 25, 35, 0.35);
-            backdrop-filter: blur(20px);
-            border-radius: 32px;
-            padding: 32px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            min-height: 500px;
-        }
-
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        .page h3 {
-            font-size: 24px;
-            margin-bottom: 28px;
-            font-weight: 600;
-        }
-
-        .task-item {
-            background: rgba(0, 0, 0, 0.35);
-            padding: 24px;
-            border-radius: 24px;
-            margin-bottom: 16px;
-        }
-
-        .task-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .task-desc {
-            font-size: 14px;
-            opacity: 0.7;
-            margin-bottom: 8px;
-        }
-
-        .deadline {
-            font-size: 13px;
-            margin: 8px 0;
-            padding: 6px 12px;
-            border-radius: 20px;
-            display: inline-block;
-        }
-
-        .deadline-normal {
-            background: rgba(245, 158, 11, 0.2);
-            color: #f59e0b;
-        }
-
-        .deadline-urgent {
-            background: rgba(239, 68, 68, 0.2);
-            color: #f87171;
-        }
-
-        .task-link {
-            color: #6c8cff;
-            text-decoration: none;
-            font-size: 14px;
-            word-break: break-all;
-            display: inline-block;
-            margin: 8px 0;
-        }
-
-        .task-status {
-            display: inline-block;
-            padding: 6px 16px;
-            border-radius: 40px;
-            font-size: 13px;
-            font-weight: 500;
-            margin-top: 8px;
-        }
-
-        .status-pending {
-            background: rgba(245, 158, 11, 0.2);
-            color: #f59e0b;
-        }
-
-        .status-completed {
-            background: rgba(16, 185, 129, 0.2);
-            color: #10b981;
-        }
-
-        .btn-complete {
-            background: rgba(16, 185, 129, 0.2);
-            border: none;
-            padding: 12px 24px;
-            border-radius: 40px;
-            color: #10b981;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 16px;
-            width: 100%;
-            transition: all 0.2s;
-        }
-
-        .btn-complete:hover {
-            background: rgba(16, 185, 129, 0.3);
-        }
-
-        .link-input {
-            width: 100%;
-            padding: 14px 18px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            color: white;
-            font-size: 15px;
-            margin-top: 16px;
-        }
-
-        .history-item {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 16px 20px;
-            border-radius: 20px;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-        }
-
-        .ranking-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .ranking-table th,
-        .ranking-table td {
-            padding: 16px 12px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            font-size: 15px;
-        }
-
-        .ranking-table th {
-            font-weight: 600;
-            opacity: 0.7;
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(12px);
-            padding: 16px 32px;
-            border-radius: 60px;
-            text-align: center;
-            z-index: 1000;
-            animation: slideUp 0.3s ease;
-            border-left: 4px solid #6c8cff;
-            font-size: 15px;
-            white-space: nowrap;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateX(-50%) translateY(100px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(-50%) translateY(0);
-                opacity: 1;
-            }
-        }
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.95); padding: 16px 32px; border-radius: 60px; z-index: 1000; border-left: 4px solid #6c8cff; white-space: nowrap; }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 16px;
-            }
-            .header {
-                padding: 18px 20px;
-            }
-            .logo h2 {
-                font-size: 20px;
-            }
-            .stat-number {
-                font-size: 32px;
-            }
-            .content {
-                padding: 20px;
-            }
-            .page h3 {
-                font-size: 20px;
-            }
-            .toast {
-                white-space: normal;
-                max-width: 90%;
-                font-size: 14px;
-                padding: 12px 20px;
-            }
+            .container { padding: 16px; }
+            .logo h2 { font-size: 20px; }
+            .stat-number { font-size: 32px; }
+            .content { padding: 20px; }
+            .toast { white-space: normal; max-width: 90%; }
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -387,28 +123,17 @@
 
     <div class="container">
         <div class="header glass-card">
-            <div class="logo">
-                <h2>📰 Кабинет шеф-редактора</h2>
-            </div>
-            <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+            <div class="logo"><h2>📰 Кабинет шеф-редактора</h2></div>
+            <div style="display: flex; gap: 16px;">
                 <span class="district-badge" id="districtDisplay">📍 Загрузка...</span>
-                <button class="reset-btn" onclick="resetAndExit()">Сменить отделение</button>
+                <button class="reset-btn" onclick="resetAndExit()">Сменить</button>
             </div>
         </div>
 
         <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number" id="totalTasks">0</div>
-                <div class="stat-label">Всего задач</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="completedTasks">0</div>
-                <div class="stat-label">Выполнено</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="totalScore">0</div>
-                <div class="stat-label">Баллов</div>
-            </div>
+            <div class="stat-card"><div class="stat-number" id="totalTasks">0</div><div class="stat-label">Всего задач</div></div>
+            <div class="stat-card"><div class="stat-number" id="completedTasks">0</div><div class="stat-label">Выполнено</div></div>
+            <div class="stat-card"><div class="stat-number" id="totalScore">0</div><div class="stat-label">Баллов</div></div>
         </div>
 
         <div class="menu-scroll">
@@ -421,273 +146,145 @@
         </div>
 
         <div class="content">
-            <div id="tasks" class="page active">
-                <h3>📋 Мои задачи</h3>
-                <div id="tasksList"></div>
-            </div>
-
-            <div id="rating" class="page">
-                <h3>🏆 Рейтинг шеф-редакторов</h3>
-                <div style="overflow-x: auto;">
-                    <table class="ranking-table">
-                        <thead>
-                            <tr><th>Шеф</th><th>Отделение</th><th>Баллы</th>inea
-                        </thead>
-                        <tbody id="ratingList"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div id="history" class="page">
-                <h3>📜 История операций</h3>
-                <div id="historyList"></div>
-            </div>
-
-            <div id="help" class="page">
-                <h3>❓ Справка</h3>
-                <p style="opacity: 0.7; line-height: 1.6; font-size: 16px;">
-                    📌 <strong>Как работать:</strong><br><br>
-                    • Выполняйте задачи и прикрепляйте ссылки (t.me или vk.com)<br>
-                    • 1 ссылка = 1 балл<br>
-                    • Баллы первичек идут в копилку местного отделения<br>
-                    • У задач есть срок выполнения — старайтесь успеть вовремя<br>
-                    • Новые задачи приходят с уведомлениями
-                </p>
-            </div>
+            <div id="tasks" class="page active"><h3>📋 Мои задачи</h3><div id="tasksList"></div></div>
+            <div id="rating" class="page"><h3>🏆 Рейтинг</h3><div style="overflow-x:auto;"><table class="ranking-table"><thead><tr><th>Шеф</th><th>Отделение</th><th>Баллы</th></tr></thead><tbody id="ratingList"></tbody></table></div></div>
+            <div id="history" class="page"><h3>📜 История</h3><div id="historyList"></div></div>
+            <div id="help" class="page"><h3>❓ Справка</h3><p style="opacity:0.7; line-height:1.6;">• Выполняйте задачи и прикрепляйте ссылки (t.me или vk.com)<br>• 1 ссылка = 1 балл<br>• У задач есть срок выполнения — старайтесь успеть!</p></div>
         </div>
     </div>
 
     <script>
-        const SUPABASE_URL = 'https://csvynjkhhlexbnwpziup.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable__WbXqBZhgBBU-dDFEvXVeA_PQYwa_y7';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        
-        let chiefId = localStorage.getItem('chiefId');
-        let districtName = localStorage.getItem('chiefDistrictName');
-        let branchType = localStorage.getItem('chiefBranchType');
-        
-        if (!chiefId) {
-            window.location.href = 'index.html';
-        }
-        
-        document.getElementById('districtDisplay').innerHTML = `📍 ${districtName}${branchType === 'primary' ? ' • Первичка' : ''}`;
-        
-        let lastTaskCount = 0;
-        
-        async function loadTasks() {
-            const { data, error } = await supabaseClient
-                .from('assignments')
-                .select('*, task_templates(*)')
-                .eq('chief_id', chiefId)
-                .order('created_at', { ascending: false });
+        document.addEventListener('DOMContentLoaded', function() {
+            const SUPABASE_URL = 'https://csvynjkhhlexbnwpziup.supabase.co';
+            const SUPABASE_KEY = 'sb_publishable__WbXqBZhgBBU-dDFEvXVeA_PQYwa_y7';
             
-            if (error) {
-                console.error('Ошибка загрузки задач:', error);
-                document.getElementById('tasksList').innerHTML = '<p style="opacity: 0.5; text-align: center; padding: 40px;">Ошибка загрузки</p>';
+            if (typeof supabase === 'undefined') {
+                console.error('Supabase не загружен');
                 return;
             }
             
-            const container = document.getElementById('tasksList');
+            const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
             
-            if (!data?.length) {
-                container.innerHTML = '<p style="opacity: 0.5; text-align: center; padding: 60px;">📭 Нет задач</p>';
+            let chiefId = localStorage.getItem('chiefId');
+            let districtName = localStorage.getItem('chiefDistrictName');
+            let branchType = localStorage.getItem('chiefBranchType');
+            
+            if (!chiefId) {
+                window.location.href = 'index.html';
                 return;
             }
             
-            const pendingTasks = data.filter(t => t.status === 'pending');
-            if (pendingTasks.length > lastTaskCount && lastTaskCount > 0) {
-                if (Notification.permission === 'granted') {
-                    new Notification('📢 Новая задача!', {
-                        body: `У вас ${pendingTasks.length} новых ${pendingTasks.length === 1 ? 'задача' : 'задач'}`,
-                        icon: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'
-                    });
-                }
-            }
-            lastTaskCount = pendingTasks.length;
+            document.getElementById('districtDisplay').innerHTML = `📍 ${districtName}${branchType === 'primary' ? ' • Первичка' : ''}`;
             
-            container.innerHTML = data.map(task => {
-                let deadlineHtml = '';
-                let deadlineClass = '';
-                if (task.deadline) {
-                    const deadlineDate = new Date(task.deadline);
-                    const isExpired = deadlineDate < new Date();
-                    deadlineClass = isExpired ? 'deadline-urgent' : 'deadline-normal';
-                    deadlineHtml = `<div class="deadline ${deadlineClass}">⏰ Срок: ${deadlineDate.toLocaleString()} ${isExpired ? '(просрочено!)' : ''}</div>`;
+            let lastTaskCount = 0;
+            
+            async function loadTasks() {
+                const { data, error } = await supabaseClient
+                    .from('assignments')
+                    .select('*, task_templates(*)')
+                    .eq('chief_id', chiefId)
+                    .order('created_at', { ascending: false });
+                
+                if (error) {
+                    console.error('Ошибка загрузки задач:', error);
+                    document.getElementById('tasksList').innerHTML = '<p style="opacity:0.5; text-align:center; padding:40px;">Ошибка загрузки</p>';
+                    return;
                 }
                 
-                return `
-                    <div class="task-item">
-                        <div class="task-title">${task.task_templates?.title || 'Задача'}</div>
-                        <div class="task-desc">${task.task_templates?.description || ''}</div>
-                        ${deadlineHtml}
-                        ${task.link ? `<a href="${task.link}" target="_blank" class="task-link">🔗 ${task.link}</a>` : ''}
-                        ${task.coordinator_comment ? `<div style="font-size: 13px; margin-top: 8px; color: #6c8cff;">💬 ${task.coordinator_comment}</div>` : ''}
-                        <div>
-                            <span class="task-status status-${task.status}">${task.status === 'pending' ? '⏳ Ожидает' : '✅ Выполнено'}</span>
+                const container = document.getElementById('tasksList');
+                if (!data?.length) {
+                    container.innerHTML = '<p style="opacity:0.5; text-align:center; padding:60px;">📭 Нет задач</p>';
+                    return;
+                }
+                
+                const pendingTasks = data.filter(t => t.status === 'pending');
+                if (pendingTasks.length > lastTaskCount && lastTaskCount > 0 && Notification.permission === 'granted') {
+                    new Notification('📢 Новая задача!', { body: `У вас ${pendingTasks.length} новых задач` });
+                }
+                lastTaskCount = pendingTasks.length;
+                
+                container.innerHTML = data.map(task => {
+                    let deadlineHtml = '';
+                    if (task.deadline) {
+                        const deadlineDate = new Date(task.deadline);
+                        const isExpired = deadlineDate < new Date();
+                        deadlineHtml = `<div class="deadline ${isExpired ? 'deadline-urgent' : 'deadline-normal'}">⏰ Срок: ${deadlineDate.toLocaleString()} ${isExpired ? '(просрочено!)' : ''}</div>`;
+                    }
+                    return `
+                        <div class="task-item">
+                            <div class="task-title">${task.task_templates?.title || 'Задача'}</div>
+                            <div class="task-desc">${task.task_templates?.description || ''}</div>
+                            ${deadlineHtml}
+                            ${task.link ? `<a href="${task.link}" target="_blank" class="task-link">🔗 ${task.link}</a>` : ''}
+                            ${task.coordinator_comment ? `<div style="font-size:13px; margin-top:8px; color:#6c8cff;">💬 ${task.coordinator_comment}</div>` : ''}
+                            <div><span class="task-status status-${task.status}">${task.status === 'pending' ? '⏳ Ожидает' : '✅ Выполнено'}</span></div>
+                            ${task.status === 'pending' ? `
+                                <input type="text" id="link_${task.id}" class="link-input" placeholder="Вставьте ссылку (t.me или vk.com)">
+                                <button class="btn-complete" onclick="completeTask(${task.id})">✅ Выполнить +1 балл</button>
+                            ` : ''}
                         </div>
-                        ${task.status === 'pending' ? `
-                            <input type="text" id="link_${task.id}" class="link-input" placeholder="Вставьте ссылку (t.me или vk.com)">
-                            <button class="btn-complete" onclick="completeTask(${task.id})">✅ Выполнить +1 балл</button>
-                        ` : ''}
-                    </div>
-                `;
-            }).join('');
-        }
-        
-        async function completeTask(taskId) {
-            const linkInput = document.getElementById(`link_${taskId}`);
-            const link = linkInput?.value?.trim();
-            
-            if (!link) {
-                alert('Вставьте ссылку на выполненную работу');
-                return;
+                    `;
+                }).join('');
             }
             
-            if (!link.includes('t.me') && !link.includes('vk.com')) {
-                alert('Ссылка должна быть на t.me или vk.com');
-                return;
-            }
-            
-            const { error } = await supabaseClient
-                .from('assignments')
-                .update({ status: 'completed', link: link, completed_at: new Date() })
-                .eq('id', taskId);
-            
-            if (error) {
-                alert('Ошибка: ' + error.message);
-                return;
-            }
-            
-            await supabaseClient
-                .from('operations_history')
-                .insert([{
-                    chief_id: chiefId,
-                    assignment_id: taskId,
-                    action: `Выполнена задача, получен 1 балл`
-                }]);
-            
-            await updateScore();
-            loadTasks();
-            loadStats();
-            loadHistory();
-            
-            showToast('✅ Задача выполнена! +1 балл');
-        }
-        
-        async function updateScore() {
-            const { data } = await supabaseClient
-                .from('assignments')
-                .select('id')
-                .eq('chief_id', chiefId)
-                .eq('status', 'completed');
-            
-            const score = data?.length || 0;
-            
-            await supabaseClient
-                .from('chief_scores')
-                .upsert({ chief_id: chiefId, total_score: score, updated_at: new Date() });
-        }
-        
-        async function loadStats() {
-            const { data } = await supabaseClient
-                .from('assignments')
-                .select('status')
-                .eq('chief_id', chiefId);
-            
-            const total = data?.length || 0;
-            const completed = data?.filter(t => t.status === 'completed').length || 0;
-            
-            const { data: scoreData } = await supabaseClient
-                .from('chief_scores')
-                .select('total_score')
-                .eq('chief_id', chiefId)
-                .single();
-            
-            document.getElementById('totalTasks').innerText = total;
-            document.getElementById('completedTasks').innerText = completed;
-            document.getElementById('totalScore').innerText = scoreData?.total_score || 0;
-        }
-        
-        async function loadHistory() {
-            const { data } = await supabaseClient
-                .from('operations_history')
-                .select('*')
-                .eq('chief_id', chiefId)
-                .order('created_at', { ascending: false })
-                .limit(30);
-            
-            const container = document.getElementById('historyList');
-            if (!data?.length) {
-                container.innerHTML = '<p style="opacity: 0.5; text-align: center; padding: 60px;">📭 История пуста</p>';
-                return;
-            }
-            
-            container.innerHTML = data.map(h => `
-                <div class="history-item">
-                    <span>${h.action || 'Действие'}</span>
-                    <span style="opacity: 0.5;">${new Date(h.created_at).toLocaleString()}</span>
-                </div>
-            `).join('');
-        }
-        
-        async function loadRating() {
-            const { data } = await supabaseClient
-                .from('chief_scores')
-                .select('*, chiefs(name, primary_branch_id)')
-                .order('total_score', { ascending: false });
-            
-            const container = document.getElementById('ratingList');
-            if (!data?.length) {
-                container.innerHTML = '<tr><td colspan="3" style="text-align: center; padding: 40px;">Нет данных</td></tr>';
-                return;
-            }
-            
-            container.innerHTML = data.map(s => `
-                <tr>
-                    <td style="font-weight: 500;">${s.chiefs?.name?.split('Шеф')[0] || 'Шеф'}</td>
-                    <td>${s.chiefs?.primary_branch_id ? '📌 Первичка' : '🏛️ Местное'}</td>
-                    <td style="color: #6c8cff; font-weight: 600;">${s.total_score} баллов</td>
-                </tr>
-            `).join('');
-        }
-        
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.innerText = message;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        }
-        
-        function resetAndExit() {
-            localStorage.clear();
-            window.location.href = 'index.html';
-        }
-        
-        document.querySelectorAll('.menu-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-                document.getElementById(btn.dataset.page).classList.add('active');
+            window.completeTask = async function(taskId) {
+                const linkInput = document.getElementById(`link_${taskId}`);
+                const link = linkInput?.value?.trim();
+                if (!link) { alert('Вставьте ссылку'); return; }
+                if (!link.includes('t.me') && !link.includes('vk.com')) { alert('Ссылка должна быть на t.me или vk.com'); return; }
                 
-                if (btn.dataset.page === 'rating') loadRating();
-                if (btn.dataset.page === 'history') loadHistory();
+                await supabaseClient.from('assignments').update({ status: 'completed', link: link, completed_at: new Date() }).eq('id', taskId);
+                await supabaseClient.from('operations_history').insert([{ chief_id: chiefId, assignment_id: taskId, action: 'Выполнена задача +1 балл' }]);
+                
+                const { data: completed } = await supabaseClient.from('assignments').select('id').eq('chief_id', chiefId).eq('status', 'completed');
+                await supabaseClient.from('chief_scores').upsert({ chief_id: chiefId, total_score: completed?.length || 0 });
+                
+                loadTasks(); loadStats(); loadHistory();
+                showToast('✅ Задача выполнена! +1 балл');
+            };
+            
+            async function loadStats() {
+                const { data: tasks } = await supabaseClient.from('assignments').select('status').eq('chief_id', chiefId);
+                const { data: score } = await supabaseClient.from('chief_scores').select('total_score').eq('chief_id', chiefId).single();
+                document.getElementById('totalTasks').innerText = tasks?.length || 0;
+                document.getElementById('completedTasks').innerText = tasks?.filter(t => t.status === 'completed').length || 0;
+                document.getElementById('totalScore').innerText = score?.total_score || 0;
+            }
+            
+            async function loadHistory() {
+                const { data } = await supabaseClient.from('operations_history').select('*').eq('chief_id', chiefId).order('created_at', { ascending: false }).limit(30);
+                const container = document.getElementById('historyList');
+                if (!data?.length) { container.innerHTML = '<p style="opacity:0.5; text-align:center; padding:60px;">📭 История пуста</p>'; return; }
+                container.innerHTML = data.map(h => `<div class="history-item"><span>${h.action}</span><span style="opacity:0.5;">${new Date(h.created_at).toLocaleString()}</span></div>`).join('');
+            }
+            
+            async function loadRating() {
+                const { data } = await supabaseClient.from('chief_scores').select('*, chiefs(name, primary_branch_id)').order('total_score', { ascending: false });
+                const container = document.getElementById('ratingList');
+                if (!data?.length) { container.innerHTML = '<tr><td colspan="3">Нет данных</td></tr>'; return; }
+                container.innerHTML = data.map(s => `<tr><td>${s.chiefs?.name?.split('Шеф')[0] || 'Шеф'}</td><td>${s.chiefs?.primary_branch_id ? '📌 Первичка' : '🏛️ Местное'}</td><td style="color:#6c8cff;">${s.total_score} баллов</td></tr>`).join('');
+            }
+            
+            function showToast(msg) { const t = document.createElement('div'); t.className = 'toast'; t.innerText = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 3000); }
+            
+            window.resetAndExit = function() { localStorage.clear(); window.location.href = 'index.html'; };
+            
+            document.querySelectorAll('.menu-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                    document.getElementById(btn.dataset.page).classList.add('active');
+                    if (btn.dataset.page === 'rating') loadRating();
+                    if (btn.dataset.page === 'history') loadHistory();
+                });
             });
+            
+            if (Notification.permission !== 'granted' && Notification.permission !== 'denied') Notification.requestPermission();
+            
+            loadStats(); loadTasks(); loadHistory(); loadRating();
+            setInterval(loadTasks, 30000);
         });
-        
-        if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
-            Notification.requestPermission();
-        }
-        
-        loadStats();
-        loadTasks();
-        loadHistory();
-        loadRating();
-        
-        setInterval(() => {
-            loadTasks();
-        }, 30000);
     </script>
 </body>
 </html>
