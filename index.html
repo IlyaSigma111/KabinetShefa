@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Кабинет шеф-редактора</title>
     <style>
         * {
@@ -13,7 +13,7 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
             background: #0a0c10;
             color: rgba(255, 255, 255, 0.95);
             min-height: 100vh;
@@ -72,7 +72,7 @@
         .container {
             max-width: 700px;
             margin: 0 auto;
-            padding: 40px 24px;
+            padding: 20px;
             position: relative;
             z-index: 1;
             min-height: 100vh;
@@ -83,64 +83,64 @@
 
         .card {
             width: 100%;
-            padding: 48px 40px;
+            padding: 32px 24px;
         }
 
         .logo {
             text-align: center;
-            margin-bottom: 48px;
+            margin-bottom: 32px;
         }
 
         .logo-icon {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             background: rgba(108, 140, 255, 0.15);
-            border-radius: 32px;
+            border-radius: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 52px;
-            margin: 0 auto 24px;
+            font-size: 44px;
+            margin: 0 auto 20px;
             border: 1px solid rgba(108, 140, 255, 0.3);
         }
 
         h1 {
-            font-size: 32px;
+            font-size: 26px;
             font-weight: 700;
             text-align: center;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             letter-spacing: -0.5px;
         }
 
         .sub {
             text-align: center;
-            font-size: 16px;
+            font-size: 14px;
             opacity: 0.6;
-            margin-bottom: 48px;
+            margin-bottom: 32px;
         }
 
         .form-group {
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
 
         label {
             display: block;
-            font-size: 14px;
+            font-size: 13px;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             font-weight: 500;
             opacity: 0.7;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         select, button {
             width: 100%;
-            padding: 18px 22px;
+            padding: 16px 18px;
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 28px;
             color: white;
-            font-size: 18px;
+            font-size: 16px;
             font-family: inherit;
             cursor: pointer;
             transition: all 0.2s;
@@ -150,7 +150,7 @@
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffffff80' d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 22px center;
+            background-position: right 18px center;
         }
 
         button {
@@ -160,14 +160,13 @@
             margin-top: 16px;
         }
 
-        button:hover {
-            background: linear-gradient(135deg, rgba(108, 140, 255, 0.5), rgba(118, 75, 162, 0.5));
-            transform: translateY(-2px);
+        button:active {
+            transform: scale(0.98);
         }
 
         .branch-group {
-            margin-top: 24px;
-            padding-top: 24px;
+            margin-top: 20px;
+            padding-top: 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             display: none;
         }
@@ -178,16 +177,16 @@
 
         .radio-group {
             display: flex;
-            gap: 20px;
+            gap: 16px;
             flex-wrap: wrap;
         }
 
         .radio-option {
             flex: 1;
             text-align: center;
-            padding: 20px;
+            padding: 16px;
             background: rgba(0, 0, 0, 0.3);
-            border-radius: 28px;
+            border-radius: 24px;
             cursor: pointer;
             transition: all 0.2s;
             border: 1px solid transparent;
@@ -199,37 +198,65 @@
         }
 
         .radio-option span:first-child {
-            font-size: 36px;
+            font-size: 32px;
             display: block;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .radio-option span:last-child {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
         }
 
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px 16px;
-            }
+        .error-message {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 20px;
+            padding: 12px;
+            margin-bottom: 20px;
+            color: #f87171;
+            font-size: 13px;
+            text-align: center;
+            display: none;
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 20px;
+            opacity: 0.7;
+            font-size: 14px;
+        }
+
+        @media (min-width: 768px) {
             .card {
-                padding: 32px 24px;
-            }
-            h1 {
-                font-size: 26px;
+                padding: 48px 40px;
             }
             .logo-icon {
-                width: 70px;
-                height: 70px;
-                font-size: 36px;
+                width: 100px;
+                height: 100px;
+                font-size: 52px;
             }
-            select, button {
-                padding: 14px 18px;
-                font-size: 16px;
+            h1 {
+                font-size: 32px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 16px;
+            }
+            .card {
+                padding: 24px 20px;
+            }
+            .radio-option {
+                padding: 12px;
+            }
+            .radio-option span:first-child {
+                font-size: 28px;
             }
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <div class="dark-glow">
@@ -245,6 +272,9 @@
                 <h1>Кабинет шеф-редактора</h1>
                 <div class="sub">выбор отделения</div>
             </div>
+
+            <div id="errorMessage" class="error-message"></div>
+            <div id="loadingIndicator" class="loading-spinner" style="display: none;">Загрузка...</div>
 
             <div class="form-group">
                 <label>📍 Местное отделение</label>
@@ -271,54 +301,115 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const SUPABASE_URL = 'https://csvynjkhhlexbnwpziup.supabase.co';
-            const SUPABASE_KEY = 'sb_publishable__WbXqBZhgBBU-dDFEvXVeA_PQYwa_y7';
-            
-            if (typeof supabase === 'undefined') {
-                console.error('Supabase не загружен');
-                document.getElementById('districtSelect').innerHTML = '<option value="">Ошибка загрузки</option>';
-                return;
+        (function() {
+            // Функция для показа ошибки
+            function showError(message) {
+                const errorDiv = document.getElementById('errorMessage');
+                errorDiv.textContent = message;
+                errorDiv.style.display = 'block';
+                setTimeout(function() {
+                    errorDiv.style.display = 'none';
+                }, 5000);
             }
-            
-            const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-            
-            let districtsList = [];
-            let selectedBranchType = 'main';
 
-            async function loadDistricts() {
-                try {
-                    const { data, error } = await supabaseClient.from('districts').select('*').order('name');
-                    if (error) {
-                        console.error('Ошибка загрузки округов:', error);
-                        document.getElementById('districtSelect').innerHTML = '<option value="">Ошибка загрузки</option>';
-                        return;
-                    }
-                    if (data && data.length > 0) {
-                        districtsList = data;
-                        const select = document.getElementById('districtSelect');
-                        select.innerHTML = '<option value="">Выберите местное отделение</option>' + 
-                            data.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
-                    } else {
-                        document.getElementById('districtSelect').innerHTML = '<option value="">Нет округов</option>';
-                    }
-                } catch (err) {
-                    console.error('Ошибка:', err);
-                    document.getElementById('districtSelect').innerHTML = '<option value="">Ошибка подключения</option>';
+            // Функция для показа/скрытия загрузки
+            function setLoading(isLoading) {
+                const loader = document.getElementById('loadingIndicator');
+                const select = document.getElementById('districtSelect');
+                const btn = document.getElementById('enterBtn');
+                if (isLoading) {
+                    loader.style.display = 'block';
+                    select.disabled = true;
+                    btn.disabled = true;
+                } else {
+                    loader.style.display = 'none';
+                    select.disabled = false;
+                    btn.disabled = false;
                 }
             }
 
-            document.querySelectorAll('.radio-option').forEach(opt => {
-                opt.addEventListener('click', () => {
-                    document.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
-                    opt.classList.add('selected');
-                    selectedBranchType = opt.dataset.branchType;
-                });
-            });
+            // Проверяем загрузку Supabase
+            if (typeof supabase === 'undefined') {
+                showError('Ошибка: не удалось загрузить библиотеку Supabase. Проверьте интернет-соединение.');
+                document.getElementById('districtSelect').innerHTML = '<option value="">Ошибка загрузки</option>';
+                return;
+            }
 
-            document.getElementById('districtSelect').addEventListener('change', (e) => {
+            const SUPABASE_URL = 'https://csvynjkhhlexbnwpziup.supabase.co';
+            const SUPABASE_KEY = 'sb_publishable__WbXqBZhgBBU-dDFEvXVeA_PQYwa_y7';
+            
+            let supabaseClient = null;
+            let districtsList = [];
+            let selectedBranchType = 'main';
+
+            // Инициализация клиента
+            try {
+                supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+                    auth: {
+                        persistSession: false,
+                        autoRefreshToken: false,
+                        detectSessionInUrl: false
+                    }
+                });
+            } catch (e) {
+                showError('Ошибка инициализации: ' + e.message);
+                return;
+            }
+
+            async function loadDistricts() {
+                setLoading(true);
+                try {
+                    // Пробуем получить данные с таймаутом
+                    const timeoutPromise = new Promise(function(_, reject) {
+                        setTimeout(function() { reject(new Error('Таймаут загрузки')); }, 10000);
+                    });
+                    
+                    const fetchPromise = supabaseClient.from('districts').select('*').order('name');
+                    
+                    const { data, error } = await Promise.race([fetchPromise, timeoutPromise]);
+                    
+                    if (error) {
+                        console.error('Ошибка загрузки округов:', error);
+                        showError('Ошибка загрузки: ' + (error.message || 'Неизвестная ошибка'));
+                        document.getElementById('districtSelect').innerHTML = '<option value="">Ошибка загрузки</option>';
+                        return;
+                    }
+                    
+                    if (data && data.length > 0) {
+                        districtsList = data;
+                        const select = document.getElementById('districtSelect');
+                        let options = '<option value="">Выберите местное отделение</option>';
+                        for (let i = 0; i < data.length; i++) {
+                            options += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+                        }
+                        select.innerHTML = options;
+                    } else {
+                        document.getElementById('districtSelect').innerHTML = '<option value="">Нет данных</option>';
+                        showError('Нет данных об округах в базе');
+                    }
+                } catch (err) {
+                    console.error('Критическая ошибка:', err);
+                    showError('Ошибка подключения к серверу. Проверьте интернет-соединение.');
+                    document.getElementById('districtSelect').innerHTML = '<option value="">Ошибка подключения</option>';
+                } finally {
+                    setLoading(false);
+                }
+            }
+
+            // Обработчики событий
+            const radioOptions = document.querySelectorAll('.radio-option');
+            for (let i = 0; i < radioOptions.length; i++) {
+                radioOptions[i].addEventListener('click', function() {
+                    for (let j = 0; j < radioOptions.length; j++) {
+                        radioOptions[j].classList.remove('selected');
+                    }
+                    this.classList.add('selected');
+                    selectedBranchType = this.dataset.branchType;
+                });
+            }
+
+            document.getElementById('districtSelect').addEventListener('change', function(e) {
                 const branchGroup = document.getElementById('branchGroup');
                 if (e.target.value) {
                     branchGroup.classList.add('show');
@@ -327,21 +418,20 @@
                 }
             });
 
-            document.getElementById('enterBtn').addEventListener('click', async () => {
+            document.getElementById('enterBtn').addEventListener('click', async function() {
                 const districtId = document.getElementById('districtSelect').value;
                 if (!districtId) {
-                    alert('Выберите местное отделение');
+                    showError('Выберите местное отделение');
                     return;
                 }
                 
-                const district = districtsList.find(d => d.id == districtId);
+                const district = districtsList.find(function(d) { return d.id == districtId; });
                 if (!district) {
-                    alert('Ошибка: округ не найден');
+                    showError('Ошибка: округ не найден');
                     return;
                 }
                 
                 let chiefId = '';
-                
                 if (selectedBranchType === 'main') {
                     chiefId = 'chief_' + districtId + '_main';
                 } else {
@@ -353,17 +443,23 @@
                 localStorage.setItem('chiefDistrictName', district.name);
                 localStorage.setItem('chiefBranchType', selectedBranchType);
                 
+                setLoading(true);
                 try {
-                    const { data: existing } = await supabaseClient
+                    // Проверяем существует ли шеф
+                    const { data: existing, error: selectError } = await supabaseClient
                         .from('chiefs')
                         .select('id')
                         .eq('id', chiefId)
                         .maybeSingle();
                     
+                    if (selectError) {
+                        console.warn('Ошибка проверки шефа:', selectError);
+                    }
+                    
                     if (!existing) {
                         await supabaseClient.from('chiefs').insert([{
                             id: chiefId,
-                            name: `Шеф ${district.name}${selectedBranchType === 'primary' ? ' (Первичка)' : ''}`,
+                            name: 'Шеф ' + district.name + (selectedBranchType === 'primary' ? ' (Первичка)' : ''),
                             district_id: parseInt(districtId),
                             primary_branch_id: selectedBranchType === 'primary' ? 1 : null
                         }]);
@@ -372,12 +468,14 @@
                     window.location.href = 'chief.html';
                 } catch (err) {
                     console.error('Ошибка при входе:', err);
-                    alert('Ошибка при входе: ' + err.message);
+                    showError('Ошибка при входе: ' + err.message);
+                    setLoading(false);
                 }
             });
 
+            // Загружаем данные
             loadDistricts();
-        });
+        })();
     </script>
 </body>
 </html>
