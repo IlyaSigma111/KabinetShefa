@@ -175,6 +175,23 @@
             margin-top: 4px;
         }
 
+        .type-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+        .type-raspush {
+            background: #f59e0b20;
+            color: #f59e0b;
+        }
+        .type-event {
+            background: #10b98120;
+            color: #10b981;
+        }
+
         .task-item {
             background: #0f1117;
             padding: 14px 16px;
@@ -346,7 +363,7 @@
                 <h2>🚀 Отправить задачу</h2>
                 <div class="info-box">
                     🔥 <strong>РАСПУШ</strong> — обязательны ссылка и срок!<br>
-                    🎉 <strong>СОБЫТИЕ</strong> — можно отправить без ссылки<br>
+                    🎉 <strong>СОБЫТИЕ</strong> — можно отправить без ссылки, шефы увидят кнопку "Участвовать"<br>
                     • Задача отправляется ВСЕМ шефам всех округов
                 </div>
                 <div class="selected-template-info">
@@ -401,12 +418,17 @@
                 return;
             }
             
-            container.innerHTML = data.map(t => `
-                <div class="template-item" onclick="selectTemplate(${t.id}, '${t.title.replace(/'/g, "\\'")}', '${t.type || 'raspush'}')">
-                    <strong>${t.title}</strong>
-                    <div class="template-desc">${t.description || ''}<br>${t.type === 'event' ? '🎉 Событие' : '📢 Распуш'}</div>
-                </div>
-            `).join('');
+            container.innerHTML = data.map(t => {
+                const typeLabel = t.type === 'event' ? '🎉 Событие' : '📢 Распуш';
+                const typeClass = t.type === 'event' ? 'type-event' : 'type-raspush';
+                return `
+                    <div class="template-item" onclick="selectTemplate(${t.id}, '${t.title.replace(/'/g, "\\'")}', '${t.type || 'raspush'}')">
+                        <strong>${t.title}</strong>
+                        <span class="type-badge ${typeClass}">${typeLabel}</span>
+                        <div class="template-desc">${t.description || ''}</div>
+                    </div>
+                `;
+            }).join('');
         }
 
         // Выбор шаблона
