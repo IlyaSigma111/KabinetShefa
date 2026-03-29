@@ -14,67 +14,15 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #0a0c10;
-            color: rgba(255, 255, 255, 0.95);
+            background: #f5f7fa;
+            color: #1a202c;
             min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .dark-glow {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .glow-sphere {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.4;
-        }
-
-        .sphere-1 {
-            width: 600px;
-            height: 600px;
-            top: -200px;
-            right: -200px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-        }
-
-        .sphere-2 {
-            width: 500px;
-            height: 500px;
-            bottom: -200px;
-            left: -100px;
-            background: linear-gradient(135deg, #ff6b6b, #ff8e53);
-        }
-
-        .sphere-3 {
-            width: 400px;
-            height: 400px;
-            top: 50%;
-            left: 30%;
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-        }
-
-        .glass-card {
-            background: rgba(20, 25, 35, 0.35);
-            backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 48px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
         }
 
         .container {
             max-width: 500px;
             margin: 0 auto;
             padding: 20px;
-            position: relative;
-            z-index: 1;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -82,40 +30,40 @@
         }
 
         .card {
-            width: 100%;
+            background: white;
+            border-radius: 32px;
             padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
         }
 
         .logo {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 32px;
         }
 
         .logo-icon {
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.05);
+            width: 70px;
+            height: 70px;
+            background: #e2e8f0;
             border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
-            margin: 0 auto 20px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 36px;
+            margin: 0 auto 16px;
         }
 
         .logo-text {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
-            background: linear-gradient(135deg, #fff, #b0c4ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #1a202c;
         }
 
         .logo-sub {
             font-size: 13px;
-            opacity: 0.5;
-            margin-top: 8px;
+            color: #718096;
+            margin-top: 6px;
         }
 
         .form-group {
@@ -125,51 +73,52 @@
         label {
             display: block;
             font-size: 12px;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            opacity: 0.6;
-            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+            color: #4a5568;
+            margin-bottom: 8px;
         }
 
         select {
             width: 100%;
-            padding: 16px 20px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 28px;
-            color: white;
+            padding: 14px 16px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            color: #1a202c;
             font-size: 16px;
             font-family: inherit;
             cursor: pointer;
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffffff80' d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%234a5568' d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 20px center;
+            background-position: right 16px center;
         }
 
         button {
             width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, rgba(108, 140, 255, 0.3), rgba(118, 75, 162, 0.3));
-            border: 1px solid rgba(108, 140, 255, 0.3);
+            padding: 14px;
+            background: #3b82f6;
+            border: none;
             border-radius: 40px;
             color: white;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
-            margin-top: 16px;
+            margin-top: 8px;
         }
 
         button:hover {
-            background: linear-gradient(135deg, rgba(108, 140, 255, 0.45), rgba(118, 75, 162, 0.45));
-            transform: translateY(-2px);
+            background: #2563eb;
+            transform: translateY(-1px);
         }
 
         .branch-group {
             margin-top: 20px;
             padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: 1px solid #e2e8f0;
             display: none;
         }
 
@@ -179,29 +128,30 @@
 
         .radio-group {
             display: flex;
-            gap: 15px;
+            gap: 12px;
         }
 
         .radio-option {
             flex: 1;
             text-align: center;
-            padding: 14px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 24px;
+            padding: 12px;
+            background: #f1f5f9;
+            border-radius: 20px;
             cursor: pointer;
             transition: all 0.2s;
-            border: 1px solid transparent;
+            border: 1px solid #e2e8f0;
         }
 
         .radio-option.selected {
-            background: rgba(108, 140, 255, 0.2);
-            border-color: rgba(108, 140, 255, 0.4);
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: white;
         }
 
         .radio-option span:first-child {
-            font-size: 28px;
+            font-size: 24px;
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         @media (max-width: 600px) {
@@ -209,26 +159,15 @@
                 padding: 28px 24px;
             }
             .logo-text {
-                font-size: 24px;
-            }
-            .logo-icon {
-                width: 65px;
-                height: 65px;
-                font-size: 32px;
+                font-size: 22px;
             }
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-    <div class="dark-glow">
-        <div class="glow-sphere sphere-1"></div>
-        <div class="glow-sphere sphere-2"></div>
-        <div class="glow-sphere sphere-3"></div>
-    </div>
-
     <div class="container">
-        <div class="card glass-card">
+        <div class="card">
             <div class="logo">
                 <div class="logo-icon">📰</div>
                 <div class="logo-text">Кабинет шеф-редактора</div>
@@ -266,8 +205,7 @@
             const SUPABASE_KEY = 'sb_publishable__WbXqBZhgBBU-dDFEvXVeA_PQYwa_y7';
             
             if (typeof supabase === 'undefined') {
-                console.error('Supabase не загружен');
-                document.getElementById('districtSelect').innerHTML = '<option>Ошибка загрузки</option>';
+                document.getElementById('districtSelect').innerHTML = '<option>Ошибка</option>';
                 return;
             }
             
@@ -276,27 +214,11 @@
             let selectedBranchType = 'main';
 
             async function loadDistricts() {
-                try {
-                    const { data, error } = await sb.from('districts').select('*').order('name');
-                    if (error) {
-                        console.error('Ошибка загрузки округов:', error);
-                        document.getElementById('districtSelect').innerHTML = '<option>Ошибка загрузки</option>';
-                        return;
-                    }
-                    if (data && data.length > 0) {
-                        districtsList = data;
-                        const select = document.getElementById('districtSelect');
-                        let options = '<option value="">Выберите округ</option>';
-                        for (let i = 0; i < data.length; i++) {
-                            options += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
-                        }
-                        select.innerHTML = options;
-                    } else {
-                        document.getElementById('districtSelect').innerHTML = '<option>Нет данных</option>';
-                    }
-                } catch (err) {
-                    console.error('Ошибка:', err);
-                    document.getElementById('districtSelect').innerHTML = '<option>Ошибка подключения</option>';
+                const { data } = await sb.from('districts').select('*').order('name');
+                if (data && data.length) {
+                    districtsList = data;
+                    const select = document.getElementById('districtSelect');
+                    select.innerHTML = '<option value="">Выберите округ</option>' + data.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
                 }
             }
 
@@ -310,59 +232,32 @@
 
             document.getElementById('districtSelect').addEventListener('change', (e) => {
                 const group = document.getElementById('branchGroup');
-                if (e.target.value) {
-                    group.classList.add('show');
-                } else {
-                    group.classList.remove('show');
-                }
+                if (e.target.value) group.classList.add('show');
+                else group.classList.remove('show');
             });
 
             document.getElementById('enterBtn').addEventListener('click', async () => {
                 const districtId = document.getElementById('districtSelect').value;
-                if (!districtId) {
-                    alert('Выберите округ');
-                    return;
-                }
+                if (!districtId) { alert('Выберите округ'); return; }
                 
                 const district = districtsList.find(d => d.id == districtId);
-                if (!district) {
-                    alert('Ошибка: округ не найден');
-                    return;
-                }
-                
-                let chiefId = '';
-                if (selectedBranchType === 'main') {
-                    chiefId = 'chief_' + districtId + '_main';
-                } else {
-                    chiefId = 'chief_' + districtId + '_primary';
-                }
+                const chiefId = selectedBranchType === 'main' ? `chief_${districtId}_main` : `chief_${districtId}_primary`;
                 
                 localStorage.setItem('chiefId', chiefId);
                 localStorage.setItem('chiefDistrictName', district.name);
                 localStorage.setItem('chiefBranchType', selectedBranchType);
                 localStorage.setItem('chiefDistrictId', districtId);
                 
-                try {
-                    const { data: existing } = await sb
-                        .from('chiefs')
-                        .select('id')
-                        .eq('id', chiefId)
-                        .maybeSingle();
-                    
-                    if (!existing) {
-                        await sb.from('chiefs').insert([{
-                            id: chiefId,
-                            name: 'Шеф ' + district.name + (selectedBranchType === 'primary' ? ' (Первичка)' : ''),
-                            district_id: parseInt(districtId),
-                            primary_branch_id: selectedBranchType === 'primary' ? 1 : null
-                        }]);
-                    }
-                    
-                    window.location.href = 'chief.html';
-                } catch (err) {
-                    console.error('Ошибка при входе:', err);
-                    alert('Ошибка: ' + err.message);
+                const { data: existing } = await sb.from('chiefs').select('id').eq('id', chiefId).maybeSingle();
+                if (!existing) {
+                    await sb.from('chiefs').insert([{
+                        id: chiefId,
+                        name: `Шеф ${district.name}${selectedBranchType === 'primary' ? ' (Первичка)' : ''}`,
+                        district_id: parseInt(districtId),
+                        primary_branch_id: selectedBranchType === 'primary' ? 1 : null
+                    }]);
                 }
+                window.location.href = 'chief.html';
             });
 
             loadDistricts();
