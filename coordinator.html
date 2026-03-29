@@ -9,16 +9,17 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: #0a0c10;
-            color: #fff;
+            color: rgba(255, 255, 255, 0.95);
             min-height: 100vh;
         }
 
-        .glow-bg {
+        .dark-glow {
             position: fixed;
             top: 0;
             left: 0;
@@ -27,32 +28,35 @@
             z-index: -1;
             overflow: hidden;
         }
-        .glow {
+
+        .glow-sphere {
             position: absolute;
             border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.3;
+            filter: blur(80px);
+            opacity: 0.4;
         }
-        .glow-1 { width: 500px; height: 500px; top: -200px; right: -200px; background: #667eea; }
-        .glow-2 { width: 400px; height: 400px; bottom: -150px; left: -150px; background: #a855f7; }
-        .glow-3 { width: 350px; height: 350px; top: 50%; left: 30%; background: #3b82f6; }
+
+        .sphere-1 { width: 600px; height: 600px; top: -200px; right: -200px; background: linear-gradient(135deg, #667eea, #764ba2); }
+        .sphere-2 { width: 500px; height: 500px; bottom: -200px; left: -100px; background: linear-gradient(135deg, #ff6b6b, #ff8e53); }
+        .sphere-3 { width: 400px; height: 400px; top: 50%; left: 30%; background: linear-gradient(135deg, #4facfe, #00f2fe); }
+
+        .glass-card {
+            background: rgba(20, 25, 35, 0.35);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 32px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+        }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
-        }
-
-        .card {
-            background: #1a1e2a;
-            border-radius: 28px;
-            padding: 20px 28px;
-            margin-bottom: 24px;
-            border: 1px solid #2d3748;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            padding: 24px;
         }
 
         .header {
+            padding: 20px 28px;
+            margin-bottom: 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -63,12 +67,14 @@
         h1 {
             font-size: 26px;
             font-weight: 700;
-            color: #fff;
+            background: linear-gradient(135deg, #fff, #b0c4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .subtitle {
             font-size: 14px;
-            color: #9ca3af;
+            opacity: 0.6;
         }
 
         .tabs {
@@ -76,50 +82,51 @@
             gap: 12px;
             flex-wrap: wrap;
             margin-bottom: 24px;
-            border-bottom: 1px solid #2d3748;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             padding-bottom: 12px;
         }
+
         .tab-btn {
             padding: 10px 24px;
             background: transparent;
             border: none;
             border-radius: 40px;
-            color: #9ca3af;
+            color: rgba(255, 255, 255, 0.7);
             font-size: 15px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
         }
+
         .tab-btn:hover {
             color: #fff;
             background: rgba(108, 140, 255, 0.1);
         }
-        .tab-btn.active {
-            background: #6c8cff;
-            color: #fff;
-        }
 
-        .panels-container {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
+        .tab-btn.active {
+            background: rgba(108, 140, 255, 0.3);
+            color: #fff;
         }
 
         .panel {
             display: none;
-            background: #1a1e2a;
-            border-radius: 24px;
-            padding: 24px;
-            border: 1px solid #2d3748;
+            background: rgba(20, 25, 35, 0.3);
+            backdrop-filter: blur(20px);
+            border-radius: 28px;
+            padding: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .panel.active { display: block; }
+
+        .panel.active {
+            display: block;
+        }
+
         .panel h2 {
             font-size: 20px;
             margin-bottom: 20px;
             padding-bottom: 12px;
-            border-bottom: 1px solid #2d3748;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             font-weight: 600;
-            color: #fff;
         }
 
         .grid-2cols {
@@ -130,87 +137,81 @@
 
         input, select, textarea {
             width: 100%;
-            padding: 12px 14px;
-            background: #0f1117;
-            border: 1px solid #2d3748;
-            border-radius: 20px;
-            color: #fff;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            color: white;
             font-size: 14px;
             margin-bottom: 14px;
             font-family: inherit;
         }
+
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: #6c8cff;
+            border-color: rgba(108, 140, 255, 0.4);
         }
+
         textarea {
             min-height: 90px;
             resize: vertical;
         }
+
         button {
             width: 100%;
             padding: 12px;
-            background: #6c8cff;
-            border: none;
+            background: rgba(108, 140, 255, 0.3);
+            border: 1px solid rgba(108, 140, 255, 0.4);
             border-radius: 40px;
-            color: #fff;
+            color: white;
             font-weight: 600;
             font-size: 14px;
             cursor: pointer;
             transition: all 0.2s;
         }
+
         button:hover {
-            background: #5a7cff;
+            background: rgba(108, 140, 255, 0.45);
             transform: translateY(-1px);
         }
+
         .mass-btn {
-            background: #a855f7;
-        }
-        .delete-btn {
-            background: #f8717120;
-            color: #f87171;
-            margin-top: 10px;
-        }
-        .delete-btn:hover {
-            background: #f8717140;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(236, 72, 153, 0.4));
+            border-color: rgba(168, 85, 247, 0.5);
         }
 
         .info-box {
-            background: #2d3748;
+            background: rgba(108, 140, 255, 0.1);
             border-left: 4px solid #a855f7;
             padding: 14px 18px;
             border-radius: 20px;
             margin-bottom: 24px;
             font-size: 13px;
             line-height: 1.5;
-            color: #e5e7eb;
         }
 
         .template-item, .board-item {
-            background: #0f1117;
+            background: rgba(0, 0, 0, 0.4);
             padding: 14px 16px;
             border-radius: 20px;
             margin-bottom: 12px;
-            border: 1px solid #2d3748;
             cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.2s;
         }
+
         .template-item:hover, .board-item:hover {
-            background: #1e2a3a;
+            background: rgba(108, 140, 255, 0.1);
             transform: translateX(5px);
         }
+
         .template-item.selected {
-            background: #2d3a4a;
-            border-color: #6c8cff;
+            background: rgba(108, 140, 255, 0.2);
+            border-color: rgba(108, 140, 255, 0.4);
         }
+
         .template-item strong {
             font-size: 15px;
-            color: #fff;
-        }
-        .template-desc {
-            font-size: 12px;
-            color: #9ca3af;
-            margin-top: 4px;
         }
 
         .type-badge {
@@ -218,12 +219,12 @@
             padding: 2px 8px;
             border-radius: 12px;
             font-size: 10px;
-            font-weight: 500;
             margin-left: 8px;
         }
-        .type-raspush { background: #f59e0b20; color: #f59e0b; }
-        .type-event { background: #10b98120; color: #10b981; }
-        .type-optional { background: #6c8cff20; color: #6c8cff; }
+
+        .type-raspush { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+        .type-event { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+        .type-optional { background: rgba(108, 140, 255, 0.2); color: #6c8cff; }
 
         .link-group {
             display: flex;
@@ -231,31 +232,28 @@
             margin-bottom: 10px;
             align-items: center;
         }
+
         .link-group input {
             flex: 1;
             margin-bottom: 0;
         }
+
         .remove-link {
-            background: #f8717120;
+            background: rgba(239, 68, 68, 0.2);
             color: #f87171;
             padding: 12px;
             border-radius: 20px;
             cursor: pointer;
             width: 44px;
             text-align: center;
-            transition: all 0.2s;
-        }
-        .remove-link:hover {
-            background: #f8717140;
         }
 
         .selected-info {
-            background: #0f1117;
+            background: rgba(0, 0, 0, 0.4);
             padding: 14px;
             border-radius: 20px;
             margin-bottom: 20px;
             text-align: center;
-            border: 1px solid #2d3748;
         }
 
         .warning-text {
@@ -268,12 +266,12 @@
         }
 
         .task-item {
-            background: #0f1117;
+            background: rgba(0, 0, 0, 0.4);
             padding: 14px;
             border-radius: 20px;
             margin-bottom: 12px;
-            border: 1px solid #2d3748;
         }
+
         .task-header {
             display: flex;
             justify-content: space-between;
@@ -281,52 +279,52 @@
             flex-wrap: wrap;
             gap: 8px;
         }
+
         .task-status {
-            display: inline-block;
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
             padding: 4px 12px;
             border-radius: 30px;
             font-size: 11px;
-            background: #f59e0b20;
-            color: #f59e0b;
         }
-        .participants-count {
-            font-size: 12px;
-            color: #10b981;
-            margin-top: 8px;
+
+        .delete-btn {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            margin-top: 10px;
+            padding: 8px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
         }
 
         .empty-state {
             text-align: center;
             padding: 40px 20px;
-            color: #9ca3af;
+            opacity: 0.6;
         }
 
         @media (max-width: 768px) {
-            .container { padding: 12px; }
-            .card { padding: 16px 20px; }
+            .container { padding: 16px; }
+            .grid-2cols { grid-template-columns: 1fr; gap: 20px; }
+            .panel { padding: 20px; }
             h1 { font-size: 22px; }
-            .tabs { gap: 8px; }
             .tab-btn { padding: 8px 16px; font-size: 13px; }
-            .panel { padding: 18px; }
-            .panel h2 { font-size: 18px; }
-            .grid-2cols { grid-template-columns: 1fr; gap: 16px; }
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-    <div class="glow-bg">
-        <div class="glow glow-1"></div>
-        <div class="glow glow-2"></div>
-        <div class="glow glow-3"></div>
+    <div class="dark-glow">
+        <div class="glow-sphere sphere-1"></div>
+        <div class="glow-sphere sphere-2"></div>
+        <div class="glow-sphere sphere-3"></div>
     </div>
 
     <div class="container">
-        <div class="card">
-            <div class="header">
-                <h1>🎛️ Медиакоординатор</h1>
-                <div class="subtitle">Управление задачами и доской объявлений</div>
-            </div>
+        <div class="header glass-card">
+            <h1>🎛️ Медиакоординатор</h1>
+            <div class="subtitle">Управление задачами и доской объявлений</div>
         </div>
 
         <div class="tabs">
@@ -388,7 +386,7 @@
                     <div class="selected-info">
                         ⚡ Выбран шаблон: <strong id="selectedTemplateName">не выбран</strong>
                     </div>
-                    
+
                     <div id="linksBlock">
                         <div id="linksContainer">
                             <div class="link-group">
@@ -396,9 +394,9 @@
                                 <div class="remove-link" onclick="removeLink(1)" style="display: none;">✖</div>
                             </div>
                         </div>
-                        <button type="button" id="addLinkBtn" onclick="addLinkInput()" style="background: #2d3748; margin-top: 8px; display: none;">+ Добавить ещё ссылку</button>
+                        <button type="button" id="addLinkBtn" onclick="addLinkInput()" style="background: rgba(45, 55, 72, 0.8); margin-top: 8px; display: none;">+ Добавить ещё ссылку</button>
                     </div>
-                    
+
                     <input type="datetime-local" id="taskDeadline" placeholder="📅 Срок выполнения">
                     <textarea id="taskComment" placeholder="💬 Комментарий для шефов (опционально)"></textarea>
                     <button class="mass-btn" onclick="sendToAll()">📤 ОТПРАВИТЬ ВСЕМ ШЕФАМ</button>
@@ -411,7 +409,7 @@
             </div>
         </div>
 
-        <!-- Панель активных задач (дублируется, но оставим для отдельной вкладки) -->
+        <!-- Панель активных задач (отдельная вкладка) -->
         <div id="active-panel" class="panel">
             <h2>📊 Активные задачи</h2>
             <div id="activeTasksList2" class="empty-state">Загрузка активных задач...</div>
@@ -422,7 +420,7 @@
         const SUPABASE_URL = 'https://csvynjkhhlexbnwpziup.supabase.co';
         const SUPABASE_KEY = 'sb_publishable__WbXqBZhgBBU-dDFEvXVeA_PQYwa_y7';
         const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        
+
         let selectedTemplateId = null;
         let selectedTemplateTitle = null;
         let selectedTemplateType = null;
@@ -434,7 +432,7 @@
                 .from('board_tasks')
                 .select('*')
                 .order('created_at', { ascending: false });
-            
+
             const container = document.getElementById('boardTasksList');
             if (error) {
                 container.innerHTML = '<div class="empty-state">❌ Ошибка загрузки</div>';
@@ -444,7 +442,7 @@
                 container.innerHTML = '<div class="empty-state">📭 Нет заданий на доске</div>';
                 return;
             }
-            
+
             const { data: participants } = await sb.from('board_participants').select('board_task_id');
             const counts = {};
             if (participants) {
@@ -452,41 +450,41 @@
                     counts[p.board_task_id] = (counts[p.board_task_id] || 0) + 1;
                 }
             }
-            
+
             let html = '';
             for (let task of data) {
                 const count = counts[task.id] || 0;
                 html += `
                     <div class="board-item">
                         <strong>${task.title}</strong>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 4px;">📅 До: ${new Date(task.deadline).toLocaleString()}</div>
+                        <div style="font-size: 11px; opacity: 0.7; margin-top: 4px;">📅 До: ${new Date(task.deadline).toLocaleString()}</div>
                         <div style="font-size: 12px; margin-top: 6px;">${task.description || ''}</div>
                         <div style="font-size: 11px; margin-top: 6px; color: #6c8cff;">📋 ТЗ: ${task.technical_task || '-'}</div>
-                        <div class="participants-count">👥 Участников: ${count}</div>
+                        <div style="font-size: 11px; margin-top: 4px;">👥 Участников: ${count}</div>
                         <button class="delete-btn" onclick="deleteBoardTask(${task.id})">🗑 Удалить</button>
                     </div>
                 `;
             }
             container.innerHTML = html;
         }
-        
-        async function deleteBoardTask(id) {
+
+        window.deleteBoardTask = async function(id) {
             if (!confirm('Удалить задание? Участники потеряют доступ.')) return;
             await sb.from('board_participants').delete().eq('board_task_id', id);
             await sb.from('board_tasks').delete().eq('id', id);
             loadBoardTasks();
             showToast('✅ Задание удалено');
-        }
-        
-        async function createBoardTask() {
+        };
+
+        window.createBoardTask = async function() {
             const title = document.getElementById('boardTitle').value;
             const desc = document.getElementById('boardDesc').value;
             const tech = document.getElementById('boardTech').value;
             const deadline = document.getElementById('boardDeadline').value;
-            
+
             if (!title) { alert('Введите название задания'); return; }
             if (!deadline) { alert('Укажите срок выполнения'); return; }
-            
+
             const { error } = await sb.from('board_tasks').insert([{
                 title: title,
                 description: desc,
@@ -494,19 +492,19 @@
                 deadline: new Date(deadline).toISOString(),
                 is_active: true
             }]);
-            
+
             if (error) {
                 alert('Ошибка: ' + error.message);
                 return;
             }
-            
+
             document.getElementById('boardTitle').value = '';
             document.getElementById('boardDesc').value = '';
             document.getElementById('boardTech').value = '';
             document.getElementById('boardDeadline').value = '';
             loadBoardTasks();
             showToast('✅ Задание опубликовано на доске');
-        }
+        };
 
         // ========== ШАБЛОНЫ ==========
         async function loadTemplates() {
@@ -515,7 +513,7 @@
                 .select('*')
                 .eq('is_active', true)
                 .order('id');
-            
+
             const container = document.getElementById('templatesList');
             if (error) {
                 container.innerHTML = '<div class="empty-state">❌ Ошибка загрузки</div>';
@@ -525,7 +523,7 @@
                 container.innerHTML = '<div class="empty-state">📭 Нет шаблонов. Создайте первый!</div>';
                 return;
             }
-            
+
             container.innerHTML = data.map(t => {
                 let typeLabel = '';
                 let typeClass = '';
@@ -536,27 +534,27 @@
                     <div class="template-item" onclick="selectTemplate(${t.id}, '${t.title.replace(/'/g, "\\'")}', '${t.type || 'raspush'}')">
                         <strong>${t.title}</strong>
                         <span class="type-badge ${typeClass}">${typeLabel}</span>
-                        <div class="template-desc">${t.description || ''}</div>
+                        <div style="font-size: 12px; opacity: 0.6; margin-top: 4px;">${t.description || ''}</div>
                     </div>
                 `;
             }).join('');
         }
-        
+
         window.selectTemplate = function(id, title, type) {
             selectedTemplateId = id;
             selectedTemplateTitle = title;
             selectedTemplateType = type;
             document.getElementById('selectedTemplateName').innerText = title;
-            
+
             document.querySelectorAll('.template-item').forEach(item => {
                 item.classList.remove('selected');
             });
             event.currentTarget.classList.add('selected');
-            
+
             const addLinkBtn = document.getElementById('addLinkBtn');
             const warning = document.getElementById('requiredWarning');
             const infoBox = document.getElementById('infoBox');
-            
+
             if (type === 'raspush') {
                 addLinkBtn.style.display = 'block';
                 warning.style.display = 'block';
@@ -573,7 +571,7 @@
                 document.querySelector('#linksContainer input').placeholder = '🔗 Ссылка (опционально)';
             }
         };
-        
+
         window.addLinkInput = function() {
             if (selectedTemplateType !== 'raspush') return;
             linkCounter++;
@@ -587,12 +585,12 @@
             `;
             container.appendChild(newDiv);
         };
-        
+
         window.removeLink = function(id) {
             const group = document.getElementById(`link-group-${id}`);
             if (group) group.remove();
         };
-        
+
         function getAllLinks() {
             const links = [];
             for (let i = 1; i <= linkCounter; i++) {
@@ -604,17 +602,17 @@
             return links;
         }
 
-        // ========== ОТПРАВКА ==========
-        async function sendToAll() {
+        // ========== ОТПРАВКА ЗАДАЧИ ==========
+        window.sendToAll = async function() {
             if (!selectedTemplateId) {
                 alert('Выберите шаблон задачи');
                 return;
             }
-            
+
             const links = getAllLinks();
             const deadline = document.getElementById('taskDeadline').value;
             const comment = document.getElementById('taskComment').value;
-            
+
             if (selectedTemplateType === 'raspush') {
                 if (links.length === 0) {
                     alert('⚠️ Для задачи "РАСПУШ" необходимо указать хотя бы одну ссылку!');
@@ -625,26 +623,26 @@
                     return;
                 }
             }
-            
+
             const allLinks = links.join(', ');
-            
+
             const { data: allChiefs, error: chiefsError } = await sb
                 .from('chiefs')
                 .select('id, district_id');
-            
+
             if (chiefsError) {
                 alert('Ошибка получения списка шефов: ' + chiefsError.message);
                 return;
             }
-            
+
             if (!allChiefs || allChiefs.length === 0) {
                 alert('Нет шефов для отправки.');
                 return;
             }
-            
+
             let successCount = 0;
             let errorCount = 0;
-            
+
             for (const chief of allChiefs) {
                 const { error: insertError } = await sb
                     .from('assignments')
@@ -658,17 +656,17 @@
                         status: 'pending',
                         type: selectedTemplateType
                     }]);
-                
+
                 if (insertError) {
                     errorCount++;
+                    console.error('Ошибка для шефа', chief.id, insertError);
                 } else {
                     successCount++;
                 }
             }
-            
+
             alert(`✅ Задача "${selectedTemplateTitle}" отправлена ${successCount} шефам!\n❌ Ошибок: ${errorCount}`);
-            
-            // Очищаем поля
+
             document.getElementById('linksContainer').innerHTML = `
                 <div class="link-group">
                     <input type="text" id="taskLink1" placeholder="🔗 Ссылка 1">
@@ -678,10 +676,10 @@
             linkCounter = 1;
             document.getElementById('taskDeadline').value = '';
             document.getElementById('taskComment').value = '';
-            
+
             loadActiveTasks();
             loadActiveTasks2();
-        }
+        };
 
         // ========== АКТИВНЫЕ ЗАДАЧИ ==========
         async function loadActiveTasks() {
@@ -691,7 +689,7 @@
                 .neq('status', 'completed')
                 .order('created_at', { ascending: false })
                 .limit(40);
-            
+
             const container = document.getElementById('activeTasksList');
             if (error) {
                 container.innerHTML = '<div class="empty-state">❌ Ошибка загрузки</div>';
@@ -701,7 +699,7 @@
                 container.innerHTML = '<div class="empty-state">✅ Нет активных задач</div>';
                 return;
             }
-            
+
             container.innerHTML = data.map(task => {
                 let deadlineHtml = '';
                 if (task.deadline) {
@@ -720,7 +718,7 @@
                 `;
             }).join('');
         }
-        
+
         async function loadActiveTasks2() {
             const { data, error } = await sb
                 .from('assignments')
@@ -728,7 +726,7 @@
                 .neq('status', 'completed')
                 .order('created_at', { ascending: false })
                 .limit(40);
-            
+
             const container = document.getElementById('activeTasksList2');
             if (error) {
                 container.innerHTML = '<div class="empty-state">❌ Ошибка загрузки</div>';
@@ -738,7 +736,7 @@
                 container.innerHTML = '<div class="empty-state">✅ Нет активных задач</div>';
                 return;
             }
-            
+
             container.innerHTML = data.map(task => {
                 let deadlineHtml = '';
                 if (task.deadline) {
@@ -763,21 +761,21 @@
             const title = document.getElementById('newTemplateTitle').value;
             const desc = document.getElementById('newTemplateDesc').value;
             const type = document.getElementById('templateType').value;
-            
+
             if (!title) {
                 alert('Введите название шаблона');
                 return;
             }
-            
+
             const { error } = await sb
                 .from('task_templates')
                 .insert([{ title, description: desc, type: type, is_active: true }]);
-            
+
             if (error) {
                 alert('Ошибка: ' + error.message);
                 return;
             }
-            
+
             document.getElementById('newTemplateTitle').value = '';
             document.getElementById('newTemplateDesc').value = '';
             loadTemplates();
@@ -801,7 +799,7 @@
                 document.getElementById(btn.dataset.tab + '-panel').classList.add('active');
                 if (btn.dataset.tab === 'board') loadBoardTasks();
                 if (btn.dataset.tab === 'templates') loadTemplates();
-                if (btn.dataset.tab === 'send') { loadActiveTasks(); }
+                if (btn.dataset.tab === 'send') loadActiveTasks();
                 if (btn.dataset.tab === 'active') loadActiveTasks2();
             };
         });
@@ -811,7 +809,7 @@
         loadTemplates();
         loadActiveTasks();
         loadActiveTasks2();
-        
+
         setInterval(() => {
             if (document.querySelector('.tab-btn.active')?.dataset.tab === 'send') loadActiveTasks();
             if (document.querySelector('.tab-btn.active')?.dataset.tab === 'active') loadActiveTasks2();
