@@ -106,7 +106,6 @@
             font-size: 14px;
             margin-bottom: 14px;
             font-family: inherit;
-            transition: all 0.2s;
         }
 
         input:focus, select:focus, textarea:focus {
@@ -142,6 +141,40 @@
         }
         .mass-btn:hover {
             background: #9747ff;
+        }
+
+        .add-link-btn {
+            background: #2d3748;
+            margin-top: 8px;
+        }
+        .add-link-btn:hover {
+            background: #3d4a5a;
+        }
+
+        .links-container {
+            margin-bottom: 16px;
+        }
+        .link-input-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+            align-items: center;
+        }
+        .link-input-group input {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        .remove-link {
+            background: #f8717120;
+            color: #f87171;
+            padding: 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            width: 44px;
+            text-align: center;
+        }
+        .remove-link:hover {
+            background: #f8717140;
         }
 
         .template-item {
@@ -190,6 +223,10 @@
         .type-event {
             background: #10b98120;
             color: #10b981;
+        }
+        .type-optional {
+            background: #6c8cff20;
+            color: #6c8cff;
         }
 
         .task-item {
@@ -352,8 +389,9 @@
                 <input type="text" id="newTemplateTitle" placeholder="Название шаблона">
                 <textarea id="newTemplateDesc" placeholder="Описание шаблона"></textarea>
                 <select id="templateType">
-                    <option value="raspush">📢 Распуш (ссылки t.me/vk.com)</option>
-                    <option value="event">🎉 Событие (участие + любая ссылка)</option>
+                    <option value="raspush">📢 Распуш (обязательны ссылки и срок)</option>
+                    <option value="event">🎉 Событие (участие + ссылка)</option>
+                    <option value="optional">⭐ По желанию (дополнительное задание)</option>
                 </select>
                 <button onclick="createTemplate()">+ Создать шаблон</button>
             </div>
@@ -362,18 +400,28 @@
             <div class="panel">
                 <h2>🚀 Отправить задачу</h2>
                 <div class="info-box">
-                    🔥 <strong>РАСПУШ</strong> — обязательны ссылка и срок!<br>
-                    🎉 <strong>СОБЫТИЕ</strong> — можно отправить без ссылки, шефы увидят кнопку "Участвовать"<br>
+                    🔥 <strong>РАСПУШ</strong> — можно добавить несколько ссылок (для разных соцсетей)<br>
+                    🎉 <strong>СОБЫТИЕ</strong> — можно отправить без ссылки<br>
+                    ⭐ <strong>ПО ЖЕЛАНИЮ</strong> — дополнительное задание<br>
                     • Задача отправляется ВСЕМ шефам всех округов
                 </div>
                 <div class="selected-template-info">
                     ⚡ Выбран шаблон: <strong id="selectedTemplateName">не выбран</strong>
                 </div>
-                <input type="text" id="taskLink" placeholder="🔗 Ссылка на материал (обязательно для РАСПУШ)">
+                
+                <!-- Блок для нескольких ссылок -->
+                <div class="links-container" id="linksContainer">
+                    <div class="link-input-group">
+                        <input type="text" id="taskLink1" placeholder="🔗 Ссылка 1 (обязательно для РАСПУШ)">
+                        <div class="remove-link" onclick="removeLink(1)" style="display: none;">✖</div>
+                    </div>
+                </div>
+                <button type="button" class="add-link-btn" onclick="addLinkInput()">+ Добавить ещё ссылку</button>
+                
                 <input type="datetime-local" id="taskDeadline" placeholder="📅 Срок выполнения (обязательно для РАСПУШ)">
                 <textarea id="taskComment" placeholder="💬 Комментарий для шефов (опционально)"></textarea>
                 <button class="mass-btn" onclick="sendToAll()">📤 ОТПРАВИТЬ ЗАДАЧУ ВСЕМ ШЕФАМ</button>
-                <div id="requiredWarning" class="required-warning">⚠️ Для задачи "РАСПУШ" обязательны ссылка и срок выполнения!</div>
+                <div id="requiredWarning" class="required-warning">⚠️ Для задачи "РАСПУШ" обязательны ссылки и срок выполнения!</div>
             </div>
 
             <!-- Панель активных задач -->
@@ -398,6 +446,38 @@
         let selectedTemplateId = null;
         let selectedTemplateTitle = null;
         let selectedTemplateType = null;
+        let linkCounter = 1;
+
+        // Добавление нового поля для ссылки
+        window.addLinkInput = function() {
+            linkCounter++;
+            const container = document.getElementById('linksContainer');
+            const newDiv = document.createElement('div');
+            newDiv.className = 'link-input-group';
+            newDiv.id = `link-group-${linkCounter}`;
+            newDiv.innerHTML = `
+                <input type="text" id="taskLink${linkCounter}" placeholder="🔗 Ссылка ${linkCounter}">
+                <div class="remove-link" onclick="removeLink(${linkCounter})">✖</div>
+            `;
+            container.appendChild(newDiv);
+        };
+
+        window.removeLink = function(id) {
+            const group = document.getElementById(`link-group-${id}`);
+            if (group) group.remove();
+        };
+
+        // Получить все ссылки
+        function getAllLinks() {
+            const links = [];
+            for (let i = 1; i <= linkCounter; i++) {
+                const input = document.getElementById(`taskLink${i}`);
+                if (input && input.value.trim()) {
+                    links.push(input.value.trim());
+                }
+            }
+            return links;
+        }
 
         // Загрузка шаблонов
         async function loadTemplates() {
@@ -419,8 +499,11 @@
             }
             
             container.innerHTML = data.map(t => {
-                const typeLabel = t.type === 'event' ? '🎉 Событие' : '📢 Распуш';
-                const typeClass = t.type === 'event' ? 'type-event' : 'type-raspush';
+                let typeLabel = '';
+                let typeClass = '';
+                if (t.type === 'raspush') { typeLabel = '📢 Распуш'; typeClass = 'type-raspush'; }
+                else if (t.type === 'event') { typeLabel = '🎉 Событие'; typeClass = 'type-event'; }
+                else { typeLabel = '⭐ По желанию'; typeClass = 'type-optional'; }
                 return `
                     <div class="template-item" onclick="selectTemplate(${t.id}, '${t.title.replace(/'/g, "\\'")}', '${t.type || 'raspush'}')">
                         <strong>${t.title}</strong>
@@ -514,7 +597,6 @@
                 return;
             }
             
-            // Группируем по округам
             const byDistrict = {};
             for (let a of data) {
                 const district = a.chiefs?.districts?.name || 'Неизвестно';
@@ -574,14 +656,14 @@
                 return;
             }
             
-            const link = document.getElementById('taskLink').value.trim();
+            const links = getAllLinks();
             const deadline = document.getElementById('taskDeadline').value;
             const comment = document.getElementById('taskComment').value;
             
             // Проверка для РАСПУШ
             if (selectedTemplateType === 'raspush') {
-                if (!link) {
-                    alert('⚠️ Для задачи "РАСПУШ" необходимо указать ссылку!');
+                if (links.length === 0) {
+                    alert('⚠️ Для задачи "РАСПУШ" необходимо указать хотя бы одну ссылку!');
                     return;
                 }
                 if (!deadline) {
@@ -589,6 +671,9 @@
                     return;
                 }
             }
+            
+            // Объединяем ссылки в одну строку через запятую
+            const allLinks = links.join(', ');
             
             // Получаем всех шефов
             const { data: allChiefs, error: chiefsError } = await sb
@@ -601,7 +686,7 @@
             }
             
             if (!allChiefs || allChiefs.length === 0) {
-                alert('Нет шефов для отправки. Сначала создайте шефов через SQL.');
+                alert('Нет шефов для отправки.');
                 return;
             }
             
@@ -615,7 +700,7 @@
                         template_id: selectedTemplateId,
                         chief_id: chief.id,
                         district_id: chief.district_id,
-                        link: link || null,
+                        link: allLinks || null,
                         coordinator_comment: comment || null,
                         deadline: deadline ? new Date(deadline).toISOString() : null,
                         status: 'pending',
@@ -632,7 +717,14 @@
             
             alert(`✅ Задача "${selectedTemplateTitle}" отправлена ${successCount} шефам!\n❌ Ошибок: ${errorCount}`);
             
-            document.getElementById('taskLink').value = '';
+            // Очищаем поля
+            document.getElementById('linksContainer').innerHTML = `
+                <div class="link-input-group" id="link-group-1">
+                    <input type="text" id="taskLink1" placeholder="🔗 Ссылка 1 (обязательно для РАСПУШ)">
+                    <div class="remove-link" onclick="removeLink(1)" style="display: none;">✖</div>
+                </div>
+            `;
+            linkCounter = 1;
             document.getElementById('taskDeadline').value = '';
             document.getElementById('taskComment').value = '';
             
@@ -645,7 +737,6 @@
         loadActiveTasks();
         loadParticipants();
         
-        // Автообновление
         setInterval(loadActiveTasks, 15000);
         setInterval(loadParticipants, 30000);
     </script>
