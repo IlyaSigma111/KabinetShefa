@@ -293,9 +293,8 @@
             min-width: 110px;
         }
 
-        /* Стили для блока участников */
         .submissions-container {
-            max-height: 500px;
+            max-height: 600px;
             overflow-y: auto;
         }
 
@@ -318,6 +317,10 @@
 
         .district-header:hover {
             background: #e2e8f0;
+        }
+
+        .district-content {
+            display: block;
         }
 
         .submission-item {
@@ -413,14 +416,13 @@
             <button class="tab-btn" data-tab="active">📊 Активные задачи</button>
         </div>
 
-        <!-- Панель доски объявлений -->
         <div id="board-panel" class="panel active">
             <div class="grid-2cols">
                 <div>
                     <h2>📢 Создать задание на доску</h2>
                     <input type="text" id="boardTitle" placeholder="Название задания">
                     <textarea id="boardDesc" placeholder="Краткое описание задания"></textarea>
-                    <textarea id="boardTech" placeholder="📋 ТЗ (техническое задание): формат видео, требования, куда загружать..."></textarea>
+                    <textarea id="boardTech" placeholder="📋 ТЗ (техническое задание)"></textarea>
                     <div class="date-input-group">
                         <input type="number" id="boardDay" placeholder="День" min="1" max="31">
                         <select id="boardMonth">
@@ -442,13 +444,11 @@
             </div>
         </div>
 
-        <!-- Панель откликов участников -->
         <div id="submissions-panel" class="panel">
             <h2>📥 Отклики участников (ссылки на выполненные работы)</h2>
             <div id="submissionsList" class="empty-state">Загрузка...</div>
         </div>
 
-        <!-- Панель шаблонов -->
         <div id="templates-panel" class="panel">
             <div class="grid-2cols">
                 <div>
@@ -469,20 +469,12 @@
             </div>
         </div>
 
-        <!-- Панель отправки -->
         <div id="send-panel" class="panel">
             <div class="grid-2cols">
                 <div>
                     <h2>🚀 Отправить задачу всем шефам</h2>
-                    <div class="info-box" id="infoBox">
-                        🔥 <strong>РАСПУШ</strong> — можно добавить несколько ссылок<br>
-                        🎉 <strong>СОБЫТИЕ</strong> — можно отправить без ссылки<br>
-                        ⭐ <strong>ПО ЖЕЛАНИЮ</strong> — дополнительное задание
-                    </div>
-                    <div class="selected-info">
-                        ⚡ Выбран шаблон: <strong id="selectedTemplateName">не выбран</strong>
-                    </div>
-
+                    <div class="info-box" id="infoBox">🔥 <strong>РАСПУШ</strong> — можно добавить несколько ссылок<br>• Ссылки и срок обязательны!</div>
+                    <div class="selected-info">⚡ Выбран шаблон: <strong id="selectedTemplateName">не выбран</strong></div>
                     <div id="linksBlock">
                         <div id="linksContainer">
                             <div class="link-group">
@@ -492,7 +484,6 @@
                         </div>
                         <button type="button" id="addLinkBtn" onclick="addLinkInput()" style="background: #f1f5f9; margin-top: 8px; display: none;">+ Добавить ещё ссылку</button>
                     </div>
-
                     <div class="date-input-group">
                         <input type="number" id="taskDay" placeholder="День" min="1" max="31">
                         <select id="taskMonth">
@@ -516,7 +507,6 @@
             </div>
         </div>
 
-        <!-- Панель активных задач -->
         <div id="active-panel" class="panel">
             <h2>📊 Активные задачи (все шефы)</h2>
             <div id="activeTasksList2" class="empty-state">Загрузка активных задач...</div>
@@ -539,9 +529,7 @@
             const year = parseInt(document.getElementById(yearId)?.value);
             const hour = parseInt(document.getElementById(hourId)?.value);
             const minute = parseInt(document.getElementById(minuteId)?.value);
-            
             if (isNaN(day) || isNaN(month) || isNaN(year)) return null;
-            
             const date = new Date(year, month, day, isNaN(hour) ? 23 : hour, isNaN(minute) ? 59 : minute);
             return date.toISOString();
         }
@@ -549,66 +537,38 @@
         function formatDateForDisplay(dateStr) {
             if (!dateStr) return '';
             const date = new Date(dateStr);
-            return date.toLocaleString('ru-RU', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
+            return date.toLocaleString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
         }
 
         function escapeHtml(str) {
-            if (!str) return '';
+            if (str === null || str === undefined) return '';
+            if (typeof str !== 'string') str = String(str);
             return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
         }
 
-        // ========== ДОСКА ОБЪЯВЛЕНИЙ ==========
         async function loadBoardTasks() {
             try {
-                const { data, error } = await sb
-                    .from('board_tasks')
-                    .select('*')
-                    .order('created_at', { ascending: false });
-
+                const { data, error } = await sb.from('board_tasks').select('*').order('created_at', { ascending: false });
                 const container = document.getElementById('boardTasksList');
                 if (error) throw error;
-
                 if (!data || data.length === 0) {
                     container.innerHTML = '<div class="empty-state">📭 Нет заданий на доске</div>';
                     return;
                 }
-
                 let html = '';
                 for (let task of data) {
-                    html += `
-                        <div class="board-item">
-                            <strong>${escapeHtml(task.title)}</strong>
-                            <div style="font-size: 11px; color: #64748b; margin-top: 4px;">📅 До: ${formatDateForDisplay(task.deadline)}</div>
-                            <div style="font-size: 12px; margin-top: 6px;">${escapeHtml(task.description || '')}</div>
-                            <div style="font-size: 11px; margin-top: 6px; color: #4f46e5;">📋 ТЗ: ${escapeHtml(task.technical_task || '-')}</div>
-                            <button class="delete-btn" onclick="deleteBoardTask(${task.id})">🗑 Удалить задание</button>
-                        </div>
-                    `;
+                    html += `<div class="board-item"><strong>${escapeHtml(task.title)}</strong><div style="font-size: 11px; color: #64748b; margin-top: 4px;">📅 До: ${formatDateForDisplay(task.deadline)}</div><div style="font-size: 12px; margin-top: 6px;">${escapeHtml(task.description || '')}</div><div style="font-size: 11px; margin-top: 6px; color: #4f46e5;">📋 ТЗ: ${escapeHtml(task.technical_task || '-')}</div><button class="delete-btn" onclick="deleteBoardTask(${task.id})">🗑 Удалить задание</button></div>`;
                 }
                 container.innerHTML = html;
-            } catch (err) {
-                console.error('Ошибка загрузки доски:', err);
-                document.getElementById('boardTasksList').innerHTML = '<div class="empty-state">❌ Ошибка загрузки</div>';
-            }
+            } catch (err) { console.error(err); }
         }
 
         window.deleteBoardTask = async function(id) {
-            if (!confirm('Удалить задание? Все отклики участников будут удалены.')) return;
-            try {
-                await sb.from('board_submissions').delete().eq('board_task_id', id);
-                await sb.from('board_tasks').delete().eq('id', id);
-                loadBoardTasks();
-                loadSubmissions();
-                showToast('✅ Задание удалено');
-            } catch (err) {
-                alert('Ошибка: ' + err.message);
-            }
+            if (!confirm('Удалить задание?')) return;
+            await sb.from('board_submissions').delete().eq('board_task_id', id);
+            await sb.from('board_tasks').delete().eq('id', id);
+            loadBoardTasks(); loadSubmissions();
+            showToast('✅ Задание удалено');
         };
 
         window.createBoardTask = async function() {
@@ -616,178 +576,77 @@
             const desc = document.getElementById('boardDesc').value;
             const tech = document.getElementById('boardTech').value;
             const deadline = buildDateFromInputs('boardDay', 'boardMonth', 'boardYear', 'boardHour', 'boardMinute');
-
-            if (!title) {
-                alert('Введите название задания');
-                return;
-            }
-            if (!deadline) {
-                alert('Укажите корректную дату и время');
-                return;
-            }
-
-            try {
-                const { error } = await sb.from('board_tasks').insert([{
-                    title: title,
-                    description: desc,
-                    technical_task: tech,
-                    deadline: deadline,
-                    is_active: true
-                }]);
-
-                if (error) throw error;
-
-                document.getElementById('boardTitle').value = '';
-                document.getElementById('boardDesc').value = '';
-                document.getElementById('boardTech').value = '';
-                document.getElementById('boardDay').value = '';
-                document.getElementById('boardYear').value = '2026';
-                document.getElementById('boardHour').value = '23';
-                document.getElementById('boardMinute').value = '59';
-                loadBoardTasks();
-                showToast('✅ Задание опубликовано на доске');
-            } catch (err) {
-                alert('Ошибка: ' + err.message);
-            }
+            if (!title) { alert('Введите название'); return; }
+            if (!deadline) { alert('Укажите дату'); return; }
+            await sb.from('board_tasks').insert([{ title, description: desc, technical_task: tech, deadline, is_active: true }]);
+            document.getElementById('boardTitle').value = '';
+            document.getElementById('boardDesc').value = '';
+            document.getElementById('boardTech').value = '';
+            loadBoardTasks();
+            showToast('✅ Задание опубликовано');
         };
 
-        // ========== ОТКЛИКИ УЧАСТНИКОВ ==========
         async function loadSubmissions() {
             try {
                 const { data, error } = await sb
                     .from('board_submissions')
                     .select('*, board_tasks(title), chiefs(name), districts(name)')
                     .order('created_at', { ascending: false });
-
                 const container = document.getElementById('submissionsList');
                 if (error) throw error;
-
                 if (!data || data.length === 0) {
                     container.innerHTML = '<div class="empty-state">📭 Пока нет откликов от участников</div>';
                     return;
                 }
-
-                // Группируем по округам
-                const groupedByDistrict = {};
+                const grouped = {};
                 for (let sub of data) {
-                    const districtName = sub.districts?.name || 'Неизвестный округ';
-                    if (!groupedByDistrict[districtName]) {
-                        groupedByDistrict[districtName] = [];
-                    }
-                    groupedByDistrict[districtName].push(sub);
+                    const district = sub.districts?.name || 'Неизвестный округ';
+                    if (!grouped[district]) grouped[district] = [];
+                    grouped[district].push(sub);
                 }
-
                 let html = '<div class="submissions-container">';
-                for (let [districtName, submissions] of Object.entries(groupedByDistrict)) {
-                    html += `
-                        <div class="district-group">
-                            <div class="district-header" onclick="toggleDistrict(this)">
-                                <span>📌 ${districtName}</span>
-                                <span class="badge">${submissions.length} откликов</span>
-                            </div>
-                            <div class="district-content" style="display: block;">
-                    `;
-                    for (let sub of submissions) {
-                        html += `
-                            <div class="submission-item">
-                                <div><strong>📋 ${escapeHtml(sub.board_tasks?.title || 'Задание')}</strong></div>
-                                <div>👤 ${escapeHtml(sub.chiefs?.name || 'Шеф')}</div>
-                                <div>🔗 <a href="${sub.link}" target="_blank" class="submission-link">${sub.link}</a></div>
-                                <div class="submission-date">📅 ${new Date(sub.created_at).toLocaleString()}</div>
-                            </div>
-                        `;
+                for (let [district, subs] of Object.entries(grouped)) {
+                    html += `<div class="district-group"><div class="district-header" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === \'none\' ? \'block\' : \'none\'"><span>📌 ${district}</span><span class="badge">${subs.length} откликов</span></div><div class="district-content">`;
+                    for (let sub of subs) {
+                        html += `<div class="submission-item"><div><strong>📋 ${escapeHtml(sub.board_tasks?.title || 'Задание')}</strong></div><div>👤 ${escapeHtml(sub.chiefs?.name || 'Шеф')}</div><div>🔗 <a href="${sub.link}" target="_blank" class="submission-link">${sub.link}</a></div><div class="submission-date">📅 ${new Date(sub.created_at).toLocaleString()}</div></div>`;
                     }
                     html += `</div></div>`;
                 }
                 html += `</div>`;
                 container.innerHTML = html;
-            } catch (err) {
-                console.error('Ошибка загрузки откликов:', err);
-                document.getElementById('submissionsList').innerHTML = '<div class="empty-state">❌ Ошибка загрузки</div>';
-            }
+            } catch (err) { console.error(err); }
         }
 
-        window.toggleDistrict = function(header) {
-            const content = header.nextElementSibling;
-            if (content) {
-                content.style.display = content.style.display === 'none' ? 'block' : 'none';
-            }
-        };
-
-        // ========== ШАБЛОНЫ ==========
         async function loadTemplates() {
-            try {
-                const { data, error } = await sb
-                    .from('task_templates')
-                    .select('*')
-                    .eq('is_active', true)
-                    .order('id');
-
-                const container = document.getElementById('templatesList');
-                if (error) throw error;
-
-                if (!data || data.length === 0) {
-                    container.innerHTML = '<div class="empty-state">📭 Нет шаблонов. Создайте первый!</div>';
-                    return;
-                }
-
-                let html = '';
-                for (let t of data) {
-                    let typeLabel = '';
-                    let typeClass = '';
-                    if (t.type === 'raspush') {
-                        typeLabel = '📢 Распуш';
-                        typeClass = 'type-raspush';
-                    } else if (t.type === 'event') {
-                        typeLabel = '🎉 Событие';
-                        typeClass = 'type-event';
-                    } else {
-                        typeLabel = '⭐ По желанию';
-                        typeClass = 'type-optional';
-                    }
-                    html += `
-                        <div class="template-item" onclick="selectTemplate(${t.id}, '${escapeHtml(t.title).replace(/'/g, "\\'")}', '${t.type || 'raspush'}')">
-                            <strong>${escapeHtml(t.title)}</strong>
-                            <span class="type-badge ${typeClass}">${typeLabel}</span>
-                            <div style="font-size: 12px; color: #64748b; margin-top: 4px;">${escapeHtml(t.description || '')}</div>
-                        </div>
-                    `;
-                }
-                container.innerHTML = html;
-            } catch (err) {
-                console.error('Ошибка загрузки шаблонов:', err);
-                document.getElementById('templatesList').innerHTML = '<div class="empty-state">❌ Ошибка загрузки</div>';
-            }
+            const { data } = await sb.from('task_templates').select('*').eq('is_active', true).order('id');
+            const container = document.getElementById('templatesList');
+            if (!data?.length) { container.innerHTML = '<div class="empty-state">Нет шаблонов</div>'; return; }
+            container.innerHTML = data.map(t => {
+                let typeLabel = '', typeClass = '';
+                if (t.type === 'raspush') { typeLabel = '📢 Распуш'; typeClass = 'type-raspush'; }
+                else if (t.type === 'event') { typeLabel = '🎉 Событие'; typeClass = 'type-event'; }
+                else { typeLabel = '⭐ По желанию'; typeClass = 'type-optional'; }
+                return `<div class="template-item" onclick="selectTemplate(${t.id}, '${escapeHtml(t.title).replace(/'/g, "\\'")}', '${t.type}')"><strong>${escapeHtml(t.title)}</strong><span class="type-badge ${typeClass}">${typeLabel}</span><div style="font-size:12px; margin-top:4px;">${escapeHtml(t.description || '')}</div></div>`;
+            }).join('');
         }
 
         window.selectTemplate = function(id, title, type) {
-            selectedTemplateId = id;
-            selectedTemplateTitle = title;
-            selectedTemplateType = type;
+            selectedTemplateId = id; selectedTemplateTitle = title; selectedTemplateType = type;
             document.getElementById('selectedTemplateName').innerText = title;
-
-            document.querySelectorAll('.template-item').forEach(item => {
-                item.classList.remove('selected');
-            });
+            document.querySelectorAll('.template-item').forEach(i => i.classList.remove('selected'));
             event.currentTarget.classList.add('selected');
-
-            const addLinkBtn = document.getElementById('addLinkBtn');
+            const addBtn = document.getElementById('addLinkBtn');
             const warning = document.getElementById('requiredWarning');
             const infoBox = document.getElementById('infoBox');
-
             if (type === 'raspush') {
-                addLinkBtn.style.display = 'block';
+                addBtn.style.display = 'block';
                 warning.style.display = 'block';
                 infoBox.innerHTML = '🔥 <strong>РАСПУШ</strong> — можно добавить несколько ссылок<br>• Ссылки и срок обязательны!';
                 document.querySelector('#linksContainer input').placeholder = '🔗 Ссылка 1 (обязательно)';
             } else {
-                addLinkBtn.style.display = 'none';
+                addBtn.style.display = 'none';
                 warning.style.display = 'none';
-                if (type === 'event') {
-                    infoBox.innerHTML = '🎉 <strong>СОБЫТИЕ</strong> — можно отправить ссылку<br>• Ссылка не обязательна';
-                } else {
-                    infoBox.innerHTML = '⭐ <strong>ПО ЖЕЛАНИЮ</strong> — дополнительное задание<br>• Ссылка не обязательна';
-                }
+                infoBox.innerHTML = type === 'event' ? '🎉 <strong>СОБЫТИЕ</strong> — ссылка не обязательна' : '⭐ <strong>ПО ЖЕЛАНИЮ</strong> — ссылка не обязательна';
                 document.querySelector('#linksContainer input').placeholder = '🔗 Ссылка (опционально)';
             }
         };
@@ -796,221 +655,75 @@
             if (selectedTemplateType !== 'raspush') return;
             linkCounter++;
             const container = document.getElementById('linksContainer');
-            const newDiv = document.createElement('div');
-            newDiv.className = 'link-group';
-            newDiv.id = `link-group-${linkCounter}`;
-            newDiv.innerHTML = `
-                <input type="text" id="taskLink${linkCounter}" placeholder="🔗 Ссылка ${linkCounter}">
-                <div class="remove-link" onclick="removeLink(${linkCounter})">✖</div>
-            `;
-            container.appendChild(newDiv);
+            const div = document.createElement('div');
+            div.className = 'link-group';
+            div.id = `link-group-${linkCounter}`;
+            div.innerHTML = `<input type="text" id="taskLink${linkCounter}" placeholder="🔗 Ссылка ${linkCounter}"><div class="remove-link" onclick="removeLink(${linkCounter})">✖</div>`;
+            container.appendChild(div);
         };
 
-        window.removeLink = function(id) {
-            document.getElementById(`link-group-${id}`)?.remove();
-        };
+        window.removeLink = function(id) { document.getElementById(`link-group-${id}`)?.remove(); };
 
         function getAllLinks() {
             const links = [];
             for (let i = 1; i <= linkCounter; i++) {
-                const input = document.getElementById(`taskLink${i}`);
-                if (input && input.value.trim()) links.push(input.value.trim());
+                const inp = document.getElementById(`taskLink${i}`);
+                if (inp && inp.value.trim()) links.push(inp.value.trim());
             }
             return links;
         }
 
-        // ========== ОТПРАВКА ЗАДАЧИ ==========
         window.sendToAll = async function() {
-            if (!selectedTemplateId) {
-                alert('Выберите шаблон задачи');
-                return;
-            }
-
+            if (!selectedTemplateId) { alert('Выберите шаблон'); return; }
             const links = getAllLinks();
             const deadline = buildDateFromInputs('taskDay', 'taskMonth', 'taskYear', 'taskHour', 'taskMinute');
             const comment = document.getElementById('taskComment').value;
-
-            if (selectedTemplateType === 'raspush') {
-                if (links.length === 0) {
-                    alert('⚠️ Для задачи "РАСПУШ" необходимо указать хотя бы одну ссылку!');
-                    return;
-                }
-                if (!deadline) {
-                    alert('⚠️ Для задачи "РАСПУШ" необходимо указать срок выполнения!');
-                    return;
-                }
+            if (selectedTemplateType === 'raspush' && (links.length === 0 || !deadline)) {
+                alert('Для распуша нужны ссылки и срок');
+                return;
             }
-
             const allLinks = links.join(', ');
-
-            try {
-                const { data: allChiefs, error: chiefsError } = await sb
-                    .from('chiefs')
-                    .select('id, district_id');
-
-                if (chiefsError) throw chiefsError;
-
-                if (!allChiefs || allChiefs.length === 0) {
-                    alert('Нет шефов для отправки.');
-                    return;
-                }
-
-                let successCount = 0;
-                let errorCount = 0;
-
-                for (const chief of allChiefs) {
-                    const { error: insertError } = await sb
-                        .from('assignments')
-                        .insert([{
-                            template_id: selectedTemplateId,
-                            chief_id: chief.id,
-                            district_id: chief.district_id,
-                            link: allLinks || null,
-                            coordinator_comment: comment || null,
-                            deadline: deadline,
-                            status: 'pending',
-                            type: selectedTemplateType
-                        }]);
-
-                    if (insertError) {
-                        errorCount++;
-                        console.error('Ошибка для шефа', chief.id, insertError);
-                    } else {
-                        successCount++;
-                    }
-                }
-
-                alert(`✅ Задача "${selectedTemplateTitle}" отправлена ${successCount} шефам!\n❌ Ошибок: ${errorCount}`);
-
-                document.getElementById('linksContainer').innerHTML = `
-                    <div class="link-group">
-                        <input type="text" id="taskLink1" placeholder="🔗 Ссылка 1">
-                        <div class="remove-link" onclick="removeLink(1)" style="display: none;">✖</div>
-                    </div>
-                `;
-                linkCounter = 1;
-                document.getElementById('taskDay').value = '';
-                document.getElementById('taskHour').value = '23';
-                document.getElementById('taskMinute').value = '59';
-                document.getElementById('taskComment').value = '';
-
-                loadActiveTasks();
-                loadActiveTasks2();
-            } catch (err) {
-                alert('Ошибка: ' + err.message);
+            const { data: chiefs } = await sb.from('chiefs').select('id, district_id');
+            if (!chiefs?.length) { alert('Нет шефов'); return; }
+            let ok = 0;
+            for (let c of chiefs) {
+                const { error } = await sb.from('assignments').insert([{ template_id: selectedTemplateId, chief_id: c.id, district_id: c.district_id, link: allLinks || null, coordinator_comment: comment || null, deadline, status: 'pending', type: selectedTemplateType }]);
+                if (!error) ok++;
             }
+            alert(`✅ Задача "${selectedTemplateTitle}" отправлена ${ok} шефам`);
+            document.getElementById('linksContainer').innerHTML = `<div class="link-group"><input type="text" id="taskLink1" placeholder="🔗 Ссылка 1"><div class="remove-link" onclick="removeLink(1)" style="display: none;">✖</div></div>`;
+            linkCounter = 1;
+            document.getElementById('taskDay').value = '';
+            document.getElementById('taskHour').value = '23';
+            document.getElementById('taskMinute').value = '59';
+            document.getElementById('taskComment').value = '';
+            loadActiveTasks(); loadActiveTasks2();
         };
 
-        // ========== АКТИВНЫЕ ЗАДАЧИ ==========
         async function loadActiveTasks() {
-            try {
-                const { data, error } = await sb
-                    .from('assignments')
-                    .select('*, task_templates(*), chiefs(name, primary_branch_id)')
-                    .neq('status', 'completed')
-                    .order('created_at', { ascending: false })
-                    .limit(40);
-
-                const container = document.getElementById('activeTasksList');
-                if (error) throw error;
-
-                if (!data || data.length === 0) {
-                    container.innerHTML = '<div class="empty-state">✅ Нет активных задач</div>';
-                    return;
-                }
-
-                let html = '';
-                for (let task of data) {
-                    let deadlineHtml = '';
-                    if (task.deadline) {
-                        deadlineHtml = `<div style="font-size: 11px; margin-top: 4px; color: #d97706;">⏰ Срок: ${formatDateForDisplay(task.deadline)}</div>`;
-                    }
-                    html += `
-                        <div class="task-item">
-                            <div class="task-header">
-                                <strong>${escapeHtml(task.task_templates?.title || 'Задача')}</strong>
-                                <span class="task-status">${task.status === 'pending' ? '⏳ Ожидает' : '🔄 В работе'}</span>
-                            </div>
-                            <div style="font-size: 12px; margin-top: 6px; color: #64748b;">Шеф: ${escapeHtml(task.chiefs?.name || 'Шеф')} | ${task.chiefs?.primary_branch_id ? '📌 Первичка' : '🏛️ Местное'}</div>
-                            ${deadlineHtml}
-                            ${task.link ? `<a href="${task.link.split(',')[0]}" target="_blank" style="color: #3b82f6; font-size: 11px;">🔗 Ссылка</a>` : ''}
-                        </div>
-                    `;
-                }
-                container.innerHTML = html;
-            } catch (err) {
-                console.error('Ошибка загрузки активных задач:', err);
-                document.getElementById('activeTasksList').innerHTML = '<div class="empty-state">❌ Ошибка загрузки</div>';
-            }
+            const { data } = await sb.from('assignments').select('*, task_templates(*), chiefs(name, primary_branch_id)').neq('status', 'completed').order('created_at', { ascending: false }).limit(40);
+            const container = document.getElementById('activeTasksList');
+            if (!data?.length) { container.innerHTML = '<div class="empty-state">✅ Нет активных задач</div>'; return; }
+            container.innerHTML = data.map(t => `<div class="task-item"><div class="task-header"><strong>${escapeHtml(t.task_templates?.title || 'Задача')}</strong><span class="task-status">${t.status === 'pending' ? '⏳ Ожидает' : '🔄 В работе'}</span></div><div style="font-size:12px; margin-top:6px;">Шеф: ${escapeHtml(t.chiefs?.name)} | ${t.chiefs?.primary_branch_id ? '📌 Первичка' : '🏛️ Местное'}</div>${t.deadline ? `<div style="font-size:11px; margin-top:4px;">⏰ Срок: ${formatDateForDisplay(t.deadline)}</div>` : ''}${t.link ? `<a href="${t.link.split(',')[0]}" target="_blank" style="color:#3b82f6;">🔗 Ссылка</a>` : ''}</div>`).join('');
         }
 
         async function loadActiveTasks2() {
-            try {
-                const { data, error } = await sb
-                    .from('assignments')
-                    .select('*, task_templates(*), chiefs(name, primary_branch_id)')
-                    .neq('status', 'completed')
-                    .order('created_at', { ascending: false })
-                    .limit(40);
-
-                const container = document.getElementById('activeTasksList2');
-                if (error) throw error;
-
-                if (!data || data.length === 0) {
-                    container.innerHTML = '<div class="empty-state">✅ Нет активных задач</div>';
-                    return;
-                }
-
-                let html = '';
-                for (let task of data) {
-                    let deadlineHtml = '';
-                    if (task.deadline) {
-                        deadlineHtml = `<div style="font-size: 11px; margin-top: 4px; color: #d97706;">⏰ Срок: ${formatDateForDisplay(task.deadline)}</div>`;
-                    }
-                    html += `
-                        <div class="task-item">
-                            <div class="task-header">
-                                <strong>${escapeHtml(task.task_templates?.title || 'Задача')}</strong>
-                                <span class="task-status">${task.status === 'pending' ? '⏳ Ожидает' : '🔄 В работе'}</span>
-                            </div>
-                            <div style="font-size: 12px; margin-top: 6px; color: #64748b;">Шеф: ${escapeHtml(task.chiefs?.name || 'Шеф')} | ${task.chiefs?.primary_branch_id ? '📌 Первичка' : '🏛️ Местное'}</div>
-                            ${deadlineHtml}
-                            ${task.link ? `<a href="${task.link.split(',')[0]}" target="_blank" style="color: #3b82f6; font-size: 11px;">🔗 Ссылка</a>` : ''}
-                        </div>
-                    `;
-                }
-                container.innerHTML = html;
-            } catch (err) {
-                console.error('Ошибка загрузки активных задач:', err);
-                document.getElementById('activeTasksList2').innerHTML = '<div class="empty-state">❌ Ошибка загрузки</div>';
-            }
+            const { data } = await sb.from('assignments').select('*, task_templates(*), chiefs(name, primary_branch_id)').neq('status', 'completed').order('created_at', { ascending: false }).limit(40);
+            const container = document.getElementById('activeTasksList2');
+            if (!data?.length) { container.innerHTML = '<div class="empty-state">✅ Нет активных задач</div>'; return; }
+            container.innerHTML = data.map(t => `<div class="task-item"><div class="task-header"><strong>${escapeHtml(t.task_templates?.title || 'Задача')}</strong><span class="task-status">${t.status === 'pending' ? '⏳ Ожидает' : '🔄 В работе'}</span></div><div style="font-size:12px; margin-top:6px;">Шеф: ${escapeHtml(t.chiefs?.name)} | ${t.chiefs?.primary_branch_id ? '📌 Первичка' : '🏛️ Местное'}</div>${t.deadline ? `<div style="font-size:11px; margin-top:4px;">⏰ Срок: ${formatDateForDisplay(t.deadline)}</div>` : ''}${t.link ? `<a href="${t.link.split(',')[0]}" target="_blank" style="color:#3b82f6;">🔗 Ссылка</a>` : ''}</div>`).join('');
         }
 
-        // ========== СОЗДАНИЕ ШАБЛОНА ==========
         window.createTemplate = async function() {
             const title = document.getElementById('newTemplateTitle').value;
             const desc = document.getElementById('newTemplateDesc').value;
             const type = document.getElementById('templateTypeSelect').value;
-
-            if (!title) {
-                alert('Введите название шаблона');
-                return;
-            }
-
-            try {
-                const { error } = await sb
-                    .from('task_templates')
-                    .insert([{ title: title, description: desc, type: type, is_active: true }]);
-
-                if (error) throw error;
-
-                document.getElementById('newTemplateTitle').value = '';
-                document.getElementById('newTemplateDesc').value = '';
-                loadTemplates();
-                showToast('✅ Шаблон создан');
-            } catch (err) {
-                alert('Ошибка: ' + err.message);
-            }
+            if (!title) { alert('Введите название'); return; }
+            await sb.from('task_templates').insert([{ title, description: desc, type, is_active: true }]);
+            document.getElementById('newTemplateTitle').value = '';
+            document.getElementById('newTemplateDesc').value = '';
+            loadTemplates();
+            showToast('✅ Шаблон создан');
         };
 
         function showToast(msg) {
@@ -1027,7 +740,6 @@
                 btn.classList.add('active');
                 document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
                 document.getElementById(btn.dataset.tab + '-panel').classList.add('active');
-                
                 if (btn.dataset.tab === 'board') loadBoardTasks();
                 if (btn.dataset.tab === 'submissions') loadSubmissions();
                 if (btn.dataset.tab === 'templates') loadTemplates();
@@ -1041,7 +753,6 @@
         loadTemplates();
         loadActiveTasks();
         loadActiveTasks2();
-
         setInterval(() => {
             if (document.querySelector('.tab-btn.active')?.dataset.tab === 'send') loadActiveTasks();
             if (document.querySelector('.tab-btn.active')?.dataset.tab === 'active') loadActiveTasks2();
