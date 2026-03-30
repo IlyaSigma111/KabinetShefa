@@ -410,12 +410,13 @@
 
         <div class="tabs">
             <button class="tab-btn active" data-tab="board">📢 Доска объявлений</button>
-            <button class="tab-btn" data-tab="submissions">📥 Отклики участников</button>
+            <button class="tab-btn" data-tab="submissions">📥 Отклики с доски</button>
             <button class="tab-btn" data-tab="templates">📋 Шаблоны задач</button>
             <button class="tab-btn" data-tab="send">🚀 Отправить задачу</button>
             <button class="tab-btn" data-tab="active">📊 Активные задачи</button>
         </div>
 
+        <!-- Панель доски объявлений -->
         <div id="board-panel" class="panel active">
             <div class="grid-2cols">
                 <div>
@@ -444,11 +445,13 @@
             </div>
         </div>
 
+        <!-- Панель откликов с доски -->
         <div id="submissions-panel" class="panel">
-            <h2>📥 Отклики участников (ссылки на выполненные работы)</h2>
+            <h2>📥 Отклики участников (ссылки с доски объявлений)</h2>
             <div id="submissionsList" class="empty-state">Загрузка...</div>
         </div>
 
+        <!-- Панель шаблонов -->
         <div id="templates-panel" class="panel">
             <div class="grid-2cols">
                 <div>
@@ -469,6 +472,7 @@
             </div>
         </div>
 
+        <!-- Панель отправки -->
         <div id="send-panel" class="panel">
             <div class="grid-2cols">
                 <div>
@@ -507,6 +511,7 @@
             </div>
         </div>
 
+        <!-- Панель активных задач -->
         <div id="active-panel" class="panel">
             <h2>📊 Активные задачи (все шефы)</h2>
             <div id="activeTasksList2" class="empty-state">Загрузка активных задач...</div>
@@ -546,6 +551,7 @@
             return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
         }
 
+        // ========== ДОСКА ОБЪЯВЛЕНИЙ ==========
         async function loadBoardTasks() {
             try {
                 const { data, error } = await sb.from('board_tasks').select('*').order('created_at', { ascending: false });
@@ -564,7 +570,7 @@
         }
 
         window.deleteBoardTask = async function(id) {
-            if (!confirm('Удалить задание?')) return;
+            if (!confirm('Удалить задание? Все отклики участников будут удалены.')) return;
             await sb.from('board_submissions').delete().eq('board_task_id', id);
             await sb.from('board_tasks').delete().eq('id', id);
             loadBoardTasks(); loadSubmissions();
@@ -586,6 +592,7 @@
             showToast('✅ Задание опубликовано');
         };
 
+        // ========== ОТКЛИКИ С ДОСКИ (board_submissions) ==========
         async function loadSubmissions() {
             try {
                 const { data, error } = await sb
@@ -606,7 +613,7 @@
                 }
                 let html = '<div class="submissions-container">';
                 for (let [district, subs] of Object.entries(grouped)) {
-                    html += `<div class="district-group"><div class="district-header" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === \'none\' ? \'block\' : \'none\'"><span>📌 ${district}</span><span class="badge">${subs.length} откликов</span></div><div class="district-content">`;
+                    html += `<div class="district-group"><div class="district-header" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none'"><span>📌 ${district}</span><span class="badge">${subs.length} откликов</span></div><div class="district-content">`;
                     for (let sub of subs) {
                         html += `<div class="submission-item"><div><strong>📋 ${escapeHtml(sub.board_tasks?.title || 'Задание')}</strong></div><div>👤 ${escapeHtml(sub.chiefs?.name || 'Шеф')}</div><div>🔗 <a href="${sub.link}" target="_blank" class="submission-link">${sub.link}</a></div><div class="submission-date">📅 ${new Date(sub.created_at).toLocaleString()}</div></div>`;
                     }
@@ -617,6 +624,7 @@
             } catch (err) { console.error(err); }
         }
 
+        // ========== ШАБЛОНЫ ==========
         async function loadTemplates() {
             const { data } = await sb.from('task_templates').select('*').eq('is_active', true).order('id');
             const container = document.getElementById('templatesList');
@@ -673,6 +681,7 @@
             return links;
         }
 
+        // ========== ОТПРАВКА ЗАДАЧИ ==========
         window.sendToAll = async function() {
             if (!selectedTemplateId) { alert('Выберите шаблон'); return; }
             const links = getAllLinks();
@@ -700,6 +709,7 @@
             loadActiveTasks(); loadActiveTasks2();
         };
 
+        // ========== АКТИВНЫЕ ЗАДАЧИ ==========
         async function loadActiveTasks() {
             const { data } = await sb.from('assignments').select('*, task_templates(*), chiefs(name, primary_branch_id)').neq('status', 'completed').order('created_at', { ascending: false }).limit(40);
             const container = document.getElementById('activeTasksList');
