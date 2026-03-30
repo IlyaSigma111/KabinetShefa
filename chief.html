@@ -239,6 +239,10 @@
             text-decoration: none;
         }
 
+        .coordinator-link a:hover {
+            text-decoration: underline;
+        }
+
         .deadline {
             font-size: 11px;
             margin: 6px 0;
@@ -399,30 +403,25 @@
         </div>
 
         <div class="content">
-            <!-- Доска объявлений -->
             <div id="board" class="page">
                 <h3>📢 Доска объявлений</h3>
                 <div id="boardList" class="empty-state">⏳ Загрузка...</div>
             </div>
 
-            <!-- Мои задачи -->
             <div id="tasks" class="page active">
                 <h3>📋 Мои задачи</h3>
                 <div id="tasksList" class="empty-state">⏳ Загрузка...</div>
             </div>
 
-            <!-- Рейтинг -->
             <div id="rating" class="page">
                 <h3>🏆 Рейтинг округов</h3>
                 <div style="overflow-x: auto;">
                     <table class="ranking-table">
-                        <thead><tr><th>Округ</th><th>Баллы</th></tr></thead>
+                        <thead>   </thead>
                         <tbody id="ratingList"></tbody>
-                    </table>
-                </div>
+                     </div>
             </div>
 
-            <!-- История -->
             <div id="history" class="page">
                 <h3>📜 История</h3>
                 <div id="historyList" class="empty-state">⏳ Загрузка...</div>
@@ -452,29 +451,20 @@
             return new Date(deadline) < new Date();
         }
         
-        // ========== ДОСКА ОБЪЯВЛЕНИЙ ==========
         async function loadBoard() {
             try {
                 const { data: tasks } = await sb.from('board_tasks').select('*').eq('is_active', true).order('deadline');
                 const { data: parts } = await sb.from('board_participants').select('board_task_id').eq('chief_id', chiefId);
                 const mySet = new Set(parts?.map(p => p.board_task_id) || []);
                 const container = document.getElementById('boardList');
-                
                 if (!tasks || tasks.length === 0) {
                     container.innerHTML = '<div class="empty-state">📢 Нет заданий</div>';
                     return;
                 }
-                
                 let html = '';
                 for (let task of tasks) {
                     const expired = isExpired(task.deadline);
-                    html += `
-                        <div class="board-item">
-                            <div class="board-title">${task.title}</div>
-                            <div class="board-date">📅 До: ${new Date(task.deadline).toLocaleString()}</div>
-                            <div class="board-desc">${task.description || ''}</div>
-                            <div class="board-tech"><strong>📋 ТЗ:</strong><br>${task.technical_task || '-'}</div>
-                    `;
+                    html += `<div class="board-item"><div class="board-title">${task.title}</div><div class="board-date">📅 До: ${new Date(task.deadline).toLocaleString()}</div><div class="board-desc">${task.description || ''}</div><div class="board-tech"><strong>📋 ТЗ:</strong><br>${task.technical_task || '-'}</div>`;
                     if (mySet.has(task.id)) {
                         html += `<div class="already-participating">✅ Вы участвуете</div>`;
                     } else if (!expired) {
@@ -513,7 +503,6 @@
             }
         };
         
-        // ========== ЗАГРУЗКА ЗАДАЧ ==========
         async function loadTasks() {
             try {
                 const { data: tasks, error } = await sb
@@ -550,12 +539,19 @@
                     const expired = isExpired(task.deadline);
                     const sent = sentMap[task.id] || [];
                     
-                    const coordinatorLinkHtml = task.link ? `
-                        <div class="coordinator-link">
-                            🔗 <strong>Ссылка для распуша:</strong><br>
-                            <a href="${task.link}" target="_blank">${task.link}</a>
-                        </div>
-                    ` : '';
+                    // ========== ИСПРАВЛЕНИЕ: раздельные ссылки ==========
+                    let coordinatorLinksHtml = '';
+                    if (task.link) {
+                        const links = task.link.split(',').map(l => l.trim());
+                        coordinatorLinksHtml = `
+                            <div class="coordinator-link">
+                                <strong>🔗 Ссылки для распуша:</strong>
+                                <div style="margin-top: 8px;">
+                                    ${links.map(l => `<div style="margin-bottom: 6px;"><a href="${l}" target="_blank" style="color: #4f46e5; word-break: break-all;">${l}</a></div>`).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
                     
                     let deadlineHtml = '';
                     if (task.deadline) {
@@ -594,7 +590,7 @@
                         <div class="task-item">
                             <div class="task-title">${task.task_templates?.title || 'Задача'}</div>
                             <div class="task-desc">${task.task_templates?.description || ''}</div>
-                            ${coordinatorLinkHtml}
+                            ${coordinatorLinksHtml}
                             ${deadlineHtml}
                             ${commentHtml}
                             ${sentHtml}
@@ -622,7 +618,6 @@
             }
         }
         
-        // ========== ОТПРАВКА ССЫЛКИ ==========
         window.sendLink = async function(taskId) {
             const link = document.getElementById(`link_${taskId}`)?.value.trim();
             if (!link) {
@@ -692,7 +687,6 @@
             }
         };
         
-        // ========== ИСТОРИЯ ==========
         async function loadHistory() {
             try {
                 const { data } = await sb.from('operations_history').select('*').eq('chief_id', chiefId).order('created_at', { ascending: false }).limit(50);
@@ -712,18 +706,17 @@
             }
         }
         
-        // ========== РЕЙТИНГ ==========
         async function loadRating() {
             try {
                 const { data } = await sb.from('district_scores').select('*, districts(name)').order('total_score', { ascending: false });
                 const container = document.getElementById('ratingList');
                 if (!data || data.length === 0) {
-                    container.innerHTML = '<tr><td colspan="2" class="empty-state">Нет данных<\/td><\/tr>';
+                    container.innerHTML = '发展<td colspan="2" class="empty-state">Нет данных<\/td><\/tr>';
                     return;
                 }
                 let html = '';
                 for (let d of data) {
-                    html += `<tr><td style="font-weight:500;">${d.districts?.name || 'Неизвестно'}<\/td><td style="color:#3b82f6;">${d.total_score} баллов<\/td><\/tr>`;
+                    html += `发展<td style="font-weight:500;">${d.districts?.name || 'Неизвестно'}<\/td><td style="color:#3b82f6;">${d.total_score} баллов<\/td><\/tr>`;
                 }
                 container.innerHTML = html;
             } catch (err) {
