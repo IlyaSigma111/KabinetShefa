@@ -155,7 +155,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Задания с доски */
         .task-card {
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -163,7 +162,6 @@
             padding: 16px;
             margin-bottom: 12px;
             cursor: pointer;
-            transition: all 0.2s;
         }
 
         .task-card:hover {
@@ -227,7 +225,6 @@
             border-radius: 20px;
             color: white;
             margin-top: 10px;
-            font-size: 13px;
         }
 
         .btn-submit {
@@ -240,7 +237,6 @@
             cursor: pointer;
             width: 100%;
             margin-top: 10px;
-            transition: all 0.2s;
         }
 
         .btn-submit:hover {
@@ -264,7 +260,6 @@
             text-decoration: none;
         }
 
-        /* Распуши (только для местных и первичек) */
         .raspush-item {
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -330,7 +325,6 @@
             .container { padding: 16px; }
             .logo h2 { font-size: 18px; }
             .stat-number { font-size: 24px; }
-            .task-card, .raspush-item { padding: 14px; }
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -381,9 +375,12 @@
                 <h3>🏆 Рейтинг округов</h3>
                 <div style="overflow-x: auto;">
                     <table class="ranking-table">
-                        <thead>   </thead>
+                        <thead>
+                            <tr><th>Округ</th><th>Баллы</th></tr>
+                        </thead>
                         <tbody id="ratingList"></tbody>
-                     </div>
+                    </table>
+                </div>
             </div>
 
             <div id="history" class="page">
@@ -424,7 +421,6 @@
             return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
         }
 
-        // ========== ЗАГРУЗКА МОИХ ОТВЕТОВ ==========
         async function loadMySubmissions() {
             const { data } = await sb.from('board_submissions').select('board_task_id, link').eq('chief_id', chiefId);
             mySubmissionsMap = {};
@@ -436,26 +432,20 @@
             }
         }
 
-        // ========== ЗАГРУЗКА СТАТИСТИКИ ==========
         async function updateStats() {
-            // Количество заданий с доски (все активные задания)
             const { data: boardTasks } = await sb.from('board_tasks').select('id', { count: 'exact' }).eq('is_active', true);
             const totalBoard = boardTasks?.length || 0;
             
-            // Количество выполненных заданий с доски (отправленные ссылки)
             const { data: mySubmissions } = await sb.from('board_submissions').select('id', { count: 'exact' }).eq('chief_id', chiefId);
             const completedBoard = mySubmissions?.length || 0;
             
-            // Количество распушей (заданий от координатора)
             const { data: assignments } = await sb.from('assignments').select('status').eq('chief_id', chiefId);
             const totalRaspush = assignments?.length || 0;
             const completedRaspush = assignments?.filter(a => a.status === 'completed').length || 0;
             
-            // Общее количество заданий (доска + распуши)
             const totalTasks = totalBoard + totalRaspush;
             const completedTasks = completedBoard + completedRaspush;
             
-            // Баллы
             const { data: scoreData } = await sb.from('chief_scores').select('total_score').eq('chief_id', chiefId).single();
             const totalScore = scoreData?.total_score || 0;
             
@@ -464,7 +454,6 @@
             document.getElementById('totalScore').innerText = totalScore;
         }
 
-        // ========== ЗАГРУЗКА ЗАДАНИЙ С ДОСКИ ==========
         async function loadBoardTasks() {
             await loadMySubmissions();
             const { data: tasks } = await sb.from('board_tasks').select('*').eq('is_active', true).order('deadline');
@@ -491,8 +480,8 @@
                             <p><strong>📋 ТЗ:</strong><br>${escapeHtml(task.technical_task || 'Нет')}</p>
                             ${myLinks.length ? `<div><strong>✅ Отправлено (${myLinks.length}):</strong><br>${myLinks.map(l => `<a href="${l}" target="_blank" class="sent-link">🔗 ${l.length > 30 ? l.substring(0,30)+'...' : l}</a>`).join('')}</div>` : ''}
                             ${!expired ? `
-                                <input type="text" id="link_${task.id}" class="link-input" placeholder="Вставьте ссылку на выполненную работу (Google Drive, Яндекс Диск, ВК)">
-                                <button class="btn-submit" onclick="submitTaskLink(${task.id}, event)">📤 Отправить ссылку +1 балл</button>
+                                <input type="text" id="link_${task.id}" class="link-input" placeholder="Вставьте ссылку на выполненную работу">
+                                <button class="btn-submit" onclick="submitTaskLink(${task.id}, event)">📤 Отправить +1 балл</button>
                             ` : ''}
                         </div>
                     </div>
@@ -503,7 +492,6 @@
         }
 
         window.toggleCard = (event, el) => {
-            // Останавливаем всплытие, чтобы клик по кнопке не закрывал
             if (event.target.tagName === 'INPUT' || event.target.tagName === 'BUTTON') {
                 return;
             }
@@ -538,9 +526,7 @@
             showToast('✅ +1 балл!');
         };
 
-        // ========== ЗАГРУЗКА РАСПУШЕЙ (ТОЛЬКО ДЛЯ МЕСТНЫХ И ПЕРВИЧЕК) ==========
         async function loadRaspush() {
-            // Активисты не видят распуши
             if (branchType === 'activist') {
                 document.getElementById('raspushList').innerHTML = '<div class="empty-state">📭 Активисты не получают распуши</div>';
                 return;
@@ -584,7 +570,7 @@
                     <div class="raspush-item">
                         <div class="task-title">${escapeHtml(task.title || task.task_templates?.title || 'Задача')}</div>
                         <div style="font-size:12px; opacity:0.7;">${escapeHtml(task.description || task.task_templates?.description || '')}</div>
-                        ${task.link ? `<div class="raspush-link"><strong>🔗 Ссылка для распуша:</strong><br><a href="${escapeHtml(task.link)}" target="_blank">${escapeHtml(task.link)}</a></div>` : ''}
+                        ${task.link ? `<div class="raspush-link"><strong>🔗 Ссылка:</strong><br><a href="${escapeHtml(task.link)}" target="_blank">${escapeHtml(task.link)}</a></div>` : ''}
                         ${task.deadline ? `<div style="font-size:11px; margin:6px 0; color:#f59e0b;">⏰ Срок: ${new Date(task.deadline).toLocaleDateString()}</div>` : ''}
                         ${sentHtml}
                         <div><span class="task-status ${statusClass}">${statusText}</span></div>
@@ -632,7 +618,6 @@
             showToast('✅ +1 балл!');
         };
 
-        // ========== ИСТОРИЯ ==========
         async function loadHistory() {
             const { data } = await sb.from('operations_history').select('*').eq('chief_id', chiefId).order('created_at', { ascending: false }).limit(50);
             const container = document.getElementById('historyList');
@@ -646,29 +631,25 @@
             container.innerHTML = html;
         }
 
-        // ========== РЕЙТИНГ (БЕЗ КИТАЙСКИХ СИМВОЛОВ) ==========
+        // ========== РЕЙТИНГ - ИСПРАВЛЕН (БЕЗ КИТАЙСКИХ) ==========
         async function loadRating() {
-            const { data } = await sb.from('district_scores').select('*, districts(name)').order('total_score', { ascending: false });
-            const container = document.getElementById('ratingList');
+            const { data: districts } = await sb.from('districts').select('id, name');
+            const { data: scores } = await sb.from('district_scores').select('district_id, total_score');
             
-            if (!data || data.length === 0) {
-                container.innerHTML = '发展<td colspan="2" class="empty-state">Нет данных<\/td><\/tr>';
-                return;
+            const scoreMap = {};
+            if (scores) {
+                for (let s of scores) {
+                    scoreMap[s.district_id] = s.total_score || 0;
+                }
             }
             
             let html = '';
-            let hasData = false;
-            for (let d of data) {
-                if (!d.districts?.name) continue;
-                hasData = true;
-                html += `发展<td style="font-weight:500;">${escapeHtml(d.districts.name)}<\/td><td style="color:#6c8cff;">${d.total_score} баллов<\/td><\/tr>`;
+            for (let d of districts) {
+                const score = scoreMap[d.id] || 0;
+                html += `<tr><td style="font-weight:500;">${escapeHtml(d.name)}</td><td style="color:#6c8cff;">${score} баллов</td></tr>`;
             }
             
-            if (!hasData) {
-                container.innerHTML = '发展<td colspan="2" class="empty-state">Нет данных<\/td><\/tr>';
-            } else {
-                container.innerHTML = html;
-            }
+            document.getElementById('ratingList').innerHTML = html;
         }
 
         function showToast(msg) {
