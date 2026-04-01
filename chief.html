@@ -81,6 +81,7 @@
             flex-wrap: wrap;
             gap: 12px;
             margin-bottom: 20px;
+            padding: 20px 24px;
         }
 
         .logo h2 {
@@ -543,13 +544,11 @@
     </div>
 
     <div class="container">
-        <div class="glass-card" style="padding: 20px 24px; margin-bottom: 20px;">
-            <div class="header">
-                <div class="logo"><h2>📰 Кабинет шеф-редактора</h2></div>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                    <span class="district-badge" id="districtDisplay">Загрузка...</span>
-                    <button class="reset-btn" onclick="resetAndExit()">Сменить</button>
-                </div>
+        <div class="glass-card header">
+            <div class="logo"><h2>📰 Кабинет шеф-редактора</h2></div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <span class="district-badge" id="districtDisplay">Загрузка...</span>
+                <button class="reset-btn" onclick="resetAndExit()">Сменить</button>
             </div>
         </div>
 
@@ -595,10 +594,9 @@
                 <h3>🏆 Рейтинг округов</h3>
                 <div style="overflow-x: auto;">
                     <table class="ranking-table">
-                        <thead><tr><th>Округ</th><th>Баллы</th></tr></thead>
+                        <thead>   </thead>
                         <tbody id="ratingList"></tbody>
-                    </table>
-                </div>
+                     </div>
             </div>
 
             <div id="history" class="page">
