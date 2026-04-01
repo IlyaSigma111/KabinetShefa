@@ -13,10 +13,59 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
-            background: #f5f7fa;
-            color: #1a202c;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0c10;
+            color: #fff;
             min-height: 100vh;
+        }
+
+        .glow-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .glow-sphere {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.4;
+        }
+
+        .sphere-1 {
+            width: 600px;
+            height: 600px;
+            top: -200px;
+            right: -200px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .sphere-2 {
+            width: 500px;
+            height: 500px;
+            bottom: -200px;
+            left: -100px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+        }
+
+        .sphere-3 {
+            width: 400px;
+            height: 400px;
+            top: 50%;
+            left: 30%;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+
+        .glass-card {
+            background: rgba(20, 25, 35, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 28px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .container {
@@ -25,40 +74,30 @@
             padding: 24px;
         }
 
-        .card {
-            background: white;
-            border-radius: 24px;
-            padding: 20px 28px;
-            margin-bottom: 24px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 15px;
+            margin-bottom: 24px;
+            padding: 20px 28px;
         }
 
         h1 {
             font-size: 24px;
             font-weight: 700;
-            color: #1a202c;
-        }
-
-        .subtitle {
-            font-size: 13px;
-            color: #64748b;
+            background: linear-gradient(135deg, #fff, #b0c4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .tabs {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
             margin-bottom: 24px;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding-bottom: 12px;
         }
 
@@ -67,28 +106,23 @@
             background: transparent;
             border: none;
             border-radius: 40px;
-            color: #64748b;
+            color: rgba(255, 255, 255, 0.7);
             font-size: 14px;
-            font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .tab-btn:hover {
-            background: #f1f5f9;
         }
 
         .tab-btn.active {
-            background: #3b82f6;
+            background: rgba(108, 140, 255, 0.3);
             color: white;
         }
 
         .panel {
             display: none;
-            background: white;
-            border-radius: 24px;
+            background: rgba(20, 25, 35, 0.4);
+            backdrop-filter: blur(20px);
+            border-radius: 28px;
             padding: 28px;
-            border: 1px solid #e2e8f0;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .panel.active {
@@ -96,11 +130,10 @@
         }
 
         .panel h2 {
-            font-size: 18px;
+            font-size: 20px;
             margin-bottom: 20px;
             padding-bottom: 12px;
-            border-bottom: 1px solid #e2e8f0;
-            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .grid-2cols {
@@ -111,21 +144,13 @@
 
         input, select, textarea {
             width: 100%;
-            padding: 12px 14px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            color: #1a202c;
+            color: #fff;
             font-size: 14px;
             margin-bottom: 14px;
-            font-family: inherit;
-            transition: all 0.2s;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: #3b82f6;
-            background: white;
         }
 
         textarea {
@@ -136,58 +161,30 @@
         button {
             width: 100%;
             padding: 12px;
-            background: #3b82f6;
-            border: none;
+            background: rgba(108, 140, 255, 0.3);
+            border: 1px solid rgba(108, 140, 255, 0.4);
             border-radius: 40px;
-            color: white;
+            color: #fff;
             font-weight: 600;
-            font-size: 14px;
             cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        button:hover {
-            background: #2563eb;
-            transform: translateY(-1px);
         }
 
         .mass-btn {
-            background: #8b5cf6;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(236, 72, 153, 0.4));
         }
 
-        .mass-btn:hover {
-            background: #7c3aed;
-        }
-
-        .info-box {
-            background: #eff6ff;
-            border-left: 4px solid #3b82f6;
-            padding: 14px 18px;
-            border-radius: 20px;
-            margin-bottom: 24px;
-            font-size: 13px;
-            color: #1e40af;
-            line-height: 1.5;
-        }
-
-        .template-item {
-            background: #f8fafc;
+        .template-item, .board-item {
+            background: rgba(0, 0, 0, 0.4);
             padding: 12px 16px;
             border-radius: 20px;
             margin-bottom: 12px;
             cursor: pointer;
-            border: 1px solid #e2e8f0;
-            transition: all 0.2s;
-        }
-
-        .template-item:hover {
-            background: #f1f5f9;
-            transform: translateX(4px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .template-item.selected {
-            background: #eff6ff;
-            border-color: #3b82f6;
+            background: rgba(108, 140, 255, 0.2);
+            border-color: rgba(108, 140, 255, 0.4);
         }
 
         .type-badge {
@@ -195,19 +192,28 @@
             padding: 2px 8px;
             border-radius: 12px;
             font-size: 10px;
-            font-weight: 500;
             margin-left: 8px;
         }
 
-        .type-raspush { background: #fef3c7; color: #d97706; }
-        .type-event { background: #dcfce7; color: #16a34a; }
-        .type-optional { background: #e0e7ff; color: #4f46e5; }
+        .type-raspush {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+
+        .type-event {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        .type-optional {
+            background: rgba(108, 140, 255, 0.2);
+            color: #6c8cff;
+        }
 
         .link-group {
             display: flex;
             gap: 10px;
             margin-bottom: 10px;
-            align-items: center;
         }
 
         .link-group input {
@@ -216,8 +222,8 @@
         }
 
         .remove-link {
-            background: #fee2e2;
-            color: #dc2626;
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
             padding: 12px;
             border-radius: 20px;
             cursor: pointer;
@@ -226,7 +232,7 @@
         }
 
         .selected-info {
-            background: #f1f5f9;
+            background: rgba(0, 0, 0, 0.4);
             padding: 14px;
             border-radius: 20px;
             margin-bottom: 20px;
@@ -234,49 +240,22 @@
         }
 
         .warning-text {
-            color: #dc2626;
+            color: #f87171;
             font-size: 12px;
-            margin-top: -8px;
-            margin-bottom: 12px;
             display: none;
             text-align: center;
         }
 
-        .date-input-group {
+        .date-group {
             display: flex;
             gap: 10px;
-            margin-bottom: 14px;
             flex-wrap: wrap;
+            margin-bottom: 14px;
         }
 
-        .date-input-group input,
-        .date-input-group select {
+        .date-group input, .date-group select {
             flex: 1;
             margin-bottom: 0;
-        }
-
-        .date-input-group select {
-            width: auto;
-            min-width: 110px;
-        }
-
-        .board-item {
-            background: #f8fafc;
-            padding: 12px 16px;
-            border-radius: 20px;
-            margin-bottom: 12px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .delete-btn {
-            background: #fee2e2;
-            color: #dc2626;
-            margin-top: 10px;
-            padding: 8px;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            width: 100%;
         }
 
         .submissions-container {
@@ -286,87 +265,36 @@
 
         .district-group {
             margin-bottom: 20px;
-            border: 1px solid #e2e8f0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             overflow: hidden;
         }
 
         .district-header {
-            background: #f1f5f9;
+            background: rgba(0, 0, 0, 0.3);
             padding: 12px 16px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-        }
-
-        .district-header:hover {
-            background: #e2e8f0;
-        }
-
-        .district-content {
-            display: block;
         }
 
         .submission-item {
             padding: 12px 16px;
-            border-bottom: 1px solid #e2e8f0;
-            background: white;
-        }
-
-        .submission-item:last-child {
-            border-bottom: none;
-        }
-
-        .submission-link {
-            color: #3b82f6;
-            text-decoration: none;
-            word-break: break-all;
-        }
-
-        .submission-date {
-            font-size: 11px;
-            color: #64748b;
-            margin-top: 4px;
-        }
-
-        .badge {
-            background: #3b82f6;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 20px;
-            font-size: 11px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .task-item {
-            background: #f8fafc;
+            background: rgba(0, 0, 0, 0.4);
             padding: 12px;
             border-radius: 20px;
             margin-bottom: 12px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .task-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .task-status {
-            background: #fef3c7;
-            color: #d97706;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 11px;
         }
 
         .empty-state {
             text-align: center;
-            padding: 40px 20px;
-            color: #64748b;
+            padding: 40px;
+            opacity: 0.6;
         }
 
         .toast {
@@ -374,24 +302,12 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: #1a202c;
-            color: white;
+            background: rgba(0, 0, 0, 0.9);
             padding: 10px 20px;
             border-radius: 40px;
             z-index: 1000;
+            border-left: 4px solid #6c8cff;
             font-size: 13px;
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateX(-50%) translateY(100px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(-50%) translateY(0);
-                opacity: 1;
-            }
         }
 
         @media (max-width: 768px) {
@@ -405,14 +321,10 @@
             .panel {
                 padding: 20px;
             }
-            .tab-btn {
-                padding: 8px 16px;
-                font-size: 13px;
-            }
-            .date-input-group {
+            .date-group {
                 flex-direction: column;
             }
-            .date-input-group select {
+            .date-group select {
                 width: 100%;
             }
         }
@@ -420,31 +332,35 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
+    <div class="glow-bg">
+        <div class="glow-sphere sphere-1"></div>
+        <div class="glow-sphere sphere-2"></div>
+        <div class="glow-sphere sphere-3"></div>
+    </div>
+
     <div class="container">
-        <div class="card">
-            <div class="header">
-                <h1>🎛️ Медиакоординатор</h1>
-                <div class="subtitle">Управление задачами и доской объявлений</div>
-            </div>
+        <div class="glass-card header">
+            <h1>🎛️ Медиакоординатор</h1>
+            <div style="opacity: 0.6;">Управление задачами</div>
         </div>
 
         <div class="tabs">
-            <button class="tab-btn active" data-tab="board">📢 Доска объявлений</button>
-            <button class="tab-btn" data-tab="submissions">📥 Отклики с доски</button>
-            <button class="tab-btn" data-tab="templates">📋 Шаблоны задач</button>
-            <button class="tab-btn" data-tab="send">🚀 Отправить задачу</button>
-            <button class="tab-btn" data-tab="active">📊 Активные задачи</button>
+            <button class="tab-btn active" data-tab="board">📢 Доска</button>
+            <button class="tab-btn" data-tab="submissions">📥 Отклики</button>
+            <button class="tab-btn" data-tab="templates">📋 Шаблоны</button>
+            <button class="tab-btn" data-tab="send">🚀 Отправить</button>
+            <button class="tab-btn" data-tab="active">📊 Активные</button>
         </div>
 
-        <!-- Панель доски объявлений -->
+        <!-- Доска -->
         <div id="board-panel" class="panel active">
             <div class="grid-2cols">
                 <div>
-                    <h2>📢 Создать задание на доску</h2>
-                    <input type="text" id="boardTitle" placeholder="Название задания">
-                    <textarea id="boardDesc" placeholder="Краткое описание задания"></textarea>
-                    <textarea id="boardTech" placeholder="📋 ТЗ (техническое задание)"></textarea>
-                    <div class="date-input-group">
+                    <h2>📢 Создать задание</h2>
+                    <input type="text" id="boardTitle" placeholder="Название">
+                    <textarea id="boardDesc" placeholder="Описание"></textarea>
+                    <textarea id="boardTech" placeholder="📋 ТЗ"></textarea>
+                    <div class="date-group">
                         <input type="number" id="boardDay" placeholder="День" min="1" max="31">
                         <select id="boardMonth">
                             <option value="0">Январь</option><option value="1">Февраль</option><option value="2">Март</option>
@@ -452,63 +368,60 @@
                             <option value="6">Июль</option><option value="7">Август</option><option value="8">Сентябрь</option>
                             <option value="9">Октябрь</option><option value="10">Ноябрь</option><option value="11">Декабрь</option>
                         </select>
-                        <input type="number" id="boardYear" placeholder="Год" min="2025" max="2030" value="2026">
-                        <input type="number" id="boardHour" placeholder="Час (0-23)" min="0" max="23" value="23">
-                        <input type="number" id="boardMinute" placeholder="Мин (0-59)" min="0" max="59" value="59">
+                        <input type="number" id="boardYear" placeholder="Год" value="2026">
+                        <input type="number" id="boardHour" placeholder="Час" value="23" min="0" max="23">
+                        <input type="number" id="boardMinute" placeholder="Мин" value="59" min="0" max="59">
                     </div>
-                    <button onclick="createBoardTask()">📢 Опубликовать на доску</button>
+                    <button onclick="createBoardTask()">📢 Опубликовать</button>
                 </div>
                 <div>
-                    <h2>📋 Активные задания на доске</h2>
+                    <h2>📋 Активные задания</h2>
                     <div id="boardTasksList" class="empty-state">Загрузка...</div>
                 </div>
             </div>
         </div>
 
-        <!-- Панель откликов с доски -->
+        <!-- Отклики -->
         <div id="submissions-panel" class="panel">
-            <h2>📥 Отклики участников (ссылки с доски объявлений)</h2>
+            <h2>📥 Отклики участников</h2>
             <div id="submissionsList" class="empty-state">Загрузка...</div>
         </div>
 
-        <!-- Панель шаблонов -->
+        <!-- Шаблоны -->
         <div id="templates-panel" class="panel">
             <div class="grid-2cols">
                 <div>
-                    <h2>📋 Существующие шаблоны</h2>
+                    <h2>📋 Шаблоны</h2>
                     <div id="templatesList" class="empty-state">Загрузка...</div>
                 </div>
                 <div>
-                    <h2>➕ Создать новый шаблон</h2>
-                    <input type="text" id="newTemplateTitle" placeholder="Название шаблона">
-                    <textarea id="newTemplateDesc" placeholder="Описание шаблона"></textarea>
-                    <select id="templateTypeSelect">
-                        <option value="raspush">📢 Распуш (обязательны ссылки и срок)</option>
-                        <option value="event">🎉 Событие (участие + ссылка)</option>
-                        <option value="optional">⭐ По желанию (дополнительное задание)</option>
+                    <h2>➕ Создать шаблон</h2>
+                    <input type="text" id="newTitle" placeholder="Название">
+                    <textarea id="newDesc" placeholder="Описание"></textarea>
+                    <select id="newType">
+                        <option value="raspush">📢 Распуш</option>
+                        <option value="event">🎉 Событие</option>
+                        <option value="optional">⭐ По желанию</option>
                     </select>
-                    <button onclick="createTemplate()">+ Создать шаблон</button>
+                    <button onclick="createTemplate()">+ Создать</button>
                 </div>
             </div>
         </div>
 
-        <!-- Панель отправки -->
+        <!-- Отправка -->
         <div id="send-panel" class="panel">
             <div class="grid-2cols">
                 <div>
-                    <h2>🚀 Отправить задачу всем шефам</h2>
-                    <div class="info-box" id="infoBox">🔥 <strong>РАСПУШ</strong> — можно добавить несколько ссылок<br>• Ссылки и срок обязательны!</div>
-                    <div class="selected-info">⚡ Выбран шаблон: <strong id="selectedTemplateName">не выбран</strong></div>
-                    <div id="linksBlock">
-                        <div id="linksContainer">
-                            <div class="link-group">
-                                <input type="text" id="taskLink1" placeholder="🔗 Ссылка 1">
-                                <div class="remove-link" onclick="removeLink(1)" style="display: none;">✖</div>
-                            </div>
+                    <h2>🚀 Отправить всем</h2>
+                    <div class="selected-info">⚡ Выбран: <strong id="selectedName">не выбран</strong></div>
+                    <div id="linksContainer">
+                        <div class="link-group">
+                            <input type="text" id="link1" placeholder="Ссылка 1">
+                            <div class="remove-link" onclick="removeLink(1)" style="display:none;">✖</div>
                         </div>
-                        <button type="button" id="addLinkBtn" onclick="addLinkInput()" style="background: #f1f5f9; margin-top: 8px; display: none;">+ Добавить ещё ссылку</button>
                     </div>
-                    <div class="date-input-group">
+                    <button type="button" id="addLinkBtn" onclick="addLink()" style="background:rgba(255,255,255,0.1); margin-top:8px; display:none;">+ Добавить ссылку</button>
+                    <div class="date-group">
                         <input type="number" id="taskDay" placeholder="День" min="1" max="31">
                         <select id="taskMonth">
                             <option value="0">Январь</option><option value="1">Февраль</option><option value="2">Март</option>
@@ -516,25 +429,25 @@
                             <option value="6">Июль</option><option value="7">Август</option><option value="8">Сентябрь</option>
                             <option value="9">Октябрь</option><option value="10">Ноябрь</option><option value="11">Декабрь</option>
                         </select>
-                        <input type="number" id="taskYear" placeholder="Год" min="2025" max="2030" value="2026">
-                        <input type="number" id="taskHour" placeholder="Час (0-23)" min="0" max="23" value="23">
-                        <input type="number" id="taskMinute" placeholder="Мин (0-59)" min="0" max="59" value="59">
+                        <input type="number" id="taskYear" placeholder="Год" value="2026">
+                        <input type="number" id="taskHour" placeholder="Час" value="23" min="0" max="23">
+                        <input type="number" id="taskMinute" placeholder="Мин" value="59" min="0" max="59">
                     </div>
-                    <textarea id="taskComment" placeholder="💬 Комментарий для шефов (опционально)"></textarea>
-                    <button class="mass-btn" onclick="sendToAll()">📤 ОТПРАВИТЬ ВСЕМ ШЕФАМ</button>
-                    <div id="requiredWarning" class="warning-text">⚠️ Для задачи "РАСПУШ" обязательны ссылки и срок выполнения!</div>
+                    <textarea id="taskComment" placeholder="Комментарий"></textarea>
+                    <button class="mass-btn" onclick="sendToAll()">📤 ОТПРАВИТЬ</button>
+                    <div id="sendWarning" class="warning-text">⚠️ Для распуша нужны ссылки и срок</div>
                 </div>
                 <div>
                     <h2>📊 Активные задачи</h2>
-                    <div id="activeTasksList" class="empty-state">Загрузка активных задач...</div>
+                    <div id="activeList" class="empty-state">Загрузка...</div>
                 </div>
             </div>
         </div>
 
-        <!-- Панель активных задач -->
+        <!-- Активные -->
         <div id="active-panel" class="panel">
-            <h2>📊 Активные задачи (все шефы)</h2>
-            <div id="activeTasksList2" class="empty-state">Загрузка активных задач...</div>
+            <h2>📊 Активные задачи</h2>
+            <div id="activeList2" class="empty-state">Загрузка...</div>
         </div>
     </div>
 
@@ -543,376 +456,180 @@
         const SUPABASE_KEY = 'sb_publishable__WbXqBZhgBBU-dDFEvXVeA_PQYwa_y7';
         const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        let selectedTemplateId = null;
-        let selectedTemplateTitle = null;
-        let selectedTemplateType = null;
+        let selectedId = null, selectedType = null, selectedTitle = null;
         let linkCounter = 1;
 
-        function buildDateFromInputs(dayId, monthId, yearId, hourId, minuteId) {
-            const day = parseInt(document.getElementById(dayId)?.value);
-            const month = parseInt(document.getElementById(monthId)?.value);
-            const year = parseInt(document.getElementById(yearId)?.value);
-            const hour = parseInt(document.getElementById(hourId)?.value);
-            const minute = parseInt(document.getElementById(minuteId)?.value);
-            if (isNaN(day) || isNaN(month) || isNaN(year)) return null;
-            const date = new Date(year, month, day, isNaN(hour) ? 23 : hour, isNaN(minute) ? 59 : minute);
-            return date.toISOString();
+        function buildDate(dayId, monthId, yearId, hourId, minuteId) {
+            const d = parseInt(document.getElementById(dayId)?.value);
+            const m = parseInt(document.getElementById(monthId)?.value);
+            const y = parseInt(document.getElementById(yearId)?.value);
+            const h = parseInt(document.getElementById(hourId)?.value);
+            const mi = parseInt(document.getElementById(minuteId)?.value);
+            if (isNaN(d) || isNaN(m) || isNaN(y)) return null;
+            return new Date(y, m, d, isNaN(h) ? 23 : h, isNaN(mi) ? 59 : mi).toISOString();
         }
 
-        function formatDateForDisplay(dateStr) {
+        function formatDate(dateStr) {
             if (!dateStr) return '';
-            const date = new Date(dateStr);
-            return date.toLocaleString('ru-RU', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
+            const d = new Date(dateStr);
+            return d.toLocaleString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
         }
 
         function escapeHtml(str) {
-            if (str === null || str === undefined) return '';
-            if (typeof str !== 'string') str = String(str);
-            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+            if (!str) return '';
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
         }
 
-        // ========== ДОСКА ОБЪЯВЛЕНИЙ ==========
         async function loadBoardTasks() {
-            try {
-                const { data, error } = await sb
-                    .from('board_tasks')
-                    .select('*')
-                    .order('created_at', { ascending: false });
-
-                const container = document.getElementById('boardTasksList');
-                if (error) throw error;
-                if (!data || data.length === 0) {
-                    container.innerHTML = '<div class="empty-state">📭 Нет заданий на доске</div>';
-                    return;
-                }
-
-                let html = '';
-                for (let task of data) {
-                    html += `
-                        <div class="board-item">
-                            <strong>${escapeHtml(task.title)}</strong>
-                            <div style="font-size: 11px; color: #64748b; margin-top: 4px;">📅 До: ${formatDateForDisplay(task.deadline)}</div>
-                            <div style="font-size: 12px; margin-top: 6px;">${escapeHtml(task.description || '')}</div>
-                            <div style="font-size: 11px; margin-top: 6px; color: #4f46e5;">📋 ТЗ: ${escapeHtml(task.technical_task || '-')}</div>
-                            <button class="delete-btn" onclick="deleteBoardTask(${task.id})">🗑 Удалить задание</button>
-                        </div>
-                    `;
-                }
-                container.innerHTML = html;
-            } catch (err) {
-                console.error(err);
-                document.getElementById('boardTasksList').innerHTML = '<div class="empty-state">❌ Ошибка загрузки</div>';
-            }
+            const { data } = await sb.from('board_tasks').select('*').order('created_at', { ascending: false });
+            const container = document.getElementById('boardTasksList');
+            if (!data?.length) { container.innerHTML = '<div class="empty-state">📭 Нет заданий</div>'; return; }
+            const { data: parts } = await sb.from('board_participants').select('board_task_id');
+            const counts = {};
+            for (let p of parts || []) counts[p.board_task_id] = (counts[p.board_task_id] || 0) + 1;
+            container.innerHTML = data.map(t => `
+                <div class="board-item">
+                    <strong>${escapeHtml(t.title)}</strong>
+                    <div style="font-size:11px; opacity:0.7;">📅 До: ${formatDate(t.deadline)}</div>
+                    <div style="font-size:12px; margin-top:6px;">👥 Участников: ${counts[t.id] || 0}</div>
+                    <button onclick="deleteBoardTask(${t.id})" style="margin-top:10px; background:rgba(239,68,68,0.2); border:none; padding:6px; border-radius:30px; color:#f87171; cursor:pointer;">🗑 Удалить</button>
+                </div>
+            `).join('');
         }
 
-        window.deleteBoardTask = async function(id) {
-            if (!confirm('Удалить задание? Все отклики участников будут удалены.')) return;
+        window.deleteBoardTask = async (id) => {
+            if (!confirm('Удалить?')) return;
             await sb.from('board_submissions').delete().eq('board_task_id', id);
             await sb.from('board_tasks').delete().eq('id', id);
-            loadBoardTasks();
-            loadSubmissions();
-            showToast('✅ Задание удалено');
+            loadBoardTasks(); loadSubmissions();
+            showToast('✅ Удалено');
         };
 
-        window.createBoardTask = async function() {
+        window.createBoardTask = async () => {
             const title = document.getElementById('boardTitle').value;
             const desc = document.getElementById('boardDesc').value;
             const tech = document.getElementById('boardTech').value;
-            const deadline = buildDateFromInputs('boardDay', 'boardMonth', 'boardYear', 'boardHour', 'boardMinute');
-
-            if (!title) {
-                alert('Введите название');
-                return;
-            }
-            if (!deadline) {
-                alert('Укажите дату');
-                return;
-            }
-
-            await sb.from('board_tasks').insert([{
-                title: title,
-                description: desc,
-                technical_task: tech,
-                deadline: deadline,
-                is_active: true
-            }]);
-
+            const deadline = buildDate('boardDay', 'boardMonth', 'boardYear', 'boardHour', 'boardMinute');
+            if (!title) { alert('Введите название'); return; }
+            if (!deadline) { alert('Укажите дату'); return; }
+            await sb.from('board_tasks').insert([{ title, description: desc, technical_task: tech, deadline, is_active: true }]);
             document.getElementById('boardTitle').value = '';
             document.getElementById('boardDesc').value = '';
             document.getElementById('boardTech').value = '';
-            document.getElementById('boardDay').value = '';
-            document.getElementById('boardYear').value = '2026';
-            document.getElementById('boardHour').value = '23';
-            document.getElementById('boardMinute').value = '59';
             loadBoardTasks();
-            showToast('✅ Задание опубликовано');
+            showToast('✅ Опубликовано');
         };
 
-        // ========== ОТКЛИКИ С ДОСКИ ==========
         async function loadSubmissions() {
-            try {
-                const { data, error } = await sb
-                    .from('board_submissions')
-                    .select('*, board_tasks(title), chiefs(name), districts(name)')
-                    .order('created_at', { ascending: false });
-
-                const container = document.getElementById('submissionsList');
-                if (error) throw error;
-                if (!data || data.length === 0) {
-                    container.innerHTML = '<div class="empty-state">📭 Пока нет откликов от участников</div>';
-                    return;
-                }
-
-                const grouped = {};
-                for (let sub of data) {
-                    const district = sub.districts?.name || 'Неизвестный округ';
-                    if (!grouped[district]) grouped[district] = [];
-                    grouped[district].push(sub);
-                }
-
-                let html = '<div class="submissions-container">';
-                for (let [district, subs] of Object.entries(grouped)) {
-                    html += `
-                        <div class="district-group">
-                            <div class="district-header" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none'">
-                                <span>📌 ${district}</span>
-                                <span class="badge">${subs.length} откликов</span>
-                            </div>
-                            <div class="district-content">
-                    `;
-                    for (let sub of subs) {
-                        html += `
-                            <div class="submission-item">
-                                <div><strong>📋 ${escapeHtml(sub.board_tasks?.title || 'Задание')}</strong></div>
-                                <div>👤 ${escapeHtml(sub.chiefs?.name || 'Шеф')}</div>
-                                <div>🔗 <a href="${sub.link}" target="_blank" class="submission-link">${sub.link}</a></div>
-                                <div class="submission-date">📅 ${new Date(sub.created_at).toLocaleString()}</div>
-                            </div>
-                        `;
-                    }
-                    html += `</div></div>`;
-                }
-                html += `</div>`;
-                container.innerHTML = html;
-            } catch (err) {
-                console.error(err);
-                document.getElementById('submissionsList').innerHTML = '<div class="empty-state">❌ Ошибка загрузки</div>';
+            const { data } = await sb.from('board_submissions').select('*, board_tasks(title), chiefs(name), districts(name)').order('created_at', { ascending: false });
+            const container = document.getElementById('submissionsList');
+            if (!data?.length) { container.innerHTML = '<div class="empty-state">📭 Нет откликов</div>'; return; }
+            const grouped = {};
+            for (let s of data) {
+                const district = s.districts?.name || 'Неизвестно';
+                if (!grouped[district]) grouped[district] = [];
+                grouped[district].push(s);
             }
+            let html = '<div class="submissions-container">';
+            for (let [district, subs] of Object.entries(grouped)) {
+                html += `<div class="district-group"><div class="district-header" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none'"><span>📌 ${district}</span><span class="badge">${subs.length}</span></div><div class="district-content">`;
+                for (let s of subs) {
+                    html += `<div class="submission-item"><strong>${escapeHtml(s.board_tasks?.title)}</strong><br>👤 ${escapeHtml(s.chiefs?.name)}<br>🔗 <a href="${s.link}" target="_blank">${s.link}</a><br>📅 ${new Date(s.created_at).toLocaleString()}</div>`;
+                }
+                html += `</div></div>`;
+            }
+            html += '</div>';
+            container.innerHTML = html;
         }
 
-        // ========== ШАБЛОНЫ ==========
         async function loadTemplates() {
-            const { data } = await sb.from('task_templates').select('*').eq('is_active', true).order('id');
+            const { data } = await sb.from('task_templates').select('*').eq('is_active', true);
             const container = document.getElementById('templatesList');
-            if (!data?.length) {
-                container.innerHTML = '<div class="empty-state">Нет шаблонов</div>';
-                return;
-            }
-
-            container.innerHTML = data.map(t => {
-                let typeLabel = '', typeClass = '';
-                if (t.type === 'raspush') {
-                    typeLabel = '📢 Распуш';
-                    typeClass = 'type-raspush';
-                } else if (t.type === 'event') {
-                    typeLabel = '🎉 Событие';
-                    typeClass = 'type-event';
-                } else {
-                    typeLabel = '⭐ По желанию';
-                    typeClass = 'type-optional';
-                }
-                return `
-                    <div class="template-item" onclick="selectTemplate(${t.id}, '${escapeHtml(t.title).replace(/'/g, "\\'")}', '${t.type}')">
-                        <strong>${escapeHtml(t.title)}</strong>
-                        <span class="type-badge ${typeClass}">${typeLabel}</span>
-                        <div style="font-size: 12px; color: #64748b; margin-top: 4px;">${escapeHtml(t.description || '')}</div>
-                    </div>
-                `;
-            }).join('');
+            if (!data?.length) { container.innerHTML = '<div class="empty-state">Нет шаблонов</div>'; return; }
+            container.innerHTML = data.map(t => `
+                <div class="template-item" onclick="selectTemplate(${t.id}, '${escapeHtml(t.title).replace(/'/g, "\\'")}', '${t.type}')">
+                    <strong>${escapeHtml(t.title)}</strong>
+                    <span class="type-badge type-${t.type}">${t.type === 'raspush' ? '📢 Распуш' : t.type === 'event' ? '🎉 Событие' : '⭐ По желанию'}</span>
+                </div>
+            `).join('');
         }
 
-        window.selectTemplate = function(id, title, type) {
-            selectedTemplateId = id;
-            selectedTemplateTitle = title;
-            selectedTemplateType = type;
-            document.getElementById('selectedTemplateName').innerText = title;
-
-            document.querySelectorAll('.template-item').forEach(item => {
-                item.classList.remove('selected');
-            });
-            event.currentTarget.classList.add('selected');
-
+        window.selectTemplate = (id, title, type) => {
+            selectedId = id; selectedType = type; selectedTitle = title;
+            document.getElementById('selectedName').innerText = title;
             const addBtn = document.getElementById('addLinkBtn');
-            const warning = document.getElementById('requiredWarning');
-            const infoBox = document.getElementById('infoBox');
-
-            if (type === 'raspush') {
-                addBtn.style.display = 'block';
-                warning.style.display = 'block';
-                infoBox.innerHTML = '🔥 <strong>РАСПУШ</strong> — можно добавить несколько ссылок<br>• Ссылки и срок обязательны!';
-                document.querySelector('#linksContainer input').placeholder = '🔗 Ссылка 1 (обязательно)';
-            } else {
-                addBtn.style.display = 'none';
-                warning.style.display = 'none';
-                infoBox.innerHTML = type === 'event' ? '🎉 <strong>СОБЫТИЕ</strong> — ссылка не обязательна' : '⭐ <strong>ПО ЖЕЛАНИЮ</strong> — ссылка не обязательна';
-                document.querySelector('#linksContainer input').placeholder = '🔗 Ссылка (опционально)';
-            }
+            const warn = document.getElementById('sendWarning');
+            addBtn.style.display = type === 'raspush' ? 'block' : 'none';
+            warn.style.display = type === 'raspush' ? 'block' : 'none';
+            document.querySelector('#linksContainer input').placeholder = type === 'raspush' ? '🔗 Ссылка 1 (обязательно)' : '🔗 Ссылка (опционально)';
         };
 
-        window.addLinkInput = function() {
-            if (selectedTemplateType !== 'raspush') return;
+        window.addLink = () => {
+            if (selectedType !== 'raspush') return;
             linkCounter++;
-            const container = document.getElementById('linksContainer');
             const div = document.createElement('div');
             div.className = 'link-group';
             div.id = `link-group-${linkCounter}`;
-            div.innerHTML = `
-                <input type="text" id="taskLink${linkCounter}" placeholder="🔗 Ссылка ${linkCounter}">
-                <div class="remove-link" onclick="removeLink(${linkCounter})">✖</div>
-            `;
-            container.appendChild(div);
+            div.innerHTML = `<input type="text" id="link${linkCounter}" placeholder="Ссылка ${linkCounter}"><div class="remove-link" onclick="removeLink(${linkCounter})">✖</div>`;
+            document.getElementById('linksContainer').appendChild(div);
         };
 
-        window.removeLink = function(id) {
-            document.getElementById(`link-group-${id}`)?.remove();
-        };
+        window.removeLink = (id) => document.getElementById(`link-group-${id}`)?.remove();
 
         function getAllLinks() {
-            const links = [];
+            let links = [];
             for (let i = 1; i <= linkCounter; i++) {
-                const inp = document.getElementById(`taskLink${i}`);
-                if (inp && inp.value.trim()) links.push(inp.value.trim());
+                let inp = document.getElementById(`link${i}`);
+                if (inp?.value.trim()) links.push(inp.value.trim());
             }
             return links;
         }
 
-        // ========== ОТПРАВКА ЗАДАЧИ ==========
-        window.sendToAll = async function() {
-            if (!selectedTemplateId) {
-                alert('Выберите шаблон');
-                return;
-            }
-
+        window.sendToAll = async () => {
+            if (!selectedId) { alert('Выберите шаблон'); return; }
             const links = getAllLinks();
-            const deadline = buildDateFromInputs('taskDay', 'taskMonth', 'taskYear', 'taskHour', 'taskMinute');
+            const deadline = buildDate('taskDay', 'taskMonth', 'taskYear', 'taskHour', 'taskMinute');
             const comment = document.getElementById('taskComment').value;
-
-            if (selectedTemplateType === 'raspush' && (links.length === 0 || !deadline)) {
-                alert('Для распуша нужны ссылки и срок');
-                return;
-            }
-
-            const allLinks = links.join(', ');
+            if (selectedType === 'raspush' && (links.length === 0 || !deadline)) { alert('Для распуша нужны ссылки и срок'); return; }
             const { data: chiefs } = await sb.from('chiefs').select('id, district_id');
-            if (!chiefs?.length) {
-                alert('Нет шефов');
-                return;
-            }
-
+            if (!chiefs?.length) { alert('Нет шефов'); return; }
             let ok = 0;
             for (let c of chiefs) {
                 const { error } = await sb.from('assignments').insert([{
-                    template_id: selectedTemplateId,
-                    chief_id: c.id,
-                    district_id: c.district_id,
-                    link: allLinks || null,
-                    coordinator_comment: comment || null,
-                    deadline: deadline,
-                    status: 'pending',
-                    type: selectedTemplateType
+                    template_id: selectedId, chief_id: c.id, district_id: c.district_id,
+                    link: links.join(', '), coordinator_comment: comment, deadline,
+                    status: 'pending', type: selectedType
                 }]);
                 if (!error) ok++;
             }
-
-            alert(`✅ Задача "${selectedTemplateTitle}" отправлена ${ok} шефам`);
-            document.getElementById('linksContainer').innerHTML = `
-                <div class="link-group">
-                    <input type="text" id="taskLink1" placeholder="🔗 Ссылка 1">
-                    <div class="remove-link" onclick="removeLink(1)" style="display: none;">✖</div>
-                </div>
-            `;
+            alert(`✅ Отправлено ${ok} шефам`);
+            document.getElementById('linksContainer').innerHTML = `<div class="link-group"><input type="text" id="link1" placeholder="Ссылка 1"><div class="remove-link" onclick="removeLink(1)" style="display:none;">✖</div></div>`;
             linkCounter = 1;
-            document.getElementById('taskDay').value = '';
-            document.getElementById('taskHour').value = '23';
-            document.getElementById('taskMinute').value = '59';
-            document.getElementById('taskComment').value = '';
-
-            loadActiveTasks();
-            loadActiveTasks2();
+            loadActiveTasks(); loadActiveTasks2();
         };
 
-        // ========== АКТИВНЫЕ ЗАДАЧИ ==========
         async function loadActiveTasks() {
-            const { data } = await sb
-                .from('assignments')
-                .select('*, task_templates(*), chiefs(name, primary_branch_id)')
-                .neq('status', 'completed')
-                .order('created_at', { ascending: false })
-                .limit(40);
-
-            const container = document.getElementById('activeTasksList');
-            if (!data?.length) {
-                container.innerHTML = '<div class="empty-state">✅ Нет активных задач</div>';
-                return;
-            }
-
-            container.innerHTML = data.map(t => `
-                <div class="task-item">
-                    <div class="task-header">
-                        <strong>${escapeHtml(t.task_templates?.title || 'Задача')}</strong>
-                        <span class="task-status">${t.status === 'pending' ? '⏳ Ожидает' : '🔄 В работе'}</span>
-                    </div>
-                    <div style="font-size: 12px; margin-top: 6px;">Шеф: ${escapeHtml(t.chiefs?.name)} | ${t.chiefs?.primary_branch_id ? '📌 Первичка' : '🏛️ Местное'}</div>
-                    ${t.deadline ? `<div style="font-size: 11px; margin-top: 4px;">⏰ Срок: ${formatDateForDisplay(t.deadline)}</div>` : ''}
-                    ${t.link ? `<a href="${t.link.split(',')[0]}" target="_blank" style="color: #3b82f6;">🔗 Ссылка</a>` : ''}
-                </div>
-            `).join('');
+            const { data } = await sb.from('assignments').select('*, task_templates(*), chiefs(name)').neq('status', 'completed').order('created_at', { ascending: false }).limit(40);
+            const container = document.getElementById('activeList');
+            if (!data?.length) { container.innerHTML = '<div class="empty-state">✅ Нет активных</div>'; return; }
+            container.innerHTML = data.map(t => `<div class="task-item"><div style="display:flex; justify-content:space-between;"><strong>${escapeHtml(t.task_templates?.title)}</strong><span>${t.status}</span></div><div>Шеф: ${escapeHtml(t.chiefs?.name)}</div>${t.deadline ? `<div>⏰ ${formatDate(t.deadline)}</div>` : ''}${t.link ? `<a href="${t.link.split(',')[0]}" target="_blank">🔗</a>` : ''}</div>`).join('');
         }
 
         async function loadActiveTasks2() {
-            const { data } = await sb
-                .from('assignments')
-                .select('*, task_templates(*), chiefs(name, primary_branch_id)')
-                .neq('status', 'completed')
-                .order('created_at', { ascending: false })
-                .limit(40);
-
-            const container = document.getElementById('activeTasksList2');
-            if (!data?.length) {
-                container.innerHTML = '<div class="empty-state">✅ Нет активных задач</div>';
-                return;
-            }
-
-            container.innerHTML = data.map(t => `
-                <div class="task-item">
-                    <div class="task-header">
-                        <strong>${escapeHtml(t.task_templates?.title || 'Задача')}</strong>
-                        <span class="task-status">${t.status === 'pending' ? '⏳ Ожидает' : '🔄 В работе'}</span>
-                    </div>
-                    <div style="font-size: 12px; margin-top: 6px;">Шеф: ${escapeHtml(t.chiefs?.name)} | ${t.chiefs?.primary_branch_id ? '📌 Первичка' : '🏛️ Местное'}</div>
-                    ${t.deadline ? `<div style="font-size: 11px; margin-top: 4px;">⏰ Срок: ${formatDateForDisplay(t.deadline)}</div>` : ''}
-                    ${t.link ? `<a href="${t.link.split(',')[0]}" target="_blank" style="color: #3b82f6;">🔗 Ссылка</a>` : ''}
-                </div>
-            `).join('');
+            const { data } = await sb.from('assignments').select('*, task_templates(*), chiefs(name)').neq('status', 'completed').order('created_at', { ascending: false }).limit(40);
+            const container = document.getElementById('activeList2');
+            if (!data?.length) { container.innerHTML = '<div class="empty-state">✅ Нет активных</div>'; return; }
+            container.innerHTML = data.map(t => `<div class="task-item"><div style="display:flex; justify-content:space-between;"><strong>${escapeHtml(t.task_templates?.title)}</strong><span>${t.status}</span></div><div>Шеф: ${escapeHtml(t.chiefs?.name)}</div>${t.deadline ? `<div>⏰ ${formatDate(t.deadline)}</div>` : ''}${t.link ? `<a href="${t.link.split(',')[0]}" target="_blank">🔗</a>` : ''}</div>`).join('');
         }
 
-        window.createTemplate = async function() {
-            const title = document.getElementById('newTemplateTitle').value;
-            const desc = document.getElementById('newTemplateDesc').value;
-            const type = document.getElementById('templateTypeSelect').value;
-            if (!title) {
-                alert('Введите название');
-                return;
-            }
+        window.createTemplate = async () => {
+            const title = document.getElementById('newTitle').value;
+            const desc = document.getElementById('newDesc').value;
+            const type = document.getElementById('newType').value;
+            if (!title) { alert('Введите название'); return; }
             await sb.from('task_templates').insert([{ title, description: desc, type, is_active: true }]);
-            document.getElementById('newTemplateTitle').value = '';
-            document.getElementById('newTemplateDesc').value = '';
+            document.getElementById('newTitle').value = '';
+            document.getElementById('newDesc').value = '';
             loadTemplates();
             showToast('✅ Шаблон создан');
         };
@@ -931,7 +648,6 @@
                 btn.classList.add('active');
                 document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
                 document.getElementById(btn.dataset.tab + '-panel').classList.add('active');
-
                 if (btn.dataset.tab === 'board') loadBoardTasks();
                 if (btn.dataset.tab === 'submissions') loadSubmissions();
                 if (btn.dataset.tab === 'templates') loadTemplates();
@@ -945,12 +661,6 @@
         loadTemplates();
         loadActiveTasks();
         loadActiveTasks2();
-
-        setInterval(() => {
-            if (document.querySelector('.tab-btn.active')?.dataset.tab === 'send') loadActiveTasks();
-            if (document.querySelector('.tab-btn.active')?.dataset.tab === 'active') loadActiveTasks2();
-            if (document.querySelector('.tab-btn.active')?.dataset.tab === 'submissions') loadSubmissions();
-        }, 15000);
     </script>
 </body>
 </html>
