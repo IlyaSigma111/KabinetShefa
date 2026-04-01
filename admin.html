@@ -9,11 +9,10 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
             background: #0a0c10;
             color: #fff;
             min-height: 100vh;
@@ -36,36 +35,15 @@
             opacity: 0.4;
         }
 
-        .sphere-1 {
-            width: 600px;
-            height: 600px;
-            top: -200px;
-            right: -200px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-        }
-
-        .sphere-2 {
-            width: 500px;
-            height: 500px;
-            bottom: -200px;
-            left: -100px;
-            background: linear-gradient(135deg, #ff6b6b, #ff8e53);
-        }
-
-        .sphere-3 {
-            width: 400px;
-            height: 400px;
-            top: 50%;
-            left: 30%;
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-        }
+        .sphere-1 { width: 600px; height: 600px; top: -200px; right: -200px; background: linear-gradient(135deg, #667eea, #764ba2); }
+        .sphere-2 { width: 500px; height: 500px; bottom: -200px; left: -100px; background: linear-gradient(135deg, #ff6b6b, #ff8e53); }
+        .sphere-3 { width: 400px; height: 400px; top: 50%; left: 30%; background: linear-gradient(135deg, #4facfe, #00f2fe); }
 
         .glass-card {
             background: rgba(20, 25, 35, 0.5);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 28px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .container {
@@ -126,11 +104,6 @@
             color: rgba(255, 255, 255, 0.7);
             font-size: 14px;
             cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .tab-btn:hover {
-            background: rgba(108, 140, 255, 0.15);
         }
 
         .tab-btn.active {
@@ -171,7 +144,6 @@
 
         .table-wrapper {
             overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
         }
 
         table {
@@ -192,10 +164,6 @@
             opacity: 0.7;
         }
 
-        tr:hover td {
-            background: rgba(108, 140, 255, 0.05);
-        }
-
         .delete-btn, .add-points-btn, .remove-points-btn {
             padding: 6px 12px;
             border: none;
@@ -204,7 +172,6 @@
             font-weight: 500;
             cursor: pointer;
             margin: 2px;
-            transition: all 0.2s;
         }
 
         .delete-btn {
@@ -212,26 +179,14 @@
             color: #f87171;
         }
 
-        .delete-btn:hover {
-            background: rgba(239, 68, 68, 0.4);
-        }
-
         .add-points-btn {
             background: rgba(16, 185, 129, 0.2);
             color: #10b981;
         }
 
-        .add-points-btn:hover {
-            background: rgba(16, 185, 129, 0.4);
-        }
-
         .remove-points-btn {
             background: rgba(245, 158, 11, 0.2);
             color: #f59e0b;
-        }
-
-        .remove-points-btn:hover {
-            background: rgba(245, 158, 11, 0.4);
         }
 
         .danger-zone {
@@ -249,11 +204,6 @@
             font-weight: 600;
             cursor: pointer;
             width: 100%;
-            transition: all 0.2s;
-        }
-
-        .danger-btn:hover {
-            background: rgba(239, 68, 68, 0.5);
         }
 
         .status-badge-small {
@@ -286,18 +236,6 @@
             z-index: 1000;
             border-left: 4px solid #6c8cff;
             font-size: 13px;
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateX(-50%) translateY(100px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(-50%) translateY(0);
-                opacity: 1;
-            }
         }
 
         .empty-state {
@@ -307,29 +245,11 @@
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 16px;
-            }
-            .header {
-                padding: 16px 20px;
-                flex-direction: column;
-                text-align: center;
-            }
-            .panel {
-                padding: 20px;
-            }
-            .tab-btn {
-                padding: 8px 16px;
-                font-size: 13px;
-            }
-            th, td {
-                padding: 10px 8px;
-                font-size: 11px;
-            }
-            .delete-btn, .add-points-btn, .remove-points-btn {
-                padding: 4px 8px;
-                font-size: 10px;
-            }
+            .container { padding: 16px; }
+            .header { padding: 16px 20px; flex-direction: column; text-align: center; }
+            .panel { padding: 20px; }
+            .tab-btn { padding: 8px 16px; font-size: 13px; }
+            th, td { padding: 10px 8px; font-size: 11px; }
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -343,94 +263,63 @@
 
     <div class="container">
         <div class="glass-card header">
-            <h1>🔧 Админ-консоль разработчика</h1>
-            <div id="dbStatus" class="status-badge">⏳ Проверка подключения...</div>
+            <h1>🔧 Админ-консоль</h1>
+            <div id="dbStatus" class="status-badge">⏳ Проверка...</div>
         </div>
 
         <div class="tabs">
-            <button class="tab-btn active" data-tab="tasks">📋 Все задачи</button>
-            <button class="tab-btn" data-tab="chiefs">👥 Управление шефами</button>
+            <button class="tab-btn active" data-tab="tasks">📋 Задачи</button>
+            <button class="tab-btn" data-tab="chiefs">👥 Шефы</button>
             <button class="tab-btn" data-tab="ratingMain">🏆 Рейтинг округов</button>
             <button class="tab-btn" data-tab="ratingPrimary">📊 Рейтинг первичек</button>
         </div>
 
-        <!-- Панель задач -->
         <div id="tasks-panel" class="panel active">
             <h2>📋 Управление задачами</h2>
-            <input type="text" id="taskSearch" class="search-input" placeholder="🔍 Поиск по названию задачи...">
+            <input type="text" id="taskSearch" class="search-input" placeholder="Поиск...">
             <div class="table-wrapper">
-                 <table>
+                <table>
                     <thead>
-                         <tr>
-                            <th>ID</th>
-                            <th>Задача</th>
-                            <th>Описание</th>
-                            <th>Статистика</th>
-                            <th>Тип</th>
-                            <th>Действия</th>
-                         </tr>
+                        <tr><th>ID</th><th>Задача</th><th>Описание</th><th>Статистика</th><th>Тип</th><th>Действия</th></tr>
                     </thead>
                     <tbody id="tasksTable"></tbody>
-                 </table>
+                </table>
             </div>
             <div class="danger-zone">
-                <button class="danger-btn" onclick="deleteAllTasks()">⚠️ УДАЛИТЬ ВСЕ ЗАДАЧИ (всех шефов, все шаблоны)</button>
+                <button class="danger-btn" onclick="deleteAllTasks()">⚠️ УДАЛИТЬ ВСЕ ЗАДАЧИ</button>
             </div>
         </div>
 
-        <!-- Панель шефов -->
         <div id="chiefs-panel" class="panel">
-            <h2>👥 Управление баллами шефов</h2>
-            <input type="text" id="chiefSearch" class="search-input" placeholder="🔍 Поиск по имени или округу...">
+            <h2>👥 Управление баллами</h2>
+            <input type="text" id="chiefSearch" class="search-input" placeholder="Поиск...">
             <div class="table-wrapper">
-                 <table>
+                <table>
                     <thead>
-                         <tr>
-                            <th>Шеф</th>
-                            <th>Округ</th>
-                            <th>Тип</th>
-                            <th>Баллы</th>
-                            <th>Действия</th>
-                         </tr>
+                        <tr><th>Шеф</th><th>Округ</th><th>Тип</th><th>Баллы</th><th>Действия</th></tr>
                     </thead>
                     <tbody id="chiefsTable"></tbody>
-                 </table>
+                </table>
             </div>
         </div>
 
-        <!-- Рейтинг местных отделений -->
         <div id="ratingMain-panel" class="panel">
-            <h2>🏆 Рейтинг местных отделений</h2>
+            <h2>🏆 Рейтинг округов</h2>
             <div class="table-wrapper">
-                 <table>
-                    <thead>
-                         <tr>
-                            <th>Округ</th>
-                            <th>Всего баллов</th>
-                            <th>Количество шефов</th>
-                            <th>Средний балл</th>
-                         </tr>
-                    </thead>
+                <table>
+                    <thead><tr><th>Округ</th><th>Баллы</th><th>Шефов</th><th>Средний</th></tr></thead>
                     <tbody id="ratingMainTable"></tbody>
-                 </table>
+                </table>
             </div>
         </div>
 
-        <!-- Рейтинг первичек -->
         <div id="ratingPrimary-panel" class="panel">
-            <h2>📊 Рейтинг первичных отделений</h2>
+            <h2>📊 Рейтинг первичек</h2>
             <div class="table-wrapper">
-                 <table>
-                    <thead>
-                         <tr>
-                            <th>Округ</th>
-                            <th>Всего баллов</th>
-                            <th>Количество первичек</th>
-                            <th>Средний балл</th>
-                         </tr>
-                    </thead>
+                <table>
+                    <thead><tr><th>Округ</th><th>Баллы</th><th>Первичек</th><th>Средний</th></tr></thead>
                     <tbody id="ratingPrimaryTable"></tbody>
-                 </table>
+                </table>
             </div>
         </div>
     </div>
@@ -440,289 +329,167 @@
         const SUPABASE_KEY = 'sb_publishable__WbXqBZhgBBU-dDFEvXVeA_PQYwa_y7';
         const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        let allTemplates = [];
-        let allAssignments = [];
+        let allTemplates = [], allAssignments = [];
 
         async function checkConnection() {
-            try {
-                const { error } = await sb.from('districts').select('count', { count: 'exact', head: true });
-                const div = document.getElementById('dbStatus');
-                if (error) {
-                    div.innerHTML = '❌ Ошибка подключения';
-                    div.className = 'status-badge offline';
-                } else {
-                    div.innerHTML = '✅ База данных подключена';
-                    div.className = 'status-badge online';
-                }
-            } catch (err) {
-                console.error(err);
+            const { error } = await sb.from('districts').select('count', { count: 'exact', head: true });
+            const div = document.getElementById('dbStatus');
+            if (error) {
+                div.innerHTML = '❌ Ошибка';
+                div.className = 'status-badge offline';
+            } else {
+                div.innerHTML = '✅ Подключено';
+                div.className = 'status-badge online';
             }
         }
 
-        // ========== ЗАДАЧИ ==========
         async function loadTasks() {
-            try {
-                const { data: templates } = await sb.from('task_templates').select('*').order('id');
-                const { data: assignments } = await sb.from('assignments').select('template_id, status');
-                allTemplates = templates || [];
-                allAssignments = assignments || [];
-                renderTasksTable();
-            } catch (err) {
-                console.error(err);
-            }
+            const { data: templates } = await sb.from('task_templates').select('*').order('id');
+            const { data: assignments } = await sb.from('assignments').select('template_id, status');
+            allTemplates = templates || [];
+            allAssignments = assignments || [];
+            renderTasksTable();
         }
 
         function renderTasksTable() {
             const search = document.getElementById('taskSearch')?.value.toLowerCase() || '';
             const filtered = allTemplates.filter(t => t.title.toLowerCase().includes(search));
             const tbody = document.getElementById('tasksTable');
-
             if (!filtered.length) {
-                tbody.innerHTML = '<tr><td colspan="6" class="empty-state">📭 Нет задач</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Нет задач</td></tr>';
                 return;
             }
-
             let html = '';
             for (let t of filtered) {
                 const tasks = allAssignments.filter(a => a.template_id === t.id);
-                const total = tasks.length;
-                const completed = tasks.filter(a => a.status === 'completed').length;
-                const typeLabel = t.type === 'event' ? '🎉 Событие' : '📢 Распуш';
-
-                html += `
-                    <tr>
-                        <td style="font-family: monospace;">${t.id}</td>
-                        <td><strong>${escapeHtml(t.title)}</strong></td>
-                        <td>${escapeHtml(t.description || '-')}</td>
-                        <td>
-                            <div>Всего: ${total}</div>
-                            <div class="task-stats">✅ Выполнено: ${completed}</div>
-                            <div class="task-stats">⏳ Ожидает: ${total - completed}</div>
-                        </td>
-                        <td><span class="status-badge-small status-active">${typeLabel}</span></td>
-                        <td><button class="delete-btn" onclick="deleteTaskByTemplate(${t.id}, '${escapeHtml(t.title).replace(/'/g, "\\'")}')">🗑 Удалить у всех</button></td>
-                    </tr>
-                `;
+                const total = tasks.length, completed = tasks.filter(a => a.status === 'completed').length;
+                html += `<tr>
+                    <td>${t.id}</td>
+                    <td><strong>${escapeHtml(t.title)}</strong></td>
+                    <td>${escapeHtml(t.description || '-')}</td>
+                    <td>Всего: ${total}<br>✅ Вып: ${completed}<br>⏳ Ожид: ${total-completed}</td>
+                    <td><span class="status-badge-small status-active">${t.type === 'event' ? '🎉 Событие' : '📢 Распуш'}</span></td>
+                    <td><button class="delete-btn" onclick="deleteTaskByTemplate(${t.id}, '${escapeHtml(t.title).replace(/'/g, "\\'")}')">🗑 Удалить у всех</button></td>
+                </tr>`;
             }
             tbody.innerHTML = html;
         }
 
-        window.deleteTaskByTemplate = async function(templateId, templateTitle) {
-            if (!confirm(`Удалить ВСЕ задачи "${templateTitle}" у ВСЕХ шефов? Это действие нельзя отменить.`)) return;
-
-            try {
-                const { data: tasksToDelete } = await sb.from('assignments').select('id').eq('template_id', templateId);
-                if (tasksToDelete && tasksToDelete.length > 0) {
-                    for (let t of tasksToDelete) {
-                        await sb.from('operations_history').delete().eq('assignment_id', t.id);
-                    }
-                    await sb.from('assignments').delete().eq('template_id', templateId);
-                }
-                loadTasks();
-                loadChiefs();
-                loadRatingMain();
-                loadRatingPrimary();
-                showToast(`✅ Все задачи "${templateTitle}" удалены у всех шефов`);
-            } catch (err) {
-                alert('Ошибка: ' + err.message);
+        window.deleteTaskByTemplate = async (id, title) => {
+            if (!confirm(`Удалить все задачи "${title}"?`)) return;
+            const { data: tasks } = await sb.from('assignments').select('id').eq('template_id', id);
+            if (tasks?.length) {
+                for (let t of tasks) await sb.from('operations_history').delete().eq('assignment_id', t.id);
+                await sb.from('assignments').delete().eq('template_id', id);
             }
+            loadTasks(); loadChiefs(); loadRatingMain(); loadRatingPrimary();
+            showToast(`✅ Задачи "${title}" удалены`);
         };
 
-        window.deleteAllTasks = async function() {
-            if (!confirm('⚠️ УДАЛИТЬ ВСЕ ЗАДАЧИ У ВСЕХ ШЕФОВ? Это действие нельзя отменить! Все данные будут потеряны!')) return;
-
-            try {
-                await sb.from('operations_history').delete().neq('id', 0);
-                await sb.from('assignments').delete().neq('id', 0);
-                loadTasks();
-                loadChiefs();
-                loadRatingMain();
-                loadRatingPrimary();
-                showToast('✅ Все задачи удалены');
-            } catch (err) {
-                alert('Ошибка: ' + err.message);
-            }
+        window.deleteAllTasks = async () => {
+            if (!confirm('УДАЛИТЬ ВСЕ ЗАДАЧИ?')) return;
+            await sb.from('operations_history').delete().neq('id', 0);
+            await sb.from('assignments').delete().neq('id', 0);
+            loadTasks(); loadChiefs(); loadRatingMain(); loadRatingPrimary();
+            showToast('✅ Все задачи удалены');
         };
 
-        // ========== ШЕФЫ ==========
         async function loadChiefs() {
-            try {
-                const { data: chiefs } = await sb.from('chiefs').select('*, districts(name)').order('name');
-                const { data: scores } = await sb.from('chief_scores').select('*');
-
-                const scoreMap = {};
-                if (scores) {
-                    for (let s of scores) {
-                        scoreMap[s.chief_id] = s.total_score || 0;
-                    }
-                }
-
-                const list = (chiefs || []).map(c => ({ ...c, score: scoreMap[c.id] || 0 }));
-                const tbody = document.getElementById('chiefsTable');
-
-                if (!list.length) {
-                    tbody.innerHTML = '<tr><td colspan="5" class="empty-state">👥 Нет шефов</td></tr>';
-                    return;
-                }
-
-                let html = '';
-                for (let c of list) {
-                    html += `
-                        <tr>
-                            <td>${escapeHtml(c.name || '-')}</td>
-                            <td>${escapeHtml(c.districts?.name || '-')}</td>
-                            <td><span class="status-badge-small status-active">${c.primary_branch_id ? '📌 Первичка' : '🏛️ Местное'}</span></td>
-                            <td style="color: #6c8cff; font-weight: 600;">${c.score} баллов</td>
-                            <td>
-                                <button class="add-points-btn" onclick="addPoints('${c.id}')">+1</button>
-                                <button class="remove-points-btn" onclick="removePoints('${c.id}')">-1</button>
-                            </td>
-                        </tr>
-                    `;
-                }
-                tbody.innerHTML = html;
-            } catch (err) {
-                console.error(err);
+            const { data: chiefs } = await sb.from('chiefs').select('*, districts(name)').order('name');
+            const { data: scores } = await sb.from('chief_scores').select('*');
+            const scoreMap = {};
+            if (scores) for (let s of scores) scoreMap[s.chief_id] = s.total_score || 0;
+            const list = (chiefs || []).map(c => ({ ...c, score: scoreMap[c.id] || 0 }));
+            const tbody = document.getElementById('chiefsTable');
+            if (!list.length) {
+                tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Нет шефов</td></tr>';
+                return;
             }
+            let html = '';
+            for (let c of list) {
+                html += `<tr>
+                    <td>${escapeHtml(c.name || '-')}</td>
+                    <td>${escapeHtml(c.districts?.name || '-')}</td>
+                    <td><span class="status-badge-small status-active">${c.primary_branch_id ? '📌 Первичка' : '🏛️ Местное'}</span></td>
+                    <td style="color:#6c8cff;">${c.score} баллов</td>
+                    <td><button class="add-points-btn" onclick="addPoints('${c.id}')">+1</button><button class="remove-points-btn" onclick="removePoints('${c.id}')">-1</button></td>
+                </tr>`;
+            }
+            tbody.innerHTML = html;
         }
 
-        window.addPoints = async function(chiefId) {
-            try {
-                const { data: current } = await sb.from('chief_scores').select('total_score').eq('chief_id', chiefId).single();
-                const newScore = (current?.total_score || 0) + 1;
-                await sb.from('chief_scores').upsert({ chief_id: chiefId, total_score: newScore, updated_at: new Date() });
-                await sb.from('operations_history').insert([{ chief_id: chiefId, action: 'Админ начислил +1 балл' }]);
-
-                const { data: chief } = await sb.from('chiefs').select('district_id').eq('id', chiefId).single();
-                if (chief) await updateDistrictScore(chief.district_id);
-
-                loadChiefs();
-                loadRatingMain();
-                loadRatingPrimary();
-                showToast('✅ Начислен 1 балл');
-            } catch (err) {
-                alert('Ошибка: ' + err.message);
-            }
+        window.addPoints = async (id) => {
+            const { data: cur } = await sb.from('chief_scores').select('total_score').eq('chief_id', id).single();
+            const newScore = (cur?.total_score || 0) + 1;
+            await sb.from('chief_scores').upsert({ chief_id: id, total_score: newScore, updated_at: new Date() });
+            await sb.from('operations_history').insert([{ chief_id: id, action: 'Админ +1 балл' }]);
+            const { data: chief } = await sb.from('chiefs').select('district_id').eq('id', id).single();
+            if (chief) await updateDistrictScore(chief.district_id);
+            loadChiefs(); loadRatingMain(); loadRatingPrimary();
+            showToast('✅ +1 балл');
         };
 
-        window.removePoints = async function(chiefId) {
-            try {
-                const { data: current } = await sb.from('chief_scores').select('total_score').eq('chief_id', chiefId).single();
-                const newScore = Math.max(0, (current?.total_score || 0) - 1);
-                await sb.from('chief_scores').upsert({ chief_id: chiefId, total_score: newScore, updated_at: new Date() });
-                await sb.from('operations_history').insert([{ chief_id: chiefId, action: 'Админ снял 1 балл' }]);
-
-                const { data: chief } = await sb.from('chiefs').select('district_id').eq('id', chiefId).single();
-                if (chief) await updateDistrictScore(chief.district_id);
-
-                loadChiefs();
-                loadRatingMain();
-                loadRatingPrimary();
-                showToast('⚠️ Снят 1 балл');
-            } catch (err) {
-                alert('Ошибка: ' + err.message);
-            }
+        window.removePoints = async (id) => {
+            const { data: cur } = await sb.from('chief_scores').select('total_score').eq('chief_id', id).single();
+            const newScore = Math.max(0, (cur?.total_score || 0) - 1);
+            await sb.from('chief_scores').upsert({ chief_id: id, total_score: newScore, updated_at: new Date() });
+            await sb.from('operations_history').insert([{ chief_id: id, action: 'Админ -1 балл' }]);
+            const { data: chief } = await sb.from('chiefs').select('district_id').eq('id', id).single();
+            if (chief) await updateDistrictScore(chief.district_id);
+            loadChiefs(); loadRatingMain(); loadRatingPrimary();
+            showToast('⚠️ -1 балл');
         };
 
         async function updateDistrictScore(districtId) {
-            try {
-                const { data: chiefs } = await sb.from('chiefs').select('id').eq('district_id', districtId);
-                let total = 0;
-                for (let c of chiefs) {
-                    const { data: s } = await sb.from('chief_scores').select('total_score').eq('chief_id', c.id).single();
-                    total += s?.total_score || 0;
-                }
-                await sb.from('district_scores').upsert({ district_id: districtId, total_score: total, updated_at: new Date() });
-            } catch (err) {
-                console.error(err);
+            const { data: chiefs } = await sb.from('chiefs').select('id').eq('district_id', districtId);
+            let total = 0;
+            for (let c of chiefs) {
+                const { data: s } = await sb.from('chief_scores').select('total_score').eq('chief_id', c.id).single();
+                total += s?.total_score || 0;
             }
+            await sb.from('district_scores').upsert({ district_id: districtId, total_score: total, updated_at: new Date() });
         }
 
-        // ========== РЕЙТИНГИ ==========
         async function loadRatingMain() {
-            try {
-                const { data: districtScores } = await sb
-                    .from('district_scores')
-                    .select('*, districts(name)')
-                    .order('total_score', { ascending: false });
-
-                const tbody = document.getElementById('ratingMainTable');
-                if (!districtScores || districtScores.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="4" class="empty-state">🏆 Нет данных</td></tr>';
-                    return;
-                }
-
-                let html = '';
-                for (let d of districtScores) {
-                    const { count } = await sb.from('chiefs').select('*', { count: 'exact', head: true }).eq('district_id', d.district_id);
-                    const avg = count > 0 ? Math.round(d.total_score / count) : 0;
-                    html += `
-                        <tr>
-                            <td style="font-weight: 500;">${escapeHtml(d.districts?.name || 'Неизвестно')}</td>
-                            <td style="color: #6c8cff; font-weight: 600;">${d.total_score} баллов</td>
-                            <td>${count || 0} шефов</td>
-                            <td>${avg} баллов</td>
-                        </tr>
-                    `;
-                }
-                tbody.innerHTML = html;
-            } catch (err) {
-                console.error(err);
+            const { data } = await sb.from('district_scores').select('*, districts(name)').order('total_score', { ascending: false });
+            const tbody = document.getElementById('ratingMainTable');
+            if (!data?.length) {
+                tbody.innerHTML = '<tr><td colspan="4" class="empty-state">Нет данных</td></tr>';
+                return;
             }
+            let html = '';
+            for (let d of data) {
+                const { count } = await sb.from('chiefs').select('*', { count: 'exact', head: true }).eq('district_id', d.district_id);
+                html += `<tr><td>${escapeHtml(d.districts?.name || 'Неизвестно')}</td><td style="color:#6c8cff;">${d.total_score} баллов</td><td>${count || 0} шефов</td><td>${count > 0 ? Math.round(d.total_score / count) : 0} баллов</td></tr>`;
+            }
+            tbody.innerHTML = html;
         }
 
         async function loadRatingPrimary() {
-            try {
-                const { data: chiefs } = await sb.from('chiefs').select('id, district_id, districts(name), primary_branch_id');
-                const { data: scores } = await sb.from('chief_scores').select('*');
-
-                const scoreMap = {};
-                if (scores) {
-                    for (let s of scores) {
-                        scoreMap[s.chief_id] = s.total_score || 0;
-                    }
-                }
-
-                const districts = {};
-                for (let c of (chiefs || [])) {
-                    if (!c.primary_branch_id) continue;
-                    const name = c.districts?.name || 'Неизвестно';
-                    if (!districts[name]) districts[name] = { total: 0, count: 0 };
-                    districts[name].total += scoreMap[c.id] || 0;
-                    districts[name].count++;
-                }
-
-                const sorted = Object.entries(districts)
-                    .map(([n, d]) => ({ name: n, total: d.total, count: d.count, avg: Math.round(d.total / d.count) }))
-                    .sort((a, b) => b.total - a.total);
-
-                const tbody = document.getElementById('ratingPrimaryTable');
-                if (!sorted.length) {
-                    tbody.innerHTML = '<tr><td colspan="4" class="empty-state">📊 Нет данных</td></tr>';
-                    return;
-                }
-
-                let html = '';
-                for (let r of sorted) {
-                    html += `
-                        <tr>
-                            <td style="font-weight: 500;">${escapeHtml(r.name)}</td>
-                            <td style="color: #6c8cff; font-weight: 600;">${r.total} баллов</td>
-                            <td>${r.count} первичек</td>
-                            <td>${r.avg} баллов</td>
-                        </tr>
-                    `;
-                }
-                tbody.innerHTML = html;
-            } catch (err) {
-                console.error(err);
+            const { data: chiefs } = await sb.from('chiefs').select('id, district_id, districts(name), primary_branch_id');
+            const { data: scores } = await sb.from('chief_scores').select('*');
+            const scoreMap = {};
+            if (scores) for (let s of scores) scoreMap[s.chief_id] = s.total_score || 0;
+            const districts = {};
+            for (let c of chiefs || []) {
+                if (!c.primary_branch_id) continue;
+                const name = c.districts?.name || 'Неизвестно';
+                if (!districts[name]) districts[name] = { total: 0, count: 0 };
+                districts[name].total += scoreMap[c.id] || 0;
+                districts[name].count++;
             }
+            const sorted = Object.entries(districts).map(([n, d]) => ({ name: n, total: d.total, count: d.count, avg: Math.round(d.total / d.count) })).sort((a,b) => b.total - a.total);
+            const tbody = document.getElementById('ratingPrimaryTable');
+            if (!sorted.length) {
+                tbody.innerHTML = '<tr><td colspan="4" class="empty-state">Нет данных</td></tr>';
+                return;
+            }
+            tbody.innerHTML = sorted.map(r => `<tr><td>${escapeHtml(r.name)}</td><td style="color:#6c8cff;">${r.total} баллов</td><td>${r.count} первичек</td><td>${r.avg} баллов</td></tr>`).join('');
         }
 
-        // ========== ВСПОМОГАТЕЛЬНЫЕ ==========
         function escapeHtml(str) {
             if (!str) return '';
-            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
         }
 
         function showToast(msg) {
@@ -733,14 +500,12 @@
             setTimeout(() => toast.remove(), 2500);
         }
 
-        // Переключение вкладок
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.onclick = () => {
                 document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
                 document.getElementById(btn.dataset.tab + '-panel').classList.add('active');
-
                 if (btn.dataset.tab === 'tasks') loadTasks();
                 if (btn.dataset.tab === 'chiefs') loadChiefs();
                 if (btn.dataset.tab === 'ratingMain') loadRatingMain();
@@ -748,25 +513,14 @@
             };
         });
 
-        // Поиск
         document.getElementById('taskSearch')?.addEventListener('input', renderTasksTable);
         document.getElementById('chiefSearch')?.addEventListener('input', () => loadChiefs());
 
-        // Инициализация
         checkConnection();
         loadTasks();
         loadChiefs();
         loadRatingMain();
         loadRatingPrimary();
-
-        // Автообновление
-        setInterval(() => {
-            const active = document.querySelector('.tab-btn.active');
-            if (active?.dataset.tab === 'tasks') loadTasks();
-            if (active?.dataset.tab === 'chiefs') loadChiefs();
-            if (active?.dataset.tab === 'ratingMain') loadRatingMain();
-            if (active?.dataset.tab === 'ratingPrimary') loadRatingPrimary();
-        }, 30000);
     </script>
 </body>
 </html>
