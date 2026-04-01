@@ -13,10 +13,59 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
-            background: #f5f7fa;
-            color: #1a202c;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0c10;
+            color: #fff;
             min-height: 100vh;
+        }
+
+        .glow-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .glow-sphere {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.4;
+        }
+
+        .sphere-1 {
+            width: 600px;
+            height: 600px;
+            top: -200px;
+            right: -200px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .sphere-2 {
+            width: 500px;
+            height: 500px;
+            bottom: -200px;
+            left: -100px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+        }
+
+        .sphere-3 {
+            width: 400px;
+            height: 400px;
+            top: 50%;
+            left: 30%;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+
+        .glass-card {
+            background: rgba(20, 25, 35, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 28px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .container {
@@ -25,49 +74,38 @@
             padding: 20px;
         }
 
-        .card {
-            background: white;
-            border-radius: 24px;
-            padding: 20px 24px;
-            margin-bottom: 20px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
         .logo h2 {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 700;
-            color: #1a202c;
+            background: linear-gradient(135deg, #fff, #b0c4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .district-badge {
-            background: #e2e8f0;
-            padding: 6px 16px;
+            background: rgba(108, 140, 255, 0.2);
+            padding: 8px 20px;
             border-radius: 40px;
-            font-size: 13px;
-            color: #1a202c;
+            font-size: 14px;
+            border: 1px solid rgba(108, 140, 255, 0.3);
         }
 
         .reset-btn {
-            background: #fee2e2;
-            border: none;
-            padding: 6px 16px;
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 8px 20px;
             border-radius: 40px;
-            color: #dc2626;
+            color: #f87171;
             cursor: pointer;
-        }
-
-        .export-btn {
-            background: #e0e7ff;
-            color: #4f46e5;
         }
 
         .stats-grid {
@@ -78,33 +116,32 @@
         }
 
         .stat-card {
-            background: white;
-            padding: 16px;
-            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 24px;
             text-align: center;
-            border: 1px solid #e2e8f0;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .stat-number {
             font-size: 32px;
             font-weight: 800;
-            color: #3b82f6;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: #64748b;
-            margin-top: 4px;
+            background: linear-gradient(135deg, #fff, #b0c4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .progress-container {
             margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            padding: 12px;
         }
 
         .progress-bar {
-            background: #e2e8f0;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            height: 12px;
+            height: 8px;
             overflow: hidden;
         }
 
@@ -117,43 +154,46 @@
 
         .progress-text {
             text-align: center;
-            font-size: 12px;
-            color: #64748b;
-            margin-top: 6px;
+            font-size: 11px;
+            margin-top: 8px;
+            opacity: 0.7;
         }
 
         .menu-scroll {
             overflow-x: auto;
             margin-bottom: 20px;
+            -webkit-overflow-scrolling: touch;
         }
 
         .menu-items {
             display: flex;
             gap: 10px;
+            min-width: min-content;
         }
 
         .menu-btn {
             padding: 10px 20px;
-            background: #f1f5f9;
+            background: rgba(0, 0, 0, 0.4);
             border: none;
             border-radius: 40px;
-            color: #475569;
+            color: rgba(255, 255, 255, 0.7);
             font-size: 14px;
             cursor: pointer;
             white-space: nowrap;
         }
 
         .menu-btn.active {
-            background: #3b82f6;
+            background: rgba(108, 140, 255, 0.3);
+            border: 1px solid rgba(108, 140, 255, 0.4);
             color: white;
         }
 
         .content {
-            background: white;
-            border-radius: 24px;
+            background: rgba(20, 25, 35, 0.4);
+            backdrop-filter: blur(20px);
+            border-radius: 28px;
             padding: 24px;
             min-height: 500px;
-            border: 1px solid #e2e8f0;
         }
 
         .page {
@@ -165,33 +205,33 @@
         }
 
         .page h3 {
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 20px;
             margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid #e2e8f0;
+            font-weight: 600;
         }
 
+        /* Календарь */
         .calendar-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 12px;
         }
 
         .calendar-nav {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             align-items: center;
         }
 
         .calendar-nav button {
-            background: #f1f5f9;
+            background: rgba(255, 255, 255, 0.1);
             border: none;
             padding: 8px 16px;
             border-radius: 30px;
+            color: white;
             cursor: pointer;
             font-size: 14px;
         }
@@ -199,29 +239,29 @@
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
+            gap: 6px;
         }
 
         .calendar-day-header {
             text-align: center;
             font-weight: 600;
-            padding: 10px;
-            color: #64748b;
+            padding: 8px;
             font-size: 12px;
+            opacity: 0.7;
         }
 
         .calendar-day {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 16px;
-            padding: 12px 8px;
-            min-height: 100px;
+            padding: 8px 4px;
+            min-height: 90px;
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .calendar-day:hover {
-            background: #f1f5f9;
+            background: rgba(108, 140, 255, 0.15);
             transform: translateY(-2px);
         }
 
@@ -231,190 +271,142 @@
 
         .calendar-day-number {
             font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 8px;
+            font-size: 13px;
+            margin-bottom: 6px;
+            text-align: center;
         }
 
         .calendar-event {
-            background: #3b82f620;
-            border-left: 3px solid #3b82f6;
-            padding: 4px 6px;
-            font-size: 10px;
-            margin-top: 4px;
+            background: rgba(59, 130, 246, 0.2);
+            border-left: 2px solid #3b82f6;
+            padding: 3px 4px;
+            font-size: 9px;
+            margin-top: 2px;
             border-radius: 4px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+
+        /* Квадратные карточки заданий */
+        .tasks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .task-card {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 18px;
             cursor: pointer;
-        }
-
-        .calendar-event:hover {
-            background: #3b82f640;
-        }
-
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            visibility: hidden;
-            opacity: 0;
             transition: all 0.2s;
         }
 
-        .modal-overlay.show {
-            visibility: visible;
-            opacity: 1;
+        .task-card:hover {
+            transform: translateY(-2px);
+            background: rgba(108, 140, 255, 0.1);
+            border-color: rgba(108, 140, 255, 0.3);
         }
 
-        .modal {
-            background: white;
-            border-radius: 32px;
-            max-width: 500px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            padding: 28px;
-        }
-
-        .modal h3 {
-            font-size: 20px;
-            margin-bottom: 16px;
-        }
-
-        .modal-close {
-            background: #f1f5f9;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-            margin-top: 20px;
-            width: 100%;
-        }
-
-        .participate-modal-btn {
-            background: #10b981;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 40px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 16px;
-            font-weight: 600;
-        }
-
-        .participate-input {
-            width: 100%;
-            padding: 12px;
-            background: #f1f5f9;
-            border: 1px solid #e2e8f0;
-            border-radius: 20px;
-            margin-top: 12px;
-        }
-
-        .task-item {
-            background: #f8fafc;
-            padding: 16px;
-            border-radius: 20px;
-            margin-bottom: 12px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .task-title {
+        .task-card-title {
             font-size: 16px;
             font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .task-desc {
-            font-size: 13px;
-            color: #64748b;
             margin-bottom: 8px;
         }
 
-        .coordinator-link {
-            background: #e0e7ff;
-            padding: 10px;
-            border-radius: 16px;
-            margin: 10px 0;
-            word-break: break-all;
-        }
-
-        .deadline {
+        .task-card-date {
             font-size: 11px;
-            margin: 6px 0;
-            padding: 3px 10px;
-            border-radius: 20px;
-            display: inline-block;
-            background: #fef3c7;
-            color: #d97706;
+            opacity: 0.6;
+            margin-bottom: 8px;
         }
 
-        .task-status {
+        .task-card-status {
             display: inline-block;
-            padding: 3px 10px;
+            padding: 4px 10px;
             border-radius: 20px;
             font-size: 10px;
-            margin-top: 8px;
-            background: #fef3c7;
-            color: #d97706;
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
         }
 
-        .btn-complete {
-            background: #dcfce7;
-            border: none;
-            padding: 10px;
-            border-radius: 40px;
-            color: #16a34a;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 12px;
+        .task-detail {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: none;
+        }
+
+        .task-card.expanded .task-detail {
+            display: block;
+        }
+
+        .task-detail p {
+            font-size: 12px;
+            line-height: 1.5;
+            opacity: 0.8;
+            margin-bottom: 12px;
+        }
+
+        .task-link {
+            color: #6c8cff;
+            text-decoration: none;
+            font-size: 12px;
+            word-break: break-all;
+            display: block;
+            margin: 8px 0;
         }
 
         .link-input {
             width: 100%;
             padding: 10px;
-            background: #f1f5f9;
-            border: 1px solid #e2e8f0;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
+            color: white;
+            margin-top: 8px;
+        }
+
+        .btn-complete {
+            background: rgba(16, 185, 129, 0.2);
+            border: none;
+            padding: 8px;
+            border-radius: 30px;
+            color: #10b981;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
             margin-top: 10px;
         }
 
         .sent-links {
-            margin-top: 12px;
-            padding-top: 10px;
-            border-top: 1px solid #e2e8f0;
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .sent-link {
             display: inline-block;
-            background: #e0e7ff;
-            padding: 4px 8px;
-            border-radius: 16px;
-            font-size: 11px;
+            background: rgba(108, 140, 255, 0.15);
+            padding: 3px 8px;
+            border-radius: 14px;
+            font-size: 10px;
             margin: 2px;
-            color: #4f46e5;
+            color: #6c8cff;
             text-decoration: none;
         }
 
         .history-item {
-            background: #f8fafc;
-            padding: 10px 14px;
-            border-radius: 16px;
-            margin-bottom: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px;
+            border-radius: 18px;
+            margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
             font-size: 12px;
-            border: 1px solid #e2e8f0;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .ranking-table {
@@ -424,16 +416,73 @@
 
         .ranking-table th,
         .ranking-table td {
-            padding: 10px 6px;
+            padding: 12px 8px;
             text-align: left;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             font-size: 13px;
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: #64748b;
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.2s;
+            padding: 20px;
+        }
+
+        .modal-overlay.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal {
+            background: rgba(20, 25, 35, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 32px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        .modal h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            padding: 10px;
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .participate-btn {
+            background: rgba(16, 185, 129, 0.2);
+            border: none;
+            padding: 12px;
+            border-radius: 40px;
+            color: #10b981;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 16px;
         }
 
         .toast {
@@ -441,42 +490,43 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: #1a202c;
-            color: white;
+            background: rgba(0, 0, 0, 0.9);
             padding: 10px 20px;
             border-radius: 40px;
             z-index: 1000;
+            border-left: 4px solid #6c8cff;
             font-size: 13px;
-            animation: slideUp 0.3s ease;
         }
 
-        @keyframes slideUp {
-            from {
-                transform: translateX(-50%) translateY(100px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(-50%) translateY(0);
-                opacity: 1;
-            }
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            opacity: 0.6;
         }
 
         @media (max-width: 768px) {
             .container {
                 padding: 16px;
             }
+            .logo h2 {
+                font-size: 20px;
+            }
+            .stat-number {
+                font-size: 26px;
+            }
             .calendar-grid {
                 gap: 4px;
             }
             .calendar-day {
-                padding: 6px 4px;
                 min-height: 70px;
+                padding: 4px 2px;
             }
-            .calendar-day-number {
-                font-size: 12px;
+            .tasks-grid {
+                grid-template-columns: 1fr;
             }
-            .stat-number {
-                font-size: 24px;
+            .menu-btn {
+                padding: 8px 16px;
+                font-size: 13px;
             }
             .content {
                 padding: 16px;
@@ -484,38 +534,40 @@
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
+    <div class="glow-bg">
+        <div class="glow-sphere sphere-1"></div>
+        <div class="glow-sphere sphere-2"></div>
+        <div class="glow-sphere sphere-3"></div>
+    </div>
+
     <div class="container">
-        <div class="card">
+        <div class="glass-card" style="padding: 20px 24px; margin-bottom: 20px;">
             <div class="header">
                 <div class="logo"><h2>📰 Кабинет шеф-редактора</h2></div>
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                     <span class="district-badge" id="districtDisplay">Загрузка...</span>
                     <button class="reset-btn" onclick="resetAndExit()">Сменить</button>
-                    <button class="reset-btn export-btn" onclick="exportReport()">📊 Экспорт отчёта</button>
                 </div>
             </div>
         </div>
 
         <div class="stats-grid">
-            <div class="stat-card"><div class="stat-number" id="totalTasks">0</div><div class="stat-label">Всего заданий</div></div>
-            <div class="stat-card"><div class="stat-number" id="completedTasks">0</div><div class="stat-label">Выполнено</div></div>
-            <div class="stat-card"><div class="stat-number" id="totalScore">0</div><div class="stat-label">Мои баллы</div></div>
+            <div class="stat-card"><div class="stat-number" id="totalTasks">0</div><div>Всего заданий</div></div>
+            <div class="stat-card"><div class="stat-number" id="completedTasks">0</div><div>Выполнено</div></div>
+            <div class="stat-card"><div class="stat-number" id="totalScore">0</div><div>Баллов</div></div>
         </div>
 
         <div class="progress-container">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-            </div>
-            <div class="progress-text" id="progressText">Загрузка прогресса...</div>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%"></div></div>
+            <div class="progress-text" id="progressText">Загрузка...</div>
         </div>
 
         <div class="menu-scroll">
             <div class="menu-items">
                 <button class="menu-btn active" data-page="calendar">📅 Календарь</button>
-                <button class="menu-btn" data-page="tasks">📋 Мои задачи</button>
+                <button class="menu-btn" data-page="tasks">📋 Задания</button>
                 <button class="menu-btn" data-page="rating">🏆 Рейтинг</button>
                 <button class="menu-btn" data-page="history">📜 История</button>
             </div>
@@ -535,22 +587,23 @@
             </div>
 
             <div id="tasks" class="page">
-                <h3>📋 Мои задачи</h3>
-                <div id="tasksList" class="empty-state">⏳ Загрузка...</div>
+                <h3>📋 Задания с доски</h3>
+                <div id="tasksList" class="empty-state">Загрузка...</div>
             </div>
 
             <div id="rating" class="page">
                 <h3>🏆 Рейтинг округов</h3>
                 <div style="overflow-x: auto;">
                     <table class="ranking-table">
-                        <thead>   </thead>
+                        <thead><tr><th>Округ</th><th>Баллы</th></tr></thead>
                         <tbody id="ratingList"></tbody>
-                     </div>
+                    </table>
+                </div>
             </div>
 
             <div id="history" class="page">
                 <h3>📜 История</h3>
-                <div id="historyList" class="empty-state">⏳ Загрузка...</div>
+                <div id="historyList" class="empty-state">Загрузка...</div>
             </div>
         </div>
     </div>
@@ -558,9 +611,9 @@
     <div id="eventModal" class="modal-overlay">
         <div class="modal">
             <h3 id="modalTitle"></h3>
-            <div id="modalDesc" style="margin-bottom: 12px;"></div>
-            <div id="modalTech" style="background: #f1f5f9; padding: 12px; border-radius: 16px; margin: 12px 0;"></div>
-            <div id="modalDeadline" style="margin-bottom: 8px;"></div>
+            <div id="modalDesc"></div>
+            <div id="modalTech" style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 16px; margin: 12px 0;"></div>
+            <div id="modalDeadline"></div>
             <div id="modalStatus"></div>
             <div id="modalParticipate"></div>
             <button class="modal-close" onclick="closeModal()">Закрыть</button>
@@ -571,582 +624,291 @@
         const SUPABASE_URL = 'https://csvynjkhhlexbnwpziup.supabase.co';
         const SUPABASE_KEY = 'sb_publishable__WbXqBZhgBBU-dDFEvXVeA_PQYwa_y7';
         const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        
+
         let chiefId = localStorage.getItem('chiefId');
         let districtName = localStorage.getItem('chiefDistrictName');
         let branchType = localStorage.getItem('chiefBranchType');
         let districtId = localStorage.getItem('chiefDistrictId');
-        
-        // Устанавливаем текущую дату на сегодня
+
         let currentDate = new Date();
         let allEvents = [];
         let mySubmissionsMap = {};
         let currentModalEventId = null;
-        
+
         if (!chiefId) {
-            document.getElementById('calendarGrid').innerHTML = '<div class="empty-state">⚠️ Ошибка. <a href="index.html">На главную</a></div>';
-            document.getElementById('districtDisplay').innerHTML = 'Ошибка';
-        } else {
-            document.getElementById('districtDisplay').innerHTML = '📍 ' + (districtName || 'Неизвестно') + (branchType === 'primary' ? ' • Первичка' : '');
+            window.location.href = 'index.html';
         }
-        
-        function formatDateForDisplay(dateStr) {
+
+        document.getElementById('districtDisplay').innerHTML = '📍 ' + (districtName || 'Неизвестно') + (branchType === 'primary' ? ' • Первичка' : '');
+
+        function formatDate(dateStr) {
             if (!dateStr) return '';
-            try {
-                const date = new Date(dateStr);
-                if (isNaN(date.getTime())) return dateStr;
-                return date.toLocaleString('ru-RU', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-            } catch (e) {
-                return dateStr;
-            }
+            const date = new Date(dateStr);
+            return date.toLocaleString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
         }
-        
-        function formatDateOnly(dateStr) {
+
+        function formatDateShort(dateStr) {
             if (!dateStr) return '';
-            try {
-                const date = new Date(dateStr);
-                if (isNaN(date.getTime())) return dateStr;
-                return date.toLocaleDateString('ru-RU');
-            } catch (e) {
-                return dateStr;
-            }
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('ru-RU');
         }
-        
+
         function escapeHtml(str) {
-            if (str === null || str === undefined) return '';
-            if (typeof str !== 'string') str = String(str);
-            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+            if (!str) return '';
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
         }
-        
+
         async function loadEvents() {
-            try {
-                const { data: tasks } = await sb
-                    .from('board_tasks')
-                    .select('*')
-                    .eq('is_active', true);
-                
-                const { data: mySubmissions } = await sb
-                    .from('board_submissions')
-                    .select('board_task_id, link')
-                    .eq('chief_id', chiefId);
-                
-                mySubmissionsMap = {};
-                if (mySubmissions) {
-                    for (let s of mySubmissions) {
-                        if (!mySubmissionsMap[s.board_task_id]) mySubmissionsMap[s.board_task_id] = [];
-                        mySubmissionsMap[s.board_task_id].push(s.link);
-                    }
+            const { data: tasks } = await sb.from('board_tasks').select('*').eq('is_active', true);
+            const { data: mySubmissions } = await sb.from('board_submissions').select('board_task_id, link').eq('chief_id', chiefId);
+
+            mySubmissionsMap = {};
+            if (mySubmissions) {
+                for (let s of mySubmissions) {
+                    if (!mySubmissionsMap[s.board_task_id]) mySubmissionsMap[s.board_task_id] = [];
+                    mySubmissionsMap[s.board_task_id].push(s.link);
                 }
-                
-                allEvents = tasks || [];
-                renderCalendar();
-                updateProgress();
-            } catch (err) {
-                console.error(err);
             }
+            allEvents = tasks || [];
+            renderCalendar();
+            updateProgress();
         }
-        
+
         function renderCalendar() {
             const year = currentDate.getFullYear();
             const month = currentDate.getMonth();
-            
-            const firstDayOfMonth = new Date(year, month, 1);
-            const lastDayOfMonth = new Date(year, month + 1, 0);
-            const startDayOfWeek = firstDayOfMonth.getDay();
-            const daysInMonth = lastDayOfMonth.getDate();
+
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const startOffset = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
+            const daysInMonth = lastDay.getDate();
             const prevMonthLastDay = new Date(year, month, 0).getDate();
-            
+
             const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
             document.getElementById('currentMonthYear').innerText = `${monthNames[month]} ${year}`;
-            
-            let gridHtml = '';
-            const dayNames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
-            for (let name of dayNames) {
-                gridHtml += `<div class="calendar-day-header">${name}</div>`;
-            }
-            
-            let startOffset = startDayOfWeek === 0 ? 6 : startDayOfWeek - 1;
-            
+
+            let grid = '';
+            const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+            for (let d of weekdays) grid += `<div class="calendar-day-header">${d}</div>`;
+
             for (let i = 0; i < startOffset; i++) {
-                const dayNum = prevMonthLastDay - startOffset + i + 1;
-                gridHtml += `<div class="calendar-day other-month"><div class="calendar-day-number">${dayNum}</div></div>`;
+                grid += `<div class="calendar-day other-month"><div class="calendar-day-number">${prevMonthLastDay - startOffset + i + 1}</div></div>`;
             }
-            
+
             for (let day = 1; day <= daysInMonth; day++) {
-                const eventsOnDay = allEvents.filter(e => {
-                    const eventDate = new Date(e.deadline);
-                    return eventDate.getDate() === day && eventDate.getMonth() === month && eventDate.getFullYear() === year;
+                const events = allEvents.filter(e => {
+                    const d = new Date(e.deadline);
+                    return d.getDate() === day && d.getMonth() === month && d.getFullYear() === year;
                 });
-                
                 let eventsHtml = '';
-                for (let event of eventsOnDay) {
-                    const myLinks = mySubmissionsMap[event.id] || [];
-                    const count = myLinks.length;
-                    const status = count > 0 ? ` (${count})` : '';
-                    eventsHtml += `<div class="calendar-event" onclick="event.stopPropagation(); openEventModal(${event.id})">${escapeHtml(event.title)}${status}</div>`;
+                for (let e of events) {
+                    const count = mySubmissionsMap[e.id]?.length || 0;
+                    eventsHtml += `<div class="calendar-event" onclick="event.stopPropagation(); openEventModal(${e.id})">${escapeHtml(e.title)}${count ? ` (${count})` : ''}</div>`;
                 }
-                
-                gridHtml += `
-                    <div class="calendar-day" onclick="openEventsOnDate('${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}')">
-                        <div class="calendar-day-number">${day}</div>
-                        ${eventsHtml}
-                    </div>
-                `;
+                grid += `<div class="calendar-day" onclick="openEventsOnDate('${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}')">
+                    <div class="calendar-day-number">${day}</div>
+                    ${eventsHtml}
+                </div>`;
             }
-            
+
             const totalCells = 42;
-            const cellsFilled = startOffset + daysInMonth;
-            const remainingCells = totalCells - cellsFilled;
-            for (let i = 1; i <= remainingCells; i++) {
-                gridHtml += `<div class="calendar-day other-month"><div class="calendar-day-number">${i}</div></div>`;
+            const filled = startOffset + daysInMonth;
+            for (let i = 1; i <= totalCells - filled; i++) {
+                grid += `<div class="calendar-day other-month"><div class="calendar-day-number">${i}</div></div>`;
             }
-            
-            document.getElementById('calendarGrid').innerHTML = gridHtml;
+
+            document.getElementById('calendarGrid').innerHTML = grid;
         }
-        
-        window.openEventModal = async function(eventId) {
-            currentModalEventId = eventId;
-            const event = allEvents.find(e => e.id === eventId);
+
+        window.openEventModal = async (id) => {
+            currentModalEventId = id;
+            const event = allEvents.find(e => e.id === id);
             if (!event) return;
-            
-            const myLinks = mySubmissionsMap[event.id] || [];
-            const linksCount = myLinks.length;
-            
+
+            const myLinks = mySubmissionsMap[id] || [];
             document.getElementById('modalTitle').innerText = event.title;
             document.getElementById('modalDesc').innerHTML = `<strong>📝 Описание:</strong><br>${escapeHtml(event.description || 'Нет')}`;
             document.getElementById('modalTech').innerHTML = `<strong>📋 ТЗ:</strong><br>${escapeHtml(event.technical_task || 'Нет')}`;
-            document.getElementById('modalDeadline').innerHTML = `<strong>⏰ Срок:</strong> ${formatDateForDisplay(event.deadline)}`;
-            
-            let statusHtml = `<strong>📌 Статус:</strong> Вы уже отправили ${linksCount} ссылку(и). Можно отправлять ещё до окончания срока!`;
-            document.getElementById('modalStatus').innerHTML = statusHtml;
-            
+            document.getElementById('modalDeadline').innerHTML = `<strong>⏰ Срок:</strong> ${formatDate(event.deadline)}`;
+            document.getElementById('modalStatus').innerHTML = `<strong>📌 Статус:</strong> Отправлено ${myLinks.length} ссылок. Можно отправлять ещё до окончания срока!`;
+
             let participateHtml = '';
             if (new Date(event.deadline) > new Date()) {
                 participateHtml = `
                     <div style="margin-top: 16px;">
-                        <div style="background: #e0e7ff; padding: 10px; border-radius: 16px; margin-bottom: 12px; font-size: 13px;">
-                            📌 <strong>Важно:</strong> Вы можете отправить несколько ссылок до окончания срока. Каждая ссылка = +1 балл!
-                        </div>
-                        <input type="text" id="modalLinkInput" class="participate-input" placeholder="Вставьте ссылку на выполненную работу (Google Drive, Яндекс Диск, ВК)">
-                        <button class="participate-modal-btn" onclick="submitModalLink()">📤 Отправить ссылку +1 балл</button>
+                        <div style="background: rgba(108,140,255,0.1); padding: 10px; border-radius: 14px; margin-bottom: 10px; font-size: 12px;">📌 Каждая ссылка = +1 балл. Можно отправить несколько!</div>
+                        <input type="text" id="modalLinkInput" class="participate-input" placeholder="Вставьте ссылку (Google Drive, Яндекс Диск, ВК)" style="width:100%; padding:10px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); border-radius:20px;">
+                        <button class="participate-btn" onclick="submitModalLink()">📤 Отправить ссылку +1 балл</button>
                     </div>
                 `;
             } else {
-                participateHtml = `<div style="margin-top: 16px; padding: 12px; background: #fee2e2; border-radius: 20px; text-align: center; color: #dc2626;">⏰ Срок выполнения истёк</div>`;
+                participateHtml = `<div style="margin-top: 16px; padding: 12px; background: rgba(239,68,68,0.2); border-radius: 20px; text-align: center;">⏰ Срок истёк</div>`;
             }
-            
             document.getElementById('modalParticipate').innerHTML = participateHtml;
             document.getElementById('eventModal').classList.add('show');
         };
-        
-        window.submitModalLink = async function() {
-            const linkInput = document.getElementById('modalLinkInput');
-            const link = linkInput ? linkInput.value.trim() : '';
-            
-            if (!link) {
-                alert('Вставьте ссылку на выполненную работу');
-                return;
+
+        window.submitModalLink = async () => {
+            const link = document.getElementById('modalLinkInput')?.value.trim();
+            if (!link) { alert('Вставьте ссылку'); return; }
+
+            const { data: existing } = await sb.from('board_submissions').select('id').eq('board_task_id', currentModalEventId).eq('chief_id', chiefId).eq('link', link);
+            if (existing?.length) { alert('❌ Эта ссылка уже была отправлена!'); return; }
+
+            await sb.from('board_submissions').insert([{ board_task_id: currentModalEventId, chief_id: chiefId, link, district_id: districtId }]);
+
+            const { data: cur } = await sb.from('chief_scores').select('total_score').eq('chief_id', chiefId).single();
+            await sb.from('chief_scores').upsert({ chief_id: chiefId, total_score: (cur?.total_score || 0) + 1, updated_at: new Date() });
+
+            const { data: chiefs } = await sb.from('chiefs').select('id').eq('district_id', districtId);
+            let total = 0;
+            for (let c of chiefs || []) {
+                const { data: s } = await sb.from('chief_scores').select('total_score').eq('chief_id', c.id).single();
+                total += s?.total_score || 0;
             }
-            
-            try {
-                const { data: existing } = await sb
-                    .from('board_submissions')
-                    .select('id')
-                    .eq('board_task_id', currentModalEventId)
-                    .eq('chief_id', chiefId)
-                    .eq('link', link);
-                
-                if (existing && existing.length > 0) {
-                    alert('❌ Эта ссылка уже была отправлена!');
-                    return;
-                }
-                
-                await sb.from('board_submissions').insert([{
-                    board_task_id: currentModalEventId,
-                    chief_id: chiefId,
-                    link: link,
-                    district_id: districtId
-                }]);
-                
-                const { data: cur } = await sb.from('chief_scores').select('total_score').eq('chief_id', chiefId).single();
-                await sb.from('chief_scores').upsert({
-                    chief_id: chiefId,
-                    total_score: (cur?.total_score || 0) + 1,
-                    updated_at: new Date()
-                });
-                
-                const { data: chiefs } = await sb.from('chiefs').select('id').eq('district_id', districtId);
-                let total = 0;
-                for (let c of chiefs || []) {
-                    const { data: s } = await sb.from('chief_scores').select('total_score').eq('chief_id', c.id).single();
-                    total += s?.total_score || 0;
-                }
-                await sb.from('district_scores').upsert({
-                    district_id: districtId,
-                    total_score: total,
-                    updated_at: new Date()
-                });
-                
-                await sb.from('operations_history').insert([{
-                    chief_id: chiefId,
-                    action: `Отправлена ссылка на задание: ${link}`
-                }]);
-                
-                closeModal();
-                loadEvents();
-                loadTasks();
-                loadHistory();
-                loadRating();
-                showToast('✅ +1 балл! Ссылка добавлена');
-            } catch (err) {
-                alert('Ошибка: ' + err.message);
-            }
+            await sb.from('district_scores').upsert({ district_id: districtId, total_score: total, updated_at: new Date() });
+
+            closeModal();
+            loadEvents();
+            loadTasks();
+            loadHistory();
+            loadRating();
+            showToast('✅ +1 балл!');
         };
-        
-        window.openEventsOnDate = function(dateStr) {
-            const eventsOnDate = allEvents.filter(e => {
-                const eventDate = new Date(e.deadline);
-                const targetDate = new Date(dateStr);
-                return eventDate.toDateString() === targetDate.toDateString();
-            });
-            
-            if (eventsOnDate.length === 0) {
-                alert('На эту дату нет мероприятий');
-                return;
-            }
-            
+
+        window.openEventsOnDate = (dateStr) => {
+            const events = allEvents.filter(e => new Date(e.deadline).toDateString() === new Date(dateStr).toDateString());
+            if (!events.length) { alert('На эту дату нет мероприятий'); return; }
+
             let modalContent = '<div style="max-height: 400px; overflow-y: auto;">';
-            for (let event of eventsOnDate) {
-                const myLinks = mySubmissionsMap[event.id] || [];
-                const count = myLinks.length;
+            for (let e of events) {
+                const count = mySubmissionsMap[e.id]?.length || 0;
                 modalContent += `
-                    <div style="border: 1px solid #e2e8f0; border-radius: 16px; padding: 12px; margin-bottom: 12px;">
-                        <strong>${escapeHtml(event.title)}</strong><br>
-                        <span style="font-size: 12px; color: #64748b;">${formatDateForDisplay(event.deadline)}</span><br>
-                        <span style="font-size: 11px;">📤 Отправлено ссылок: ${count}</span>
-                        <button onclick="closeModal(); setTimeout(() => openEventModal(${event.id}), 100)" style="margin-top: 8px; padding: 6px 12px; background: #3b82f6; color: white; border: none; border-radius: 20px; cursor: pointer;">Подробнее</button>
+                    <div style="border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 12px; margin-bottom: 12px;">
+                        <strong>${escapeHtml(e.title)}</strong><br>
+                        <span style="font-size: 11px;">📅 ${formatDateShort(e.deadline)}</span><br>
+                        <span>📤 Отправлено: ${count}</span>
+                        <button onclick="closeModal(); setTimeout(() => openEventModal(${e.id}), 100)" style="margin-top: 8px; padding: 6px 12px; background: #3b82f6; border: none; border-radius: 20px; color: white; cursor: pointer;">Подробнее</button>
                     </div>
                 `;
             }
             modalContent += '</div>';
-            
-            document.getElementById('modalTitle').innerText = `События на ${formatDateOnly(dateStr)}`;
+
+            document.getElementById('modalTitle').innerText = `События на ${formatDateShort(dateStr)}`;
             document.getElementById('modalDesc').innerHTML = modalContent;
             document.getElementById('modalTech').innerHTML = '';
             document.getElementById('modalDeadline').innerHTML = '';
             document.getElementById('modalStatus').innerHTML = '';
             document.getElementById('modalParticipate').innerHTML = '';
-            
             document.getElementById('eventModal').classList.add('show');
         };
-        
+
         function closeModal() {
             document.getElementById('eventModal').classList.remove('show');
-            currentModalEventId = null;
         }
-        
+
         async function updateProgress() {
-            try {
-                const { data: chiefs } = await sb
-                    .from('chiefs')
-                    .select('id')
-                    .eq('district_id', districtId);
-                
-                const { data: scores } = await sb
-                    .from('chief_scores')
-                    .select('total_score')
-                    .eq('chief_id', chiefId)
-                    .single();
-                
-                const myScore = scores?.total_score || 0;
-                
-                let totalDistrictScore = 0;
-                for (let c of chiefs || []) {
-                    const { data: s } = await sb
-                        .from('chief_scores')
-                        .select('total_score')
-                        .eq('chief_id', c.id)
-                        .single();
-                    totalDistrictScore += s?.total_score || 0;
-                }
-                
-                const avgDistrictScore = chiefs?.length ? totalDistrictScore / chiefs.length : 0;
-                const progressPercent = avgDistrictScore > 0 ? Math.min(100, Math.round((myScore / avgDistrictScore) * 100)) : 0;
-                
-                document.getElementById('progressFill').style.width = `${progressPercent}%`;
-                document.getElementById('progressText').innerHTML = `${progressPercent}% от среднего по округу (средний: ${Math.round(avgDistrictScore)} баллов)`;
-            } catch (err) {
-                console.error(err);
+            const { data: chiefs } = await sb.from('chiefs').select('id').eq('district_id', districtId);
+            const { data: myScore } = await sb.from('chief_scores').select('total_score').eq('chief_id', chiefId).single();
+
+            let total = 0;
+            for (let c of chiefs || []) {
+                const { data: s } = await sb.from('chief_scores').select('total_score').eq('chief_id', c.id).single();
+                total += s?.total_score || 0;
             }
+            const avg = chiefs?.length ? total / chiefs.length : 0;
+            const percent = avg > 0 ? Math.min(100, Math.round((myScore?.total_score || 0) / avg * 100)) : 0;
+
+            document.getElementById('progressFill').style.width = `${percent}%`;
+            document.getElementById('progressText').innerHTML = `${percent}% от среднего по округу (средний: ${Math.round(avg)} баллов)`;
         }
-        
-        window.exportReport = async function() {
-            try {
-                const { data: tasks } = await sb
-                    .from('board_tasks')
-                    .select('*')
-                    .eq('is_active', true);
-                
-                const { data: mySubmissions } = await sb
-                    .from('board_submissions')
-                    .select('*, board_tasks(title)')
-                    .eq('chief_id', chiefId);
-                
-                const { data: score } = await sb
-                    .from('chief_scores')
-                    .select('total_score')
-                    .eq('chief_id', chiefId)
-                    .single();
-                
-                const reportData = [
-                    ['ОТЧЁТ ПО АКТИВНОСТИ ШЕФ-РЕДАКТОРА'],
-                    [''],
-                    ['Округ', districtName || 'Неизвестно'],
-                    ['Тип отделения', branchType === 'primary' ? 'Первичное' : 'Местное'],
-                    ['Всего баллов', score?.total_score || 0],
-                    ['Дата формирования', new Date().toLocaleString()],
-                    [''],
-                    ['МОИ ОТПРАВЛЕННЫЕ ССЫЛКИ:'],
-                    ['Задание', 'Ссылка', 'Дата отправки']
-                ];
-                
-                if (mySubmissions && mySubmissions.length > 0) {
-                    for (let sub of mySubmissions) {
-                        reportData.push([
-                            sub.board_tasks?.title || 'Неизвестно',
-                            sub.link,
-                            new Date(sub.created_at).toLocaleString()
-                        ]);
-                    }
-                } else {
-                    reportData.push(['Нет отправленных ссылок', '', '']);
-                }
-                
-                reportData.push([''], ['ДОСТУПНЫЕ ЗАДАНИЯ НА ДОСКЕ:']);
-                reportData.push(['Название', 'Срок', 'Описание', 'ТЗ']);
-                
-                if (tasks && tasks.length > 0) {
-                    for (let task of tasks) {
-                        reportData.push([
-                            task.title,
-                            formatDateForDisplay(task.deadline),
-                            task.description || '',
-                            (task.technical_task || '').substring(0, 200)
-                        ]);
-                    }
-                } else {
-                    reportData.push(['Нет доступных заданий', '', '', '']);
-                }
-                
-                const ws = XLSX.utils.aoa_to_sheet(reportData);
-                ws['!cols'] = [{wch: 25}, {wch: 40}, {wch: 20}, {wch: 30}];
-                const wb = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(wb, ws, 'Отчёт');
-                XLSX.writeFile(wb, `отчёт_${districtName}_${new Date().toISOString().slice(0, 10)}.xlsx`);
-                showToast('✅ Отчёт скачан');
-            } catch (err) {
-                console.error(err);
-                alert('Ошибка при экспорте: ' + err.message);
-            }
-        };
-        
+
         async function loadTasks() {
-            try {
-                const { data: tasks, error } = await sb
-                    .from('assignments')
-                    .select('*, task_templates(*)')
-                    .eq('chief_id', chiefId)
-                    .order('created_at', { ascending: false });
-                
-                if (error) throw error;
-                
-                const container = document.getElementById('tasksList');
-                if (!tasks || tasks.length === 0) {
-                    container.innerHTML = '<div class="empty-state">📭 Нет задач</div>';
-                    return;
-                }
-                
-                const { data: history } = await sb
-                    .from('operations_history')
-                    .select('assignment_id, description')
-                    .eq('chief_id', chiefId)
-                    .ilike('action', '%ссылка%');
-                
-                const sentMap = {};
-                if (history) {
-                    for (let h of history) {
-                        if (!sentMap[h.assignment_id]) sentMap[h.assignment_id] = [];
-                        const match = h.description.match(/ссылка: (https?:\/\/[^\s]+)/);
-                        if (match) sentMap[h.assignment_id].push(match[1]);
-                    }
-                }
-                
-                let html = '';
-                for (let task of tasks) {
-                    const sent = sentMap[task.id] || [];
-                    let sentHtml = '';
-                    if (sent.length > 0) {
-                        sentHtml = `
-                            <div class="sent-links">
-                                <div style="font-size: 11px; margin-bottom: 6px;">✅ Отправленные ссылки (${sent.length}):</div>
-                                <div>${sent.map(l => `<a href="${escapeHtml(l)}" target="_blank" class="sent-link">🔗 ${l.length > 35 ? l.substring(0, 35) + '...' : l}</a>`).join('')}</div>
-                            </div>
-                        `;
-                    }
-                    
-                    html += `
-                        <div class="task-item">
-                            <div class="task-title">${escapeHtml(task.title || task.task_templates?.title || 'Задача')}</div>
-                            <div class="task-desc">${escapeHtml(task.description || task.task_templates?.description || '')}</div>
-                            ${task.link ? `<div class="coordinator-link"><strong>🔗 Ссылка для распуша:</strong><br><a href="${escapeHtml(task.link)}" target="_blank">${escapeHtml(task.link)}</a></div>` : ''}
-                            ${task.deadline ? `<div class="deadline">⏰ Срок: ${formatDateForDisplay(task.deadline)}</div>` : ''}
-                            ${sentHtml}
-                            <div><span class="task-status">${task.status === 'pending' ? '⏳ Ожидает' : '✅ Выполнено'}</span></div>
-                            ${task.status === 'pending' ? `
-                                <input type="text" id="link_${task.id}" class="link-input" placeholder="Вставьте ссылку (t.me, vk.com, vk.ru)">
-                                <button class="btn-complete" onclick="sendLink(${task.id})">✅ Выполнить +1 балл</button>
+            const { data: tasks } = await sb.from('board_tasks').select('*').eq('is_active', true).order('deadline');
+            const container = document.getElementById('tasksList');
+            if (!tasks?.length) { container.innerHTML = '<div class="empty-state">📭 Нет заданий</div>'; return; }
+
+            let html = '<div class="tasks-grid">';
+            for (let task of tasks) {
+                const myLinks = mySubmissionsMap[task.id] || [];
+                const expired = new Date(task.deadline) < new Date();
+                html += `
+                    <div class="task-card" onclick="toggleTaskCard(this)">
+                        <div class="task-card-title">${escapeHtml(task.title)}</div>
+                        <div class="task-card-date">📅 ${formatDateShort(task.deadline)}</div>
+                        <div><span class="task-card-status">${expired ? '⏰ Просрочено' : '⏳ Активно'}</span></div>
+                        <div class="task-detail">
+                            <p><strong>📝 Описание:</strong><br>${escapeHtml(task.description || 'Нет')}</p>
+                            <p><strong>📋 ТЗ:</strong><br>${escapeHtml(task.technical_task || 'Нет')}</p>
+                            ${myLinks.length ? `<div><strong>✅ Отправлено (${myLinks.length}):</strong><br>${myLinks.map(l => `<a href="${l}" target="_blank" class="sent-link">🔗 ${l.length > 30 ? l.substring(0,30)+'...' : l}</a>`).join('')}</div>` : ''}
+                            ${!expired ? `
+                                <input type="text" id="task_link_${task.id}" class="link-input" placeholder="Вставьте ссылку на выполненную работу">
+                                <button class="btn-complete" onclick="event.stopPropagation(); submitTaskLink(${task.id})">📤 Отправить ссылку +1 балл</button>
                             ` : ''}
                         </div>
-                    `;
-                }
-                container.innerHTML = html;
-                
-                const { data: stats } = await sb.from('assignments').select('status').eq('chief_id', chiefId);
-                const { data: score } = await sb.from('chief_scores').select('total_score').eq('chief_id', chiefId).single();
-                document.getElementById('totalTasks').innerText = stats?.length || 0;
-                document.getElementById('completedTasks').innerText = stats?.filter(t => t.status === 'completed').length || 0;
-                document.getElementById('totalScore').innerText = score?.total_score || 0;
-            } catch (err) {
-                console.error(err);
-                document.getElementById('tasksList').innerHTML = '<div class="empty-state">❌ Ошибка: ' + err.message + '</div>';
+                    </div>
+                `;
             }
+            html += '</div>';
+            container.innerHTML = html;
         }
-        
-        window.sendLink = async function(taskId) {
-            const link = document.getElementById(`link_${taskId}`)?.value.trim();
-            if (!link) {
-                alert('Вставьте ссылку');
-                return;
-            }
-            
-            const allowedDomains = ['t.me', 'vk.com', 'vk.ru'];
-            let isValid = false;
-            for (let domain of allowedDomains) {
-                if (link.includes(domain)) {
-                    isValid = true;
-                    break;
-                }
-            }
-            if (!isValid) {
-                alert('Ссылка должна быть на t.me, vk.com или vk.ru');
-                return;
-            }
-            
-            const { data: dup } = await sb
-                .from('operations_history')
-                .select('id')
-                .eq('chief_id', chiefId)
-                .eq('assignment_id', taskId)
-                .ilike('description', `%${link}%`);
-            
-            if (dup && dup.length > 0) {
-                alert('❌ Эта ссылка уже была отправлена!');
-                return;
-            }
-            
-            try {
-                await sb.from('operations_history').insert([{
-                    chief_id: chiefId,
-                    assignment_id: taskId,
-                    action: `Отправлена ссылка: ${link}`
-                }]);
-                
-                const { data: cur } = await sb.from('chief_scores').select('total_score').eq('chief_id', chiefId).single();
-                await sb.from('chief_scores').upsert({
-                    chief_id: chiefId,
-                    total_score: (cur?.total_score || 0) + 1,
-                    updated_at: new Date()
-                });
-                
-                const { data: chiefs } = await sb.from('chiefs').select('id').eq('district_id', districtId);
-                let total = 0;
-                for (let c of chiefs || []) {
-                    const { data: s } = await sb.from('chief_scores').select('total_score').eq('chief_id', c.id).single();
-                    total += s?.total_score || 0;
-                }
-                await sb.from('district_scores').upsert({
-                    district_id: districtId,
-                    total_score: total,
-                    updated_at: new Date()
-                });
-                
-                document.getElementById(`link_${taskId}`).value = '';
-                loadTasks();
-                loadHistory();
-                loadRating();
-                updateProgress();
-                showToast('✅ +1 балл!');
-            } catch (err) {
-                alert('Ошибка: ' + err.message);
-            }
+
+        window.toggleTaskCard = (el) => {
+            el.classList.toggle('expanded');
         };
-        
+
+        window.submitTaskLink = async (taskId) => {
+            const link = document.getElementById(`task_link_${taskId}`)?.value.trim();
+            if (!link) { alert('Вставьте ссылку'); return; }
+
+            const { data: existing } = await sb.from('board_submissions').select('id').eq('board_task_id', taskId).eq('chief_id', chiefId).eq('link', link);
+            if (existing?.length) { alert('❌ Эта ссылка уже была отправлена!'); return; }
+
+            await sb.from('board_submissions').insert([{ board_task_id: taskId, chief_id: chiefId, link, district_id: districtId }]);
+
+            const { data: cur } = await sb.from('chief_scores').select('total_score').eq('chief_id', chiefId).single();
+            await sb.from('chief_scores').upsert({ chief_id: chiefId, total_score: (cur?.total_score || 0) + 1, updated_at: new Date() });
+
+            const { data: chiefs } = await sb.from('chiefs').select('id').eq('district_id', districtId);
+            let total = 0;
+            for (let c of chiefs || []) {
+                const { data: s } = await sb.from('chief_scores').select('total_score').eq('chief_id', c.id).single();
+                total += s?.total_score || 0;
+            }
+            await sb.from('district_scores').upsert({ district_id: districtId, total_score: total, updated_at: new Date() });
+
+            loadTasks();
+            loadEvents();
+            loadHistory();
+            loadRating();
+            showToast('✅ +1 балл!');
+        };
+
         async function loadHistory() {
-            try {
-                const { data } = await sb
-                    .from('operations_history')
-                    .select('*')
-                    .eq('chief_id', chiefId)
-                    .order('created_at', { ascending: false })
-                    .limit(50);
-                
-                const container = document.getElementById('historyList');
-                if (!data || data.length === 0) {
-                    container.innerHTML = '<div class="empty-state">📭 История пуста</div>';
-                    return;
-                }
-                let html = '';
-                for (let h of data) {
-                    let action = h.action;
-                    if (action && action.length > 55) action = action.substring(0, 55) + '...';
-                    html += `<div class="history-item"><span>${escapeHtml(action || 'Действие')}</span><span style="color: #64748b;">${new Date(h.created_at).toLocaleString()}</span></div>`;
-                }
-                container.innerHTML = html;
-            } catch (err) {
-                console.error(err);
+            const { data } = await sb.from('operations_history').select('*').eq('chief_id', chiefId).order('created_at', { ascending: false }).limit(50);
+            const container = document.getElementById('historyList');
+            if (!data?.length) { container.innerHTML = '<div class="empty-state">📭 История пуста</div>'; return; }
+            let html = '';
+            for (let h of data) {
+                let action = h.action;
+                if (action?.length > 55) action = action.substring(0, 55) + '...';
+                html += `<div class="history-item"><span>${escapeHtml(action || 'Действие')}</span><span style="opacity:0.5;">${new Date(h.created_at).toLocaleString()}</span></div>`;
             }
+            container.innerHTML = html;
         }
-        
+
         async function loadRating() {
-            try {
-                const { data } = await sb
-                    .from('district_scores')
-                    .select('*, districts(name)')
-                    .order('total_score', { ascending: false });
-                
-                const container = document.getElementById('ratingList');
-                if (!data || data.length === 0) {
-                    container.innerHTML = '发展<td colspan="2" class="empty-state">Нет данных<\/td><\/tr>';
-                    return;
-                }
-                let html = '';
-                for (let d of data) {
-                    const districtName = d.districts?.name || null;
-                    if (!districtName) continue;
-                    html += `发展<td style="font-weight:500;">${escapeHtml(districtName)}<\/td><td style="color: #3b82f6;">${d.total_score} баллов<\/td><\/tr>`;
-                }
-                container.innerHTML = html || '发展<td colspan="2" class="empty-state">Нет данных<\/td><\/tr>';
-            } catch (err) {
-                console.error(err);
+            const { data } = await sb.from('district_scores').select('*, districts(name)').order('total_score', { ascending: false });
+            const container = document.getElementById('ratingList');
+            if (!data?.length) { container.innerHTML = '发展<td colspan="2" class="empty-state">Нет данных<\/td><\/tr>'; return; }
+            let html = '';
+            for (let d of data) {
+                if (!d.districts?.name) continue;
+                html += `发展<td style="font-weight:500;">${escapeHtml(d.districts.name)}<\/td><td style="color:#6c8cff;">${d.total_score} баллов<\/td><\/tr>`;
             }
+            container.innerHTML = html;
         }
-        
+
         function showToast(msg) {
             const toast = document.createElement('div');
             toast.className = 'toast';
@@ -1154,12 +916,12 @@
             document.body.appendChild(toast);
             setTimeout(() => toast.remove(), 2500);
         }
-        
-        window.resetAndExit = function() {
+
+        window.resetAndExit = () => {
             localStorage.clear();
             window.location.href = 'index.html';
         };
-        
+
         document.getElementById('prevMonthBtn').onclick = () => {
             currentDate.setMonth(currentDate.getMonth() - 1);
             renderCalendar();
@@ -1168,7 +930,7 @@
             currentDate.setMonth(currentDate.getMonth() + 1);
             renderCalendar();
         };
-        
+
         document.querySelectorAll('.menu-btn').forEach(btn => {
             btn.onclick = () => {
                 document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
@@ -1181,15 +943,13 @@
                 if (btn.dataset.page === 'calendar') loadEvents();
             };
         });
-        
-        if (chiefId) {
-            loadEvents();
-            loadTasks();
-            loadHistory();
-            loadRating();
-            setInterval(loadEvents, 30000);
-            setInterval(loadTasks, 30000);
-        }
+
+        loadEvents();
+        loadTasks();
+        loadHistory();
+        loadRating();
+        setInterval(loadEvents, 30000);
+        setInterval(loadTasks, 30000);
     </script>
 </body>
 </html>
