@@ -22,7 +22,6 @@
             padding: 20px;
         }
 
-        /* Glow spheres */
         .glow-bg {
             position: fixed;
             top: 0;
@@ -64,7 +63,6 @@
             background: linear-gradient(135deg, #4facfe, #00f2fe);
         }
 
-        /* Glass card */
         .glass-card {
             background: rgba(20, 25, 35, 0.6);
             backdrop-filter: blur(20px);
@@ -129,7 +127,7 @@
             margin-bottom: 8px;
         }
 
-        select {
+        select, input {
             width: 100%;
             padding: 14px 16px;
             background: rgba(0, 0, 0, 0.4);
@@ -137,11 +135,18 @@
             border-radius: 24px;
             color: #fff;
             font-size: 16px;
+        }
+
+        select {
             cursor: pointer;
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffffff80' d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 16px center;
+        }
+
+        input {
+            cursor: text;
         }
 
         button {
@@ -163,20 +168,11 @@
             background: linear-gradient(135deg, rgba(108, 140, 255, 0.5), rgba(118, 75, 162, 0.5));
         }
 
-        .branch-group {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            display: none;
-        }
-
-        .branch-group.show {
-            display: block;
-        }
-
         .radio-group {
             display: flex;
             gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
         }
 
         .radio-option {
@@ -199,6 +195,15 @@
             font-size: 28px;
             display: block;
             margin-bottom: 6px;
+        }
+
+        .name-input {
+            margin-top: 16px;
+            display: none;
+        }
+
+        .name-input.show {
+            display: block;
         }
 
         @media (max-width: 600px) {
@@ -239,18 +244,24 @@
                 </select>
             </div>
 
-            <div id="branchGroup" class="branch-group">
-                <label>🏢 Тип отделения</label>
-                <div class="radio-group">
-                    <div class="radio-option selected" data-branch-type="main">
-                        <span>🏛️</span>
-                        <span>Местное</span>
-                    </div>
-                    <div class="radio-option" data-branch-type="primary">
-                        <span>📌</span>
-                        <span>Первичка</span>
-                    </div>
+            <div class="radio-group">
+                <div class="radio-option selected" data-branch-type="main">
+                    <span>🏛️</span>
+                    <span>Местное</span>
                 </div>
+                <div class="radio-option" data-branch-type="primary">
+                    <span>📌</span>
+                    <span>Первичка</span>
+                </div>
+                <div class="radio-option" data-branch-type="activist">
+                    <span>⭐</span>
+                    <span>Активист</span>
+                </div>
+            </div>
+
+            <div id="activistNameInput" class="name-input">
+                <label>👤 Ваше имя и фамилия</label>
+                <input type="text" id="activistName" placeholder="Иванов Иван">
             </div>
 
             <button id="enterBtn">Войти в кабинет</button>
@@ -262,7 +273,6 @@
         const SUPABASE_KEY = 'sb_publishable__WbXqBZhgBBU-dDFEvXVeA_PQYwa_y7';
         const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        let districtsList = [];
         let selectedBranchType = 'main';
 
         const districts = [
@@ -283,25 +293,41 @@
                 document.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
                 opt.classList.add('selected');
                 selectedBranchType = opt.dataset.branchType;
+                
+                const nameInput = document.getElementById('activistNameInput');
+                if (selectedBranchType === 'activist') {
+                    nameInput.classList.add('show');
+                } else {
+                    nameInput.classList.remove('show');
+                }
             });
-        });
-
-        document.getElementById('districtSelect').addEventListener('change', (e) => {
-            const group = document.getElementById('branchGroup');
-            if (e.target.value) group.classList.add('show');
-            else group.classList.remove('show');
         });
 
         document.getElementById('enterBtn').addEventListener('click', async () => {
             const district = document.getElementById('districtSelect').value;
             if (!district) { alert('Выберите округ'); return; }
 
-            const chiefId = selectedBranchType === 'main' ? `chief_${district}_main` : `chief_${district}_primary`;
+            let chiefId = '';
+            let activistName = '';
+            
+            if (selectedBranchType === 'activist') {
+                activistName = document.getElementById('activistName').value.trim();
+                if (!activistName) {
+                    alert('Введите ваше имя и фамилию');
+                    return;
+                }
+                chiefId = `activist_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
+            } else {
+                chiefId = selectedBranchType === 'main' ? `chief_${district}_main` : `chief_${district}_primary`;
+            }
 
             localStorage.setItem('chiefId', chiefId);
             localStorage.setItem('chiefDistrictName', district);
             localStorage.setItem('chiefBranchType', selectedBranchType);
             localStorage.setItem('chiefDistrictId', district);
+            if (activistName) {
+                localStorage.setItem('activistName', activistName);
+            }
 
             window.location.href = 'chief.html';
         });
