@@ -9,11 +9,10 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
             background: #0a0c10;
             color: #fff;
             min-height: 100vh;
@@ -338,7 +337,7 @@
             </div>
         </div>
 
-        <!-- Отклики с ФИО активистов -->
+        <!-- Отклики -->
         <div id="submissions-panel" class="panel">
             <h2>📥 Отклики участников</h2>
             <div id="submissionsList" class="empty-state">Загрузка...</div>
@@ -440,7 +439,10 @@
         async function loadBoardTasks() {
             const { data } = await sb.from('board_tasks').select('*').order('created_at', { ascending: false });
             const container = document.getElementById('boardTasksList');
-            if (!data?.length) { container.innerHTML = '<div class="empty-state">📭 Нет заданий</div>'; return; }
+            if (!data?.length) {
+                container.innerHTML = '<div class="empty-state">📭 Нет заданий</div>';
+                return;
+            }
             const { data: parts } = await sb.from('board_participants').select('board_task_id');
             const counts = {};
             for (let p of parts || []) counts[p.board_task_id] = (counts[p.board_task_id] || 0) + 1;
@@ -477,25 +479,17 @@
             showToast('✅ Опубликовано');
         };
 
-        // Отклики с ФИО активистов
         async function loadSubmissions() {
             const { data } = await sb.from('board_submissions').select('*, board_tasks(title), chiefs(name), districts(name)').order('created_at', { ascending: false });
             const container = document.getElementById('submissionsList');
-            if (!data?.length) { container.innerHTML = '<div class="empty-state">📭 Нет откликов</div>'; return; }
-            
-            // Получаем имена активистов из localStorage (они хранятся в chiefId или отдельно)
-            // В текущей структуре имя активиста хранится в activistName, но в БД оно не сохраняется.
-            // Нужно добавить поле activist_name в таблицу chiefs или отдельную таблицу.
-            // Пока выводим chiefId как имя, если это активист.
+            if (!data?.length) {
+                container.innerHTML = '<div class="empty-state">📭 Нет откликов</div>';
+                return;
+            }
             
             const grouped = {};
             for (let s of data) {
                 let participantName = s.chiefs?.name || 'Неизвестно';
-                // Если в имени есть "activist", пытаемся извлечь имя
-                if (s.chiefs?.id && s.chiefs.id.startsWith('activist_')) {
-                    const activistData = await sb.from('activists').select('full_name').eq('chief_id', s.chiefs.id).single();
-                    if (activistaData?.full_name) participantName = activistData.full_name;
-                }
                 const district = s.districts?.name || 'Неизвестный округ';
                 if (!grouped[district]) grouped[district] = [];
                 grouped[district].push({ ...s, participantName });
@@ -523,7 +517,10 @@
         async function loadTemplates() {
             const { data } = await sb.from('task_templates').select('*').eq('is_active', true);
             const container = document.getElementById('templatesList');
-            if (!data?.length) { container.innerHTML = '<div class="empty-state">Нет шаблонов</div>'; return; }
+            if (!data?.length) {
+                container.innerHTML = '<div class="empty-state">Нет шаблонов</div>';
+                return;
+            }
             container.innerHTML = data.map(t => `
                 <div class="template-item" onclick="selectTemplate(${t.id}, '${escapeHtml(t.title).replace(/'/g, "\\'")}', '${t.type}')">
                     <strong>${escapeHtml(t.title)}</strong>
@@ -589,14 +586,20 @@
         async function loadActiveTasks() {
             const { data } = await sb.from('assignments').select('*, task_templates(*), chiefs(name)').neq('status', 'completed').order('created_at', { ascending: false }).limit(40);
             const container = document.getElementById('activeList');
-            if (!data?.length) { container.innerHTML = '<div class="empty-state">✅ Нет активных</div>'; return; }
+            if (!data?.length) {
+                container.innerHTML = '<div class="empty-state">✅ Нет активных</div>';
+                return;
+            }
             container.innerHTML = data.map(t => `<div class="task-item"><div style="display:flex; justify-content:space-between;"><strong>${escapeHtml(t.task_templates?.title)}</strong><span>${t.status}</span></div><div>Шеф: ${escapeHtml(t.chiefs?.name)}</div>${t.deadline ? `<div>⏰ ${formatDate(t.deadline)}</div>` : ''}${t.link ? `<a href="${t.link.split(',')[0]}" target="_blank">🔗</a>` : ''}</div>`).join('');
         }
 
         async function loadActiveTasks2() {
             const { data } = await sb.from('assignments').select('*, task_templates(*), chiefs(name)').neq('status', 'completed').order('created_at', { ascending: false }).limit(40);
             const container = document.getElementById('activeList2');
-            if (!data?.length) { container.innerHTML = '<div class="empty-state">✅ Нет активных</div>'; return; }
+            if (!data?.length) {
+                container.innerHTML = '<div class="empty-state">✅ Нет активных</div>';
+                return;
+            }
             container.innerHTML = data.map(t => `<div class="task-item"><div style="display:flex; justify-content:space-between;"><strong>${escapeHtml(t.task_templates?.title)}</strong><span>${t.status}</span></div><div>Шеф: ${escapeHtml(t.chiefs?.name)}</div>${t.deadline ? `<div>⏰ ${formatDate(t.deadline)}</div>` : ''}${t.link ? `<a href="${t.link.split(',')[0]}" target="_blank">🔗</a>` : ''}</div>`).join('');
         }
 
